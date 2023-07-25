@@ -21,7 +21,6 @@ num_progress = 0
 
 def sendconfig(Dict,request):
     try:
-        #填加備註123123
         print(request.session['train_name'])
         app = Apps.objects.filter(app_name=request.session['train_name']).first()
         temp = {'title': config.title,
