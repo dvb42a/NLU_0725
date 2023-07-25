@@ -1,0 +1,142 @@
+{% extends "layouts/bs4-account.html" %}
+{% block css %}
+    <style type="text/css">
+        .img-account-profile {
+    height: 10rem;
+}
+.rounded-circle {
+    border-radius: 50% !important;
+}
+.card {
+    box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+}
+.card .card-header {
+    font-weight: 500;
+}
+.card-header:first-child {
+    border-radius: 0.35rem 0.35rem 0 0;
+}
+.card-header {
+    padding: 1rem 1.35rem;
+    margin-bottom: 0;
+    background-color: rgba(33, 40, 50, 0.03);
+    border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+}
+.form-control, .dataTable-input {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1;
+    color: #69707a;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #c5ccd6;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 0.35rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.nav-borders .nav-link.active {
+    color: #0061f2;
+    border-bottom-color: #0061f2;
+}
+.nav-borders .nav-link {
+    color: #69707a;
+    border-bottom-width: 0.125rem;
+    border-bottom-style: solid;
+    border-bottom-color: transparent;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.btn-danger-soft {
+    color: #000;
+    background-color: #f1e0e3;
+    border-color: #f1e0e3;
+    </style>
+{% endblock %}
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">我的帳號</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">帳號安全性</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+{% block nav_items %}
+    {% include "layouts/left-bar-account.html" %}
+{% endblock %}
+{% block page_card %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-header">更改密碼</div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="small mb-1" for="currentPassword">現有密碼</label>
+                        {{form.password}}
+                         <div style="color:red">
+                             {{form.name.errors}}
+                             {% if oldPwdMsg %}
+                                {{oldPwdMsg}}
+                             {% endif %}
+                         </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="small mb-1" for="newPassword">新的密碼</label>
+                        {{form.new_password}}
+                         <div style="color:red">
+                             {{form.name.errors}}
+                         </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="small mb-1" for="confirmPassword">再次輸入新的密碼</label>
+                        {{form.new_passwordConfirm}}
+                         <div style="color:red">
+                             {{form.name.errors}}
+                             {% if newPwdMsg %}
+                                {{newPwdMsg}}
+                             {% endif %}
+                         </div>
+                    </div>
+                     <div class="d-flex justify-content-end mt-4">
+                        <button class="btn btn-primary " >儲存</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-header">刪除帳號</div>
+            <div class="card-body">
+                <p>刪除您的帳號是一個無法更改的行為。如果你確定要刪除你的帳號時，請按下方按鈕確認</p>
+                <p>Deleting your account is a permanent action and cannot be undone. If you are sure you want to delete
+                    your account, select the button below.</p>
+                <button class="btn btn-danger-soft text-danger" type="button">刪除帳號</button>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,487 @@
+{% extends "layouts/base-dashboard.html" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block main_title %}{{title}}{% endblock %}
+
+{% block nav_items %}
+    {% include "layouts/base-dashboard_left.html" %}
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/accounts/css/checkbox.css" type="text/css">
+    <style>
+        .success_status {
+            display: inline-block;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            margin-left: -5px;
+            margin-right: 5px;
+            box-shadow: 0 0 2px rgba(0, 0, 0, .08), 0 1px 2px rgba(0, 0, 0, .16);
+            background-color: #6bb700;
+        }
+
+        .error_status {
+            display: inline-block;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            margin-left: -5px;
+            margin-right: 5px;
+            box-shadow: 0 0 2px rgba(0, 0, 0, .08), 0 1px 2px rgba(0, 0, 0, .16);
+            background-color: #b4000a;
+        }
+
+        .default_status {
+            display: inline-block;
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            margin-left: -5px;
+            margin-right: 5px;
+            box-shadow: 0 0 2px rgba(0, 0, 0, .08), 0 1px 2px rgba(0, 0, 0, .16);
+            background-color: #444444;
+        }
+    </style>
+{% endblock %}
+
+
+{% block path_bar %}
+    <!--導航列-->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">Intent(意圖)</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><a>{{ app_name }}</a></li>
+                    <li class="breadcrumb-item"><a>建置</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Intent(意圖)</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+            <label class="btn btn-default " style="margin-bottom: 0">
+                <span class="btn-inner--icon"><i class="ni ni-book-bookmark" style="transform: scale(1.5, 1.5)"></i></span>
+                匯入基本包
+                <input class="btn-inner--text" id="upload_base" type="file" accept=".xlsx,.xls" style="display: none">
+            </label>
+            <label class="btn btn-default " style="margin-bottom: 0">
+                <span class="btn-inner--icon"><i class="ni ni-cloud-upload-96" style="transform: scale(1.5, 1.5)"></i></span>
+                匯入訓練檔
+                <input class="btn-inner--text" id="check_execl" style="display: none">
+            </label>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block small_card %}
+    <!-- Card stats -->
+    <div class="row">
+        <!-- Card 1 start-->
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Intent 數量：</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ all_intent_count }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                <i class="ni ni-air-baloon"></i>
+                            </div>
+                        </div>
+                    </div>
+<!--                    {% if historyCount.intentGrow > 0 %}-->
+<!--                        <p class="mt-3 mb-0 text-sm">-->
+<!--                            <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> {{ historyCount.intentGrow }}</span>-->
+<!--                            <span class="text-nowrap">Since last day</span>-->
+<!--                        </p>-->
+<!--                    {% elif historyCount.utteranceGrow < 0 %}-->
+<!--                        <p class="mt-3 mb-0 text-sm">-->
+<!--                            <span class="text-danger mr-2"><i-->
+<!--                                    class="fa fa-arrow-down"></i> {{ historyCount.intentGrow }}</span>-->
+<!--                            <span class="text-nowrap">Since last day</span>-->
+<!--                        </p>-->
+<!--                    {% endif %}-->
+                </div>
+            </div>
+        </div>
+        <!-- Card 1 end-->
+
+        <!-- Card 2 start-->
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">語句總數量：</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ all_labeled_examples_count }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-indigo text-white rounded-circle shadow">
+                                <i class="ni ni-chat-round"></i>
+                            </div>
+                        </div>
+                    </div>
+<!--                    {% if historyCount.utteranceGrow > 0 %}-->
+<!--                        <p class="mt-3 mb-0 text-sm">-->
+<!--                            <span class="text-success mr-2"><i-->
+<!--                                    class="fa fa-arrow-up"></i> {{ historyCount.utteranceGrow }}</span>-->
+<!--                            <span class="text-nowrap">Since last day</span>-->
+<!--                        </p>-->
+<!--                    {% elif historyCount.utteranceGrow < 0 %}-->
+<!--                        <p class="mt-3 mb-0 text-sm">-->
+<!--                            <span class="text-danger mr-2"><i-->
+<!--                                    class="fa fa-arrow-down"></i> {{ historyCount.utteranceGrow }}</span>-->
+<!--                            <span class="text-nowrap">Since last day</span>-->
+<!--                        </p>-->
+<!--                    {% endif %}-->
+                </div>
+            </div>
+        </div>
+        <!-- Card 2 end-->
+
+        <!-- Card 3 start-->
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <span class="h2 font-weight-bold mb-0">
+                                <a class="nav-link text-light">
+                                    {% if all_intent_count < 2 %}
+                                        <button type="button" class="btn btn-light" disabled>
+                                            <span class="default_status"></span>
+                                            訓練
+                                        </button>
+                                    {% elif all_intent_count > 1 and in_training == 1 %}
+                                        <button type="button" class="btn btn-light" disabled>
+                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            訓練中
+                                        </button>
+                                    {% elif all_intent_count > 1 and  in_training == 0 %}
+                                        {% if trained == 1 %}
+                                            <button type="button" class="btn btn-light" disabled>
+                                                <span class="success_status" ></span>
+                                                訓練
+                                            </button>
+                                        {% else %}
+                                            <button type="button" class="btn btn-light" id="training_btn">
+                                                <span class="error_status" ></span>
+                                                訓練
+                                            </button>
+                                        {% endif %}
+                                    {% endif %}
+                                </a>
+                            </span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                <i class="ni ni-check-bold"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 3 end-->
+
+    </div>
+{% endblock %}
+
+
+{% block page_card %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Intent list</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">名稱</th>
+                            <th scope="col">語句數量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for intent in intent_list %}
+                            <tr>
+                                {% if "None" in intent.name %}
+                                <th scope="row">
+                                    {{ forloop.counter }}. <a href="javascript:void(0)">{{ intent.name }}</a>
+                                </th>
+                                <td>
+                                    <span>{{ intent.utterance_count }}</span>
+                                </td>
+                                {% else %}
+                                <th scope="row">
+                                    {{ forloop.counter }}. <a href="{% url "app:intent_utter" %}?{{ url }}&intentName={{ intent.name }}">{{ intent.name }}</a>
+                                </th>
+                                <td>
+                                    <span>{{ intent.utterance_count }}</span>
+                                </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block modal_card %}
+<!-- Modal_upload progress bar -->
+<div class="modal fade" id="progressModalCenter" tabindex="-1" role="dialog" aria-labelledby="progressModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="progressModalCenterTitle" style="font-size: 1.5rem;">匯入中...</h5>
+            </div>
+
+            <div class="modal-body">
+                <div class="mat-dialog-content">
+                    <div class="progress progress-custom-bar" style="visibility: hidden;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+                             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="checkBase" tabindex="-1" role="dialog" aria-labelledby="checkBaseTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkBaseTitle">檢查基本包：</h5>
+            </div>
+            <div class="modal-body" id="checkBaseBody"></div>
+            <div class="modal-footer">
+                <label class="btn btn-secondary" style="margin-bottom: 0">
+                Cancel
+                <input class="btn-inner--text" id="baseCancel" type="button" style="display: none">
+                </label>
+                <label class="btn btn-default " id="upload_check" style="margin-bottom: 0" >
+                繼續匯入
+                <input class="btn-inner--text" id="upload_excel" type="file" accept=".xlsx,.xls" style="display: none" >
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block jquery %}
+    <script src="/static/accounts/js/myjs_intent.js"></script>
+
+    <script>
+        var new_url = ''
+        var report = ''
+        var message = ''
+        var base = 0
+        var same_entity = []
+        var uttr_intent = []
+        var ans_intent = []
+        var miss_text = ''
+        jQuery(function () {
+            $(document).ready(function () {
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                });
+
+                // check train status
+<!--                call_train_status();-->
+<!--                //固定每五秒檢查 App train 狀態-->
+<!--                setInterval(call_train_status, 5000);-->
+            });
+
+            $('#upload_base').change(function () {
+                var data = new FormData();
+                data.append("csrfmiddlewaretoken", '{{ csrf_token }}');
+                data.append("file", $(this)[0].files[0]);
+                data.append("app_name",{{ app_name }});
+                getProgress(1);
+                $.ajax({
+                    url: "{% url "app:upload_base_excel" %}",
+                    type: "POST",
+                    data: data,
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    success: function (res) {
+                        report = res.message
+                        if (report == 'error'){
+<!--                            setTimeout(function(){window.location.reload();},5000);-->
+                        }
+                    }
+                })
+            });
+
+            $('#check_execl').click(function () {
+                $('#checkBase').css('opacity', 'unset');
+                $('#checkBase').css('display', 'inline');
+                $('#upload_check').css('pointer-events', 'none');
+                var data = new FormData();
+                data.append("csrfmiddlewaretoken", '{{ csrf_token }}');
+                data.append("app_name",{{ app_name }});
+                $.ajax({
+                        url: "{% url "app:check_base" %}",
+                        type: "POST",
+                        data: data,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: function(res){
+                            report = res.message
+                            if (report == 'exist'){
+                                document.getElementById("checkBaseBody").innerHTML='找到基本包訓練檔，是否要匯入基本包訓練檔？<br><input type="radio" id="yesChoice" name="contact"/>&nbsp;&nbsp;是<br><input type="radio" id="noChoice" name="contact" checked/>&nbsp;&nbsp;否';
+                                $('#upload_check').css('pointer-events', 'auto');
+                                $("input[name=contact]").change(function () {
+                                    if ($('#yesChoice').is(":checked")) {
+                                        base = 1;
+                                    } else {
+                                        base = 0;
+                                    }
+                                });
+                            }
+                            else{
+                                document.getElementById("checkBaseBody").innerHTML='查無基本包訓練檔!!!';
+                                $('#upload_check').css('pointer-events', 'auto');
+                            }
+                      }
+                })
+            });
+
+            $('#upload_excel').change(function () {
+                $('#checkBase').css('display', 'none');
+                var data = new FormData();
+                data.append("csrfmiddlewaretoken", '{{ csrf_token }}');
+                data.append("file", $(this)[0].files[0]);
+                data.append("base", base);
+                data.append("app_name",{{ app_name }});
+                getProgress(2);
+                $.ajax({
+                    url: "{% url "app:upload_excel_json" %}",
+                    type: "POST",
+                    data: data,
+                    contentType: false,
+                    processData: false,
+                    cache: false,
+                    success: function (res) {
+                            report =  res.report
+                            if (report == 'error'){
+
+                            }
+                            else if (report == 'miss'){
+                                uttr_intent = res.uttr_intent
+                                ans_intent = res.ans_intent
+                                var utterance_text  = "Utterance頁有缺少或是錯誤的意圖：" + uttr_intent.join("、") + "。"
+                                var ans_text  = "Ans頁有缺少或是錯誤的意圖：" + ans_intent.join("、") + "。"
+                                if ((uttr_intent.length > 0) && (ans_intent.length > 0)){
+                                    miss_text = utterance_text + "</p>" + ans_text
+                                }else if (uttr_intent.length > 0){
+                                    miss_text = utterance_text
+                                }else if (ans_intent.length > 0){
+                                    miss_text = ans_text
+                                }
+                            }
+                            else if (report == 'same'){
+                                same_entity = res.same_entity
+                                var entity_text  = "Entity頁有重覆的Keyword：" + same_entity.join("、") + "。"
+                                miss_text = entity_text
+                            }
+                            else {
+                                new_url = 'https://www.kinglyrobot.tk/app/';
+                            }
+                    }
+                })
+            });
+
+            $('#baseCancel').click(function () {
+                $('#checkBase').css('display', 'none');
+            });
+
+            function getProgress(s) {
+                    $('#progressModalCenter').css('opacity', 'unset');
+                    $('#progressModalCenter').css('display', 'inline');
+                    var message = '<br><br><button type="button" class="btn btn-primary" onclick="location.reload()">確認並離開</button>';
+                    var sitv = setInterval(function () {
+                        var prog_url = '{% url "app:input_progress_bar" %}';
+                        $.getJSON(prog_url, function (num_progress) {
+                            console.log((100 / num_progress) + '%');
+                            $('.progress').css('visibility', 'visible');
+                            $('.progress-bar').css('width', (num_progress) + '%');
+                            if (s == 1){
+                                if (num_progress == 100) {
+                                    clearInterval(sitv);
+                                    $('.progress-bar').css('width', '100%');
+                                    document.getElementById("progressModalCenterTitle").innerHTML='基本包匯入成功!!!'+message;
+                                    //$('.progress-bar').text('100%');
+                                }else if (num_progress == 50 && report == 'error'){
+                                    document.getElementById("progressModalCenterTitle").innerHTML='匯入失敗，請檢查相關excel標籤頁名稱!!!'+message;
+                                }else if (num_progress == 50){
+                                    document.getElementById("progressModalCenterTitle").innerHTML='正在寫入基本資訊...';
+                                }
+                                else if (num_progress == 75) {
+                                    document.getElementById("progressModalCenterTitle").innerHTML='正在後台建立新的基本包...';
+                                }
+                            }
+                            else if (s == 2){
+                                if (num_progress == 100) {
+                                    clearInterval(sitv);
+                                    $('.progress-bar').css('width', '100%');
+                                    document.getElementById("progressModalCenterTitle").innerHTML='Excel匯入成功!!!<br><br>APP異動成功，按下"確認並離開"回APP清單頁。<br><br><button type="button" class="btn btn-primary" onclick="location.reload()">確認並離開</button>';
+                                    //$('.progress-bar').text('100%');
+                                }else if (num_progress == 25 && report == 'error'){
+                                    document.getElementById("progressModalCenterTitle").innerHTML='匯入失敗，請檢查相關excel標籤頁名稱!!!'+message;
+                                }else if (num_progress == 25 && (report == 'miss'||report == 'same')){
+                                    document.getElementById("progressModalCenterTitle").innerHTML= '匯入失敗!!!' + '<br><br> ' + miss_text +message;
+                                }else if (num_progress == 50 && report == 'fail'){
+                                    document.getElementById("progressModalCenterTitle").innerHTML='APP建立失敗!!!<br><br>伺服器連接異常，請稍後再上傳!'+message;
+                                }else if (num_progress == 50 ){
+                                    document.getElementById("progressModalCenterTitle").innerHTML='正在轉換Excel...';
+                                }else if (num_progress == 75) {
+                                    document.getElementById("progressModalCenterTitle").innerHTML='正在建立新的APP...';
+                                }
+                            }
+                        });
+                    }, 500);
+            }
+
+            function train_app() {
+                $.ajax({
+                    url: '{% url "app:train" %}?{{ url }}',
+                    type: "GET",
+                    success: function () {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        console.log('Training error[400]: ' + err);
+                    }
+                });
+            }
+            $('#training_btn').click(function () {
+                train_app();
+            });
+        });
+    </script>
+{% endblock %}

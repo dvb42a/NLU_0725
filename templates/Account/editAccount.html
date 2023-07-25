@@ -1,0 +1,261 @@
+
+
+{% extends "layouts/base-dashboard.html" %}
+
+{% block title %}{{title}}{% endblock %}
+{% block main_title %}{{title}}{% endblock %}
+
+{% block css %}
+    <style type="text/css">
+        .img-account-profile {
+            height: 10rem;
+        }
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
+        .card {
+            box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+        }
+        .card .card-header {
+            font-weight: 500;
+        }
+        .card-header:first-child {
+            border-radius: 0.35rem 0.35rem 0 0;
+        }
+        .card-header {
+            padding: 1rem 1.35rem;
+            margin-bottom: 0;
+            background-color: rgba(33, 40, 50, 0.03);
+            border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+        }
+        .form-control, .dataTable-input {
+            display: block;
+            width: 100%;
+            padding: 0.875rem 1.125rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1;
+            color: #69707a;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #c5ccd6;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.35rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .nav-borders .nav-link.active {
+            color: #0061f2;
+            border-bottom-color: #0061f2;
+        }
+        .nav-borders .nav-link {
+            color: #69707a;
+            border-bottom-width: 0.125rem;
+            border-bottom-style: solid;
+            border-bottom-color: transparent;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+    </style>
+{% endblock %}
+
+{% block nav_items %}
+    {% include "layouts/base-dashboard_left.html" %}
+{% endblock %}
+
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">修改帳號資訊</h6>
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_card %}
+    <div class="row" >
+        <div class="col-12">
+            <div class="card">
+                <hr class="mt-0 mb-4">
+                <div class="row justify-content-center">
+                    <div class="col-xl-8">
+                        <div class="card mb-4">
+                            <div class="card-header">個人頭像</div>
+                            <div class="card-body text-center">
+                                <img class="img-account-profile rounded-circle mb-2"
+                                     src="/static/bootstrapThemes/assets/img/theme/team-4.jpg" alt="">
+                                <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 2 MB</div>
+                                <button class="btn btn-primary" type="button">上載照片</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="card mb-4">
+                            <form action="{% url "Accounts:edit" %}" method="POST">
+                                <div class="card-header">帳號內容:</div>
+                                <div class="card-body">
+                                        {% csrf_token %}
+                                        <div class="mb-3">
+                                            <label class="small mb-1">帳號</label>
+                                            <input class="form-control" type="text" placeholder="Enter your username" value="{{account.ac_name}}"
+                                                   data-bs-toggle="tooltip" data-bs-placement="bottom" title="帳號不可修改!" disabled>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1">電郵地址</label>
+                                                {{base_form.email}}
+                                            <div style="color:red">{{base_form.email.errors}}</div>
+                                        </div>
+                                        {% if account.role != "main_ac"%}
+                                        <div class="d-flex justify-content-end mt-4">
+                                            <button class="btn btn-primary " >儲存</button>
+                                        </div>
+                                        {% endif %}
+                                </div>
+                                {% if account.role == "main_ac"%}
+                                <div class="card-header">聯絡資訊:</div>
+                                <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="small mb-1">{{main_form.phone_number.label}}</label>
+                                                {{main_form.phone_number}}
+                                            <div style="color:red">{{main_form.phone_number.errors}}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1">{{main_form.real_name.label}}</label>
+                                                {{main_form.real_name}}
+                                            <div style="color:red">{{main_form.real_name.errors}}</div>
+                                        </div>
+                                </div>
+                                <div class="card-header">付款資訊:</div>
+                                <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="small mb-1">{{main_form.bankaccount.label}}</label>
+                                                {{main_form.bankaccount}}
+                                            <div style="color:red">{{main_form.bankaccount.errors}}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1">{{main_form.transfer_name.label}}</label>
+                                                {{main_form.transfer_name}}
+                                            <div class="mt-2"><input type="checkbox" id="SameWithRealName">與真實姓名相同</div>
+                                            <div style="color:red">{{main_form.transfer_name.errors}}</div>
+                                        </div>
+                                </div>
+                                <div class="card-header"><input type="checkbox" id="IsCompany">帳號是否為公司行號</div>
+                                <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="small mb-1">{{main_form.company_name.label}}</label>
+                                                {{main_form.company_name}}
+                                            <div style="color:red">{{main_form.company_name.errors}}</div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="small mb-1">{{main_form.tax_number.label}}</label>
+                                                {{main_form.tax_number}}
+                                            <div style="color:red">{{main_form.tax_number.errors}}</div>
+                                        </div>
+                                        <div class="d-flex justify-content-end mt-4">
+                                            <button class="btn btn-primary " >儲存</button>
+                                        </div>
+                                </div>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="card mb-4">
+                            <div class="card-header">更改密碼:</div>
+                            <div class="card-body">
+                                <form action="{% url "Accounts:safety" %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="currentPassword">現有密碼</label>
+                                        {{password_form.password}}
+                                         <div style="color:red">
+                                             {{password_form.name.errors}}
+                                             {% if oldPwdMsg %}
+                                                {{oldPwdMsg}}
+                                             {% endif %}
+                                         </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="newPassword">新的密碼</label>
+                                        {{password_form.new_password}}
+                                         <div style="color:red">
+                                             {{password_form.name.errors}}
+                                         </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label class="small mb-1" for="confirmPassword">再次輸入新的密碼</label>
+                                        {{password_form.new_passwordConfirm}}
+                                         <div style="color:red">
+                                             {{password_form.name.errors}}
+                                             {% if newPwdMsg %}
+                                                {{newPwdMsg}}
+                                             {% endif %}
+                                         </div>
+                                    </div>
+                                     <div class="d-flex justify-content-end mt-4">
+                                        <button class="btn btn-primary " >儲存</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block jquery %}
+<script>
+    const RealName = document.getElementById('RealName');
+    const SameBtn = document.getElementById('SameWithRealName');
+    const transfer = document.getElementById('transferName');
+    const CompanyName= document.getElementById('CompanyName');
+    const TaxNum = document.getElementById('TaxNum');
+    const IsCompanyBtn = document.getElementById('IsCompany');
+
+    function disabledInput()
+    {
+        CompanyName.disabled=true;
+        TaxNum.disabled=true;
+    }
+    disabledInput();
+
+    function toggleCompany()
+    {
+        if(IsCompanyBtn.checked)
+        {
+            CompanyName.disabled=false;
+            TaxNum.disabled=false;
+        }
+        else
+        {
+            CompanyName.disabled=true;
+            TaxNum.disabled=true;
+        }
+
+    }
+
+    function transferNameFillIn()
+    {
+        if(SameBtn.checked){
+            transfer.value=RealName.value;
+        }
+        else
+        {
+            transfer.value='';
+        }
+    }
+    SameBtn.addEventListener('change', transferNameFillIn) ;
+    IsCompany.addEventListener('change' , toggleCompany);
+
+</script>
+{% endblock %}

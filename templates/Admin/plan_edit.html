@@ -1,0 +1,124 @@
+{% extends "Admin/bs4-admin.html" %}
+
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">方案管理</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item "><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active">系統管理</li>
+                    <li class="breadcrumb-item active" aria-current="page">方案管理</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+    </div>
+{% endblock %}
+{% block small_card %}
+{% endblock %}
+{% block page_card %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header">
+                    <h3 class="mb-0">方案資訊</h3>
+                </div>
+                <form method="post" onkeydown="if(event.keyCode==13)return false;">
+                {% csrf_token %}
+                <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Form groups used in grid -->
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputName">{{form.plan_name.label}}</label>
+                                        {{form.plan_name}}
+                                    <div style="color:red">{{form.plan_name.errors}}</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputName">{{form.plan_pay.label}}</label>
+                                        {{form.plan_pay}}
+                                        <div style="color:red">{{form.plan_pay.errors}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputName">方案可使用APP數量</label>
+                                        {{form.plan_app}}
+                                    <div style="color:red">{{form.plan_app.errors}}</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputName">方案APP可操作人數上限</label>
+                                        {{form.plan_person}}
+                                    <div style="color:red">{{form.plan_person.errors}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputName">方案提供額外公司可新增帳號數量</label>
+                                        {{form.plan_employee}}
+                                    <div style="color:red">{{form.plan_employee.errors}}</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputName">方案APP可上載文件之數量</label>
+                                        {{form.plan_file}}
+                                    <div style="color:red">{{form.plan_file.errors}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputName">APP可查詢次數上限</label>
+                                        {{form.plan_count}}
+                                    <div style="color:red">{{form.plan_count.errors}}</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputName">期限天數</label>
+                                        {{form.expired_at}}
+                                    <div style="color:red">{{form.expired_at.errors}}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col text-right">
+                            <span data-toggle="tooltip" data-original-title="更新方案">
+                                  <button type="submit" class="btn btn-primary btn-icon">
+                                      <span class="btn-inner--text">更新</span>
+                                  </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+
+        </div>
+    </div>
+
+{% endblock %}
+{% block jquery %}
+
+    {% if message %}
+       <script>
+            alert("{{ message }}");
+       </script>
+    {% endif %}
+{% endblock %}

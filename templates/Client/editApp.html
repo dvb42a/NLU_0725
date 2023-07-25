@@ -1,0 +1,248 @@
+{% extends "layouts/bs4-account.html" %}\
+{% block nav_items %}
+    {% include "layouts/left-bar-order.html" %}
+{% endblock %}
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">方案與訂單</h6>
+             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">方案管理</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+{% block small_card %}
+    <!-- Card stats -->
+    <div class="row">
+        <!-- Card 1 start-->
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">方案數量：</h5>
+                            <span class="h2 font-weight-bold mb-0">{{clientPlanCount}}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                <i class="fa fa-file" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 1 end-->
+    </div>
+{% endblock %}
+
+{% block page_card %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col d-flex justify-content-between">
+                            <h3 class="mb-0">正在使用的方案</h3>
+                            <div class="d-inline-flex" >
+                              <form method="get"  class="d-flex" style="margin-left:12px">
+                                  <input  class="form-control rounded" style="width:350px" placeholder="搜尋訂單編號/匯款人名稱/手機號碼/後四碼" aria-label="Search" name="search" value="{{search_input}}" />
+                                  <button class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                  </button>
+                                  <button  class="btn btn-primary" id="refresh" type="button">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                  </button>
+                              </form>
+                                </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">已購方案</th>
+                            <th scope="col" class="text-center">可開通數量/APP總數</th>
+                            <th scope="col" class="text-center">查詢次數/月</th>
+                            <th scope="col" class="text-center">狀態</th>
+                            <th scope="col" >...</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% load filter %}
+                        {% if clientPlan %}
+                            {% for plan in clientPlan %}
+                                <tr>
+                                    <th scope="row">
+                                        {{ plan.cplan_name}}
+                                    </th>
+                                    <th scope="row" class="text-center">
+                                        {{plan.current_app| displayAppCount:plan.cplan_app }}/{{ plan.cplan_app}}
+                                    </th>
+                                    <th scope="row" class="text-center">
+                                        {{ plan.cplan_count}}
+                                    </th>
+                                    <th scope="row" class="text-center">
+                                        {{plan.expired_at | days_until}}
+                                    </th>
+                                    <td ><a href="{% url "Client:appIndex" plan.cplan_id %}"> 查看</a></td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <th scope="row">
+                                    <span class="text-primary">沒有任何己購買之方案。</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <nav aria-label="...">
+                          <ul class="pagination pagination-lg">
+                            {% for num_page in order_list.paginator.page_range %}
+                                {% if num_page == order_list.number%}
+                                <li class="page-item disabled active">
+                                    <a class="page-link">{{num_page}}</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item">
+                                  <a class="page-link" href="" >{{num_page}}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                          </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block modal_card %}
+    <!-- Modal_creat app -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">建立方案</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="/admin/plan/" method="post" onkeydown="if(event.keyCode==13)return false;">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="mat-dialog-content">
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_name.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_name}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_pay.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_pay}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_app.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                               {{form.plan_app}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_person.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_person}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_employee.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_employee}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_file.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_file}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_count.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_count}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.expired_at.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.expired_at}}
+                            </div>
+                        </div>
+                    </div>
+                    {% if messages %}
+                        {{ message }}
+                    {% endif %}
+                    <div class="modal-footer" id="creat_Done_btn_div">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="creat_Done_btn">Done</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block jquery %}
+    <script>
+        const modal_button = document.getElementById('open_modal');
+        const refresh_button =document.getElementById('refresh');
+
+        refresh_button.addEventListener('click',function(){
+             window.location.href = ""
+        });
+
+    </script>
+    {% if message %}
+       <script>
+
+        modal_button.click();
+        alert("{{ message }}");
+
+       </script>
+    {% endif %}
+
+{% endblock %}
+

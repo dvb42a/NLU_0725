@@ -1,0 +1,225 @@
+{% extends "layouts/bs4-account.html" %}
+{% block css %}
+   <style type="text/css">
+        .img-account-profile {
+            height: 10rem;
+        }
+        .rounded-circle {
+            border-radius: 50% !important;
+        }
+        .card {
+            box-shadow: 0 0.15rem 1.75rem 0 rgb(33 40 50 / 15%);
+        }
+        .card .card-header {
+            font-weight: 500;
+        }
+        .card-header:first-child {
+            border-radius: 0.35rem 0.35rem 0 0;
+        }
+        .card-header {
+            padding: 1rem 1.35rem;
+            margin-bottom: 0;
+            background-color: rgba(33, 40, 50, 0.03);
+            border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+        }
+        .form-control, .dataTable-input {
+            display: block;
+            width: 100%;
+            padding: 0.875rem 1.125rem;
+            font-size: 0.875rem;
+            font-weight: 400;
+            line-height: 1;
+            color: #69707a;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #c5ccd6;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border-radius: 0.35rem;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .nav-borders .nav-link.active {
+            color: #0061f2;
+            border-bottom-color: #0061f2;
+        }
+        .nav-borders .nav-link {
+            color: #69707a;
+            border-bottom-width: 0.125rem;
+            border-bottom-style: solid;
+            border-bottom-color: transparent;
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 1rem;
+            margin-right: 1rem;
+        }
+        .fa-2x {
+            font-size: 2em;
+        }
+
+        .table-billing-history th, .table-billing-history td {
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            padding-left: 1.375rem;
+            padding-right: 1.375rem;
+        }
+        .table > :not(caption) > * > *, .dataTable-table > :not(caption) > * > * {
+            padding: 0.75rem 0.75rem;
+            background-color: var(--bs-table-bg);
+            border-bottom-width: 1px;
+            box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+        }
+
+        .border-start-primary {
+            border-left-color: #0061f2 !important;
+        }
+        .border-start-secondary {
+            border-left-color: #6900c7 !important;
+        }
+        .border-start-success {
+            border-left-color: #00ac69 !important;
+        }
+        .border-start-lg {
+            border-left-width: 0.25rem !important;
+        }
+        .h-100 {
+            height: 100% !important;
+        }
+    </style>
+{% endblock %}
+{% block nav_items %}
+    {% include "layouts/left-bar-account.html" %}
+{% endblock %}
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">我的帳號</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">訂單與付款方式</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+{% block page_card %}
+
+        <div class="card mb-4">
+             <form method="POST">
+                {% csrf_token %}
+                <div class="card-header">聯絡資訊</div>
+                <div class="card-body">
+                    <div class="mat-dialog-content">
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.phone_number.label}}
+                                </label>
+                                {{form.phone_number}}
+                                <div style="color:red">{{form.phone_number.errors}}</div>
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.real_name.label}}
+                                </label>
+                                {{form.real_name}}
+                                <div style="color:red">{{form.real_name.errors}}</div>
+                            </div>
+                            <br>
+                    </div>
+                </div>
+                <div class="card-header">付款資訊</div>
+                <div class="card-body">
+                    <div class="mat-dialog-content">
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.bankaccount.label}}
+                                </label>
+                                {{form.bankaccount}}
+                                 <div style="color:red">{{form.bankaccount.errors}}</div>
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.transfer_name.label}}
+                                </label>
+                                {{form.transfer_name}}
+                                <div class="mt-2"><input type="checkbox" id="SameWithRealName">與真實姓名相同</div>
+                                <div style="color:red">{{form.transfer_name.errors}}</div>
+                            </div>
+                            <br>
+                    </div>
+                </div>
+                <div class="card-header"><input type="checkbox" id="IsCompany"> 帳號是否為公司行號</div>
+                <div class="card-body">
+                    <div class="mat-dialog-content">
+                        <div class="form-row">
+                            <label for="app-name" class="m-label">{{form.company_name.label}}
+                            </label>
+                            {{form.company_name}}
+                            <div style="color:red">{{form.company_name.errors}}</div>
+                        </div>
+                        <br>
+                        <div class="form-row">
+                            <label for="app-name" class="m-label">{{form.tax_number.label}}
+                            </label>
+                            {{form.tax_number}}
+                            <div style="color:red">{{form.tax_number.errors}}</div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button class="btn btn-primary " >儲存</button>
+                    </div>
+                </div>
+             </form>
+        </div>
+
+
+{% endblock %}
+{% block jquery %}
+<script>
+    const RealName = document.getElementById('RealName');
+    const SameBtn = document.getElementById('SameWithRealName');
+    const transfer = document.getElementById('transferName');
+    const CompanyName= document.getElementById('CompanyName');
+    const TaxNum = document.getElementById('TaxNum');
+    const IsCompanyBtn = document.getElementById('IsCompany');
+
+    function disabledInput()
+    {
+        CompanyName.disabled=true;
+        TaxNum.disabled=true;
+    }
+    disabledInput();
+
+    function toggleCompany()
+    {
+        if(IsCompanyBtn.checked)
+        {
+            CompanyName.disabled=false;
+            TaxNum.disabled=false;
+        }
+        else
+        {
+            CompanyName.disabled=true;
+            TaxNum.disabled=true;
+        }
+
+    }
+
+    function transferNameFillIn()
+    {
+        if(SameBtn.checked){
+            transfer.value=RealName.value;
+        }
+        else
+        {
+            transfer.value='';
+        }
+    }
+    SameBtn.addEventListener('change', transferNameFillIn) ;
+    IsCompany.addEventListener('change' , toggleCompany);
+
+</script>
+{% endblock %}

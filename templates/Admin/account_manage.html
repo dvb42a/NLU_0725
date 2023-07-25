@@ -1,0 +1,210 @@
+{% extends "Admin/bs4-admin.html" %}
+
+
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">帳戶管理</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item "><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active">系統管理</li>
+                    <li class="breadcrumb-item active" aria-current="page">帳戶管理</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block small_card %}
+    <!-- Card stats -->
+    <div class="row">
+        <!-- Card 1 start-->
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">帳戶數量：</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ account_list|length }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                <i class="ni ni-single-02"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 1 end-->
+    </div>
+{% endblock %}
+
+
+
+{% block page_card %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">帳戶列表</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">帳戶名稱</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">註冊日期</th>
+                            <th scope="col">權限角色</th>
+                            <th scope="col">權限編輯</th>
+                            <th scope="col">...</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if account_list %}
+                            {% for account in account_list %}
+                                <tr>
+                                    <th scope="row">
+                                        {{ forloop.counter }}. <a>{{ account.ac_name }}</a>
+                                    </th>
+                                    <th scope="row">
+                                        {{ account.ac_id }}
+                                    </th>
+                                    <th scope="row">
+                                        {{ account.ac_join_date | date:"Y.m.d H:i:s" }}
+                                    </th>
+                                    <th scope="row">
+                                        {{ account.role_perm_name }}
+                                    </th>
+                                    <th scope="row">
+                                        <select acid="{{ account.ac_id }}" class="select-role">
+                                            {% for r in role_list %}
+                                                {% if account.role_perm_name == r.role_perm_name %}
+                                                    <option value="{{ r.role_id }}"
+                                                            selected="selected">{{ r.role_perm_name }}</option>
+                                                {% else %}
+                                                    <option value="{{ r.role_id }}">{{ r.role_perm_name }}</option>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                    </th>
+                                    <td>
+                                        {#                                        <button type="button" class="btn btn-danger" style="margin: 0;"#}
+                                        {#                                                data-toggle="modal"#}
+                                        {#                                                data-target="#deleteModalCenter-{{ topic }}">刪除#}
+                                        {#                                        </button>#}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <th scope="row">
+                                    <span class="text-primary">沒有帳戶資料。</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+
+{% block modal_card %}
+    <!-- Modal_Delete entity -->
+    {#    {% if topic_list %}#}
+    {#        {% for topic in topic_list %}#}
+    {#            <div class="modal fade" id="deleteModalCenter-{{ topic }}" tabindex="-1" role="dialog"#}
+    {#                 aria-labelledby="deleteModalCenterTitle-{{ topic }}" aria-hidden="true">#}
+    {#                <div class="modal-dialog modal-dialog-centered" role="document">#}
+    {#                    <div class="modal-content">#}
+    {#                        <div class="modal-header">#}
+    {#                            <h5 class="modal-title" id="deleteModalCenterTitle-{{ topic }}">刪除主題?</h5>#}
+    {#                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+    {#                                <span aria-hidden="true">&times;</span>#}
+    {#                            </button>#}
+    {#                        </div>#}
+
+    {#                        <form action="{% url "NLUv3:v3_topic_delete" %}?{{ url }}&topic={{ topic }}" method="post">#}
+    {#                            {% csrf_token %}#}
+    {#                            <div class="modal-body">#}
+    {#                                <div class="mat-dialog-content">#}
+    {#                                    <div class="form-row">#}
+    {#                                        <label for="app-name" class="m-label"> 你確定要刪除主題#}
+    {#                                            "{{ topic }}" 嗎? </label>#}
+    {#                                    </div>#}
+    {#                                </div>#}
+    {#                            </div>#}
+    {#                            <div class="modal-footer" id="delete_ok_div-{{ topic }}">#}
+    {#                                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>#}
+    {#                                <button type="submit" class="btn btn-danger" id="delete_ok_btn-{{ topic.name }}">刪除#}
+    {#                                </button>#}
+    {#                            </div>#}
+    {#                        </form>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        {% endfor %}#}
+    {#    {% endif %}#}
+{% endblock %}
+
+
+
+{% block jquery %}
+    <script src="/static/accounts/js/myjs_entity.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+        {% if topic_list %}
+            jQuery(function () {
+                {% for topic in topic_list %}
+                    $('#delete_ok_btn-{{ topic }}').click(function () {
+                        $(this).attr('hidden', true);
+                        $('#delete_ok_div-{{ topic }}').append('<button type="button" class="btn btn-danger" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 正在刪除</button>');
+                    });
+                {% endfor %}
+            });
+        {% endif %}
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajaxSetup({
+                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+            });
+        });
+        $('.select-role').change(function () {
+            var role = $(this).val();
+            var acid = $(this).attr('acid');
+
+            $.post('{% url 'Admin:account' %}', {'acid': acid, 'role': role}, function (data) {
+                if (data['code'] == 1) {
+                    alert(data['msg'])
+                } else {
+                    alert(data['msg'])
+                }
+                window.location.reload()
+            }, 'json');
+        })
+    </script>
+{% endblock %}

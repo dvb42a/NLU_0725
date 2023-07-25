@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://getbootstrap.com/docs/4.5/examples/checkout/ -->
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v4.1.1">
+  <title>對話訓練平台 訂單系統</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+      <!-- Favicons -->
+  <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/manifest.json">
+  <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#563d7c">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="./Checkout example · Bootstrap_files/form-validation.css" rel="stylesheet">
+  <link id="avast_os_ext_custom_font" href="chrome-extension://mbckjcfnjmoiinpgddefodcighgikkgn/common/ui/fonts/fonts.css" rel="stylesheet" type="text/css">
+</head>
+<body class="bg-light">
+  <div class="container">
+    <div class="py-5 text-center">
+      <a class="navbar-brand" href="{% url "app:dashboard" %}">
+        {% load static %}
+        <img class="my-0 mr-md-auto font-weight-normal" src="{% static "images/logo.png"%}" style="height:50px">
+      </a>
+      <br><br>
+      <h2>訂單系統</h2>
+
+      <br><br>
+        <div class="alert alert-success" role="alert">
+          訂單已建立
+        </div>
+       <hr class="mb-4">
+        <h4 style="text-align:left">訂單基本資料:</h4><br>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="cc-number">訂單編號:</label>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="cc-number">{{order.order_no}}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="cc-number">下單日期:</label>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label for="cc-number">{{order.order_time | date:"Y年m月d日"}}</label>
+            </div>
+          </div>
+      <br>
+ <p style="text-align:left" class="text-muted">請注意:已經產生的訂單將為您保留3天。請於時間內完成繳費，若超過時間請重新下單。</p>
+      <hr class="mb-4">
+      <br>
+        <h4 style="text-align:left">訂單詳細資料:</h4><br>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th style="text-align:left">商品</th>
+              <th style="text-align:right">總計</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <td class="table-light" style="text-align:left">
+                {{plan.plan_name}}
+              </td>
+              <td class="table-light" style="text-align:right">
+                NT${{order.price}}
+              </td>
+            </tr>
+            <tr style="text-align:right">
+              <td >
+                小計:
+              </td>
+              <td>
+                NT${{order.price}}
+              </td>
+            </tr>
+            <tr style="text-align:right">
+              <td >
+                總計:
+              </td>
+              <td style="color:green">
+                NT${{order.price}}
+              </td>
+            </tr>
+            <tr>
+              <td colspan="4" style="text-align:left" >
+                付款方式:匯款
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <br><br>
+          <h4 style="text-align:left">收款帳戶資料:</h4><br>
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td style="text-align:left">銀行</td>
+                <td style="text-align:left">第一銀行</td>
+              </tr>
+              <tr>
+                <td style="text-align:left">銀行代碼</td>
+                <td style="text-align:left">007</td>
+              </tr>
+              <tr>
+                <td style="text-align:left">銀行帳戶:</td>
+                <td style="text-align:left">1233 123123 123</td>
+              </tr>
+              <tr>
+                <td style="text-align:left">付款截止日:</td>
+                <td style="text-align:left ;color:red">{{expired_date |date:"Y年m月d日" }}</td>
+              </tr>
+            </tbody>
+          </table>
+      <hr class="mb-4">
+            <p style="text-align:left" class="text-muted">謝謝，我們已經收到你的訂單。</p>
+         <p style="text-align:left"> 任何有關於付款的問題請聯絡: kinglyrobot@mail.com</p>
+      </div>
+      <a href="{% url 'Client:order' %}" class="btn btn-secondary btn-lg btn-block">回到訂單管理</a>
+  </div>
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">© 2017-2020 Company Name</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.5/examples/checkout/#">Privacy</a></li>
+      <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.5/examples/checkout/#">Terms</a></li>
+      <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.5/examples/checkout/#">Support</a></li>
+    </ul>
+  </footer>
+</body>
+<script>
+  const price = document.getElementById('price').innerText;
+  const total = document.getElementById('total');
+  const submitBtn = document.getElementById('submitBtn');
+
+  total.innerText=price;
+  if (!price)
+  {
+    submitBtn.disabled = true;
+    console.log('123');
+  }
+
+</script>
+{% if message %}
+   <script>
+        alert("{{ message }}");
+   </script>
+{% endif %}
+</html>

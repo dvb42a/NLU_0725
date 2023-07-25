@@ -1,0 +1,65 @@
+#frame .messages {
+  height: auto;
+  min-height: calc(100% - 93px);
+  max-height: 400px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+@media screen and (max-width: 735px) {
+  #frame .messages {
+    /*max-height: calc(100% - 105px);*/
+  }
+}
+#frame .messages::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+#frame .messages::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+#frame .messages ul {
+  padding: 0;
+}
+#frame .messages ul li {
+  display: inline-block;
+  clear: both;
+  float: left;
+  /*margin: 15px 15px 5px 15px;*/
+  width: calc(100% - 25px);
+  font-size: 0.9em;
+}
+#frame .messages ul li:nth-last-child(1) {
+  margin-bottom: 20px;
+}
+#frame .messages ul li.replies img {
+  margin: 0 8px 0 0;
+}
+#frame .messages ul li.replies p {
+  background: #435f7a;
+  color: #f5f5f5;
+}
+#frame .messages ul li.sent img {
+  float: right;
+  margin: 6px 0 0 8px;
+}
+#frame .messages ul li.sent p {
+  background: #f5f5f5;
+  float: right;
+}
+#frame .messages ul li img {
+  width: 45px;
+  border-radius: 50%;
+  float: left;
+}
+#frame .messages ul li p {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 20px;
+  max-width: 205px;
+  line-height: 130%;
+}
+@media screen and (min-width: 735px) {
+  #frame .messages ul li p {
+    max-width: 500px;
+  }
+}

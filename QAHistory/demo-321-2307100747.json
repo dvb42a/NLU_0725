@@ -1,0 +1,40 @@
+[
+   {
+      "q": "電話多少",
+      "clu_intent": "問公司電話",
+      "intent": "問公司電話",
+      "score": "0.99",
+      "ans": "台積電公司的電話是：(03) 123213123",
+      "entities": [
+         {
+            "entity": "電話",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "多少",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.01 秒",
+      "ask_time": "2023-07-10 15:39:37"
+   },
+   {
+      "q": "公司電話",
+      "clu_intent": "問公司電話",
+      "intent": "問公司電話",
+      "score": "0.99",
+      "ans": "請撥打(03) 123213123",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "電話",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "0.95 秒",
+      "ask_time": "2023-07-10 15:40:46"
+   }
+]

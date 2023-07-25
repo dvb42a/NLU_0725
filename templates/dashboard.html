@@ -1,0 +1,342 @@
+{% extends "layouts/base-dashboard.html" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block main_title %}{{title}}{% endblock %}
+
+{% block nav_items %}
+    {% include "layouts/base-dashboard_left.html" %}
+{% endblock %}
+
+
+{% block path_bar %}
+<!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h2 text-white d-inline-block mb-0">App 列表</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item">儀表板</li>
+                    <li class="breadcrumb-item active" aria-current="page">App 列表</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block small_card %}
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">任務 App 數量</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ apps|length }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-warning text-white rounded-circle shadow">
+                                <i class="ni ni-app"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block page_card %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">任務 App list</h3>
+                        </div>
+                        <div class="col text-right">
+                            <span data-toggle="tooltip" data-original-title="新增任務App">
+                                  <button type="button" class="btn btn-primary btn-icon" data-toggle="modal"
+                                          data-target="#AddTaskModal">
+                                      <span class="btn-inner--icon">
+                                          <i class="ni ni-fat-add" style="transform: scale(1.5, 1.5)"></i>
+                                      </span>
+                                      <span class="btn-inner--text">任務App</span>
+                                  </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">App name</th>
+                            <th scope="col">描述</th>
+                            <th scope="col">所屬方案</th>
+                            <th scope="col">Call次數</th>
+                            <th scope="col">建立時間</th>
+                            <th scope="col">...</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {%load filter %}
+                        {% if apps %}
+                            {% for app in apps %}
+                                <tr>
+                                    <th scope="row">
+                                        <a href="{% url "app:manage_info" %}?app={{app.app_name}}">{{app.app_name}}</a>
+                                    </th>
+                                    <td>
+                                        <span>{{app.app_desc}}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{app.plan.plan_name}}({{ app.plan.plan_end | days_until}})</span>
+                                    </td>
+                                    <td>
+                                        <span>{{app.counter }}</span>
+                                    </td>
+                                    <td>
+                                        <span>{{app.created_date | show_date}}</span>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                data-target="#DeleteTaskModal-{{app.app_name}}">刪除
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <th scope="row">
+                                    <span class="text-primary">尚未建立任務型專案。</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block modal_card %}
+<!-- Modal_creat 任務 app -->
+    <div class="modal fade" id="AddTaskModal" tabindex="-1" role="dialog"
+         aria-labelledby="AddTaskModalTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="AddTaskModalTitle">建立任務 App</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{% url "app:task_app_create" %}" method="post"
+                      onkeydown="if(event.keyCode==13)return false;">
+                    {% csrf_token %}
+                    <div id="AddTaskModalBody" class="modal-body">
+                        <div class="mat-dialog-content">
+                             <div class="form-row">
+                                <label class="m-label"> 選擇方案
+                                    <small>(Required)：</small>
+                                </label>
+                                <select style="width: 100%;height:30px;" id="app-plan" onchange="checkOption()" name="plan">
+                                    <option > 選擇APP所屬方案 </option>
+                                    {% load filter %}
+                                    {% for plan in client_plan %}
+                                        {% if plan.max_app|minus:plan.current_app == 0%}
+                                            <option value="{{plan.id}}" disabled>{{ forloop.counter }}.{{plan.plan_name}}(還有{{ plan.max_app|minus:plan.current_app }}個App可以建立)</option>
+                                        {% else %}
+                                            <option value="{{plan.id}}" >{{ forloop.counter }}.{{plan.plan_name}}(還有{{ plan.max_app|minus:plan.current_app }}個App可以建立)</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                             </div>
+                            <div class="form-row mt-2" >
+                                <label class="m-label">名稱
+                                    <small>(Required)：</small>
+                                </label>
+                                <input style="width:100%;height:30px;" required autocomplete="off" id="app-name" type="text" placeholder="輸入 App 名稱..." disabled>
+                            </div>
+                            <div class="form-row mt-2">
+                                <label class="m-label">Culture
+                                    <small>(Required)：</small>
+                                </label>
+                                <select style="width: 100%;height:30px;" class="" id="app-culture">
+                                    <option value="zh-cn" class=""> Chinese</option>
+                                </select>
+                            </div>
+                            <div class="form-row mt-2">
+                                <label class="m-label">描述：</label>
+                                <input style="width: 100%;height:30px;" id="app-description" type="text" placeholder="輸入 App 描述..." disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer" id="AddTaskModalFooter">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="task_creat_Done_btn" disabled>Done</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<!-- Modal_Delete 任務 app -->
+{% for app in apps %}
+    <div class="modal fade" id="DeleteTaskModal-{{app.app_name}}" tabindex="-1" role="dialog"
+         aria-labelledby="DeleteTaskModalTitle-{{app.app_name}}" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="DeleteTaskModalTitle-{{app.app_name}}">要刪除 App?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url "app:task_app_delete" %}?app={{app.app_name}}" method="post"
+                          onkeydown="if(event.keyCode==13)return false;">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="mat-dialog-content">
+                                <div class="form-row">
+                                    <label for="app-name" class="m-label"  style="font-size: 20px;"> 您確定要刪除"{{app.app_name}}"這個App嗎?確定刪除後，所有的訓練資料也會一併刪除! </label>
+                                </div>
+                                <br>
+                                <div class="form-check">
+                                    <input class="form-check-input" name="check_delete_app"
+                                           id="checkDelete-{{app.app_name}}" role="checkbox" type="checkbox"
+                                            style="transform: scale(2);" value="yes">
+                                    <label class="form-check-label"  style="font-size: 20px;">是的，確定刪除</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" id="DeleteTaskModalFooter-{{app.app_name}}">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-danger" id="delete_ok_btn-{{app.app_name}}"
+                                    disabled>OK
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        var app_list = [];
+        jQuery(function () {
+            {% for app in apps %}
+                app_list.push('{{ app.app_name }}')
+                $('#checkDelete-{{app.app_name}}').change(function () {
+                    if ($(this).attr('checked')) {
+                        $(this).attr('checked', false);
+                        $('#delete_ok_btn-{{app.app_name}}').attr('disabled', true);
+                    } else {
+                        $(this).attr('checked', true);
+                        $('#delete_ok_btn-{{app.app_name}}').attr('disabled', false);
+                    }
+                });
+
+                $('#delete_ok_btn-{{app.app_name}}').click(function () {
+                    // 替換等待樣式
+                    $(this).attr('hidden', true);
+                    $('#DeleteTaskModalFooter-{{app.app_name}}').append('<button type="submit" class="btn btn-danger" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> OK</button>');
+                });
+
+            {% endfor %}
+
+            var inputVal = ""
+            $('#app-name').on('keyup', function(){
+                inputVal = $(this).val().trim();
+                if (inputVal === '') {
+                    $('#task_creat_Done').attr('disabled', true);
+                } else {
+                    var regex = /^[a-zA-Z0-9_\u4e00-\u9fa5\.]*$/; // 中英文、数字、下划线和小数点的正则表达式
+                    $('#task_creat_Done').attr('disabled', false);
+                    if (!regex.test(inputVal)) { // 判断输入框的值是否符合正则表达式
+                        document.getElementById("AddTaskModalTitle").innerHTML='錯誤訊息：';
+                        document.getElementById("AddTaskModalBody").innerHTML='<span style="font-size: 20px;">輸入錯誤，只能輸入中英文和數字下底線和小數點！</span>'
+                        document.getElementById("AddTaskModalFooter").innerHTML='<br><br><button type="button" class="btn btn-primary" onclick="location.reload()">確認</button>';
+                    }
+                }
+            });
+
+            $('#task_creat_Done_btn').click(function () {
+                // 替換等待樣式
+                $(this).attr('hidden', true);
+                $('#AddTaskModalFooter').append('<button type="submit" class="btn btn-primary" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Done</button>');
+
+                var index = $.inArray(inputVal, app_list);
+                if (index >= 0) {
+                    document.getElementById("AddTaskModalTitle").innerHTML='錯誤訊息：';
+                    document.getElementById("AddTaskModalBody").innerHTML='<span style="font-size: 20px;">App建立失敗，已存在的App名稱!!</span>'
+                    document.getElementById("AddTaskModalFooter").innerHTML='<br><br><button type="button" class="btn btn-primary" onclick="location.reload()">確認</button>';
+                    $('#app-name').val('');
+                } else {
+                    $('#app-name').attr('readonly', true);
+                    $('#app-description').attr('readonly', true);
+                    var data = new FormData();
+                    var selectElement = document.getElementById("app-plan");
+                    var selectedOption = selectElement.options[selectElement.selectedIndex].value
+                    var description = $('#app-description').val().trim();
+                    var appName = $('#app-name').val().trim();
+                    data.append("csrfmiddlewaretoken", '{{ csrf_token }}');
+                    data.append("plan_id",selectedOption)
+                    data.append("new_app_name",appName)
+                    data.append("app_description",description)
+                    $.ajax({
+                        type: 'POST',
+                        url: "{% url "app:task_app_create" %}",
+                        data: data,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: function(res) {
+                            report =  res.report
+                            document.getElementById("AddTaskModalTitle").innerHTML='回報訊息：';
+                            document.getElementById("AddTaskModalFooter").innerHTML='<br><br><button type="button" class="btn btn-primary" onclick="location.reload()">確認</button>';
+                            if (report == 'success') {
+                                document.getElementById("AddTaskModalBody").innerHTML='<span style="font-size: 20px;">App建立成功。</span>'
+                            }
+                            else{
+                                document.getElementById("AddTaskModalBody").innerHTML='<span style="font-size: 20px;">App建立失敗，伺服器連線異常!!</span>'
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        function checkOption() {
+                var selectElement = document.getElementById("app-plan");
+                var selectedOption = selectElement.options[selectElement.selectedIndex].value
+                if (selectedOption === "選擇APP所屬方案") {
+                    $('#task_creat_Done_btn').attr('disabled', true);
+                    $('#app-name').attr('disabled', true);
+                    $('#app-name').val('');
+                    $('#app-description').attr('disabled', true);
+                    $('#app-description').val('');
+                }
+                else{
+                    $('#task_creat_Done_btn').attr('disabled', false);
+                    $('#app-name').attr('disabled', false);
+                    $('#app-description').attr('disabled', false);
+                }
+        }
+    </script>
+{% endblock %}

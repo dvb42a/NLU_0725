@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+  <meta charset="utf-8">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+  <!-- Icons -->
+  <link rel="stylesheet" href="/static/bootstrapThemes/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+  <link rel="stylesheet" href="/static/bootstrapThemes/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
+  <!-- Page plugins -->
+  <!-- Argon CSS -->
+  <link rel="stylesheet" href="/static/bootstrapThemes/assets/css/argon.min.css?v=1.2.0" type="text/css">
+</head>
+<body>
+<style>
+    .scrollTop-button {
+      display: inline-block;
+      text-decoration: none;
+      background: #7e8992;
+      color: #FFF;
+      width: 70px;
+      height: 70px;
+      line-height: 70px;
+      border-radius: 50%;
+      text-align: center;
+      vertical-align: middle;
+      overflow: hidden;
+      transition: .4s;
+      position: fixed;
+      bottom: 100px;
+      right: 28px;
+    }
+
+    @media (max-width: 700px) {
+        .scrollTop-button {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            bottom: 80px;
+        }
+    }
+</style>
+
+    <button class="scrollTop-button btn-icon" onclick="scrollTop_btn()" type="button" style="border-style: unset">
+      <span class="btn-inner--icon"><i class="ni ni-bold-up" style="transform: scale(1.8);"></i></span>
+    </button>
+
+<script>
+var body = $("html, body");
+function scrollTop_btn() {
+    body.stop().animate({ scrollTop: '0px' }, 300, "swing");
+}
+</script>
+
+</body>
+</html>

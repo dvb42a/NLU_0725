@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="utf-8">
+    <title>ChatBot</title>
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="/static/bootstrapThemes/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+    <link rel="stylesheet" href="/static/bootstrapThemes/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
+          type="text/css">
+    <!-- Page plugins -->
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="/static/bootstrapThemes/assets/css/argon.min.css?v=1.2.0" type="text/css">
+    <link rel="stylesheet" href="/static/accounts/css/smallChatBot.css" type="text/css">
+</head>
+
+<body>
+
+<button class="chat-btn btn-icon" onclick="openForm()" type="button" style="border-style: unset">
+    <span class="btn-inner--icon"><i class="ni ni-chat-round" style="transform: scale(1.8);"></i></span>
+</button>
+
+<div class="chat-popup" id="myChat">
+    <div class="card">
+        <!-- Card header -->
+        <div class="card-header border-0 chat-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="chat-header_title mb-0">小幫手</h3>
+                </div>
+                <div class="col text-right">
+                    <button type="button" class="btn btn-icon" onclick="closeForm()">
+                        <span class="btn-inner--icon text-white"><i class="ni ni-bold-down"></i></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card body -->
+        <div class="card-body">
+            <!-- Form groups used in grid -->
+            <div class="mb-1" id="frame">
+                <div class="chat-messages">
+                    <ul>
+                    </ul>
+                </div>
+                <div class="media align-items-center">
+                    <div class="media-body">
+                        <div class="input-group mb-3 ">
+                            <textarea class="form-control" id="chat-message_input" placeholder="輸入問題..."
+                                      rows="1"></textarea>
+                            <button class="btn btn-outline-primary" type="button" id="chat-submit">送出</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var show_first_msg = false;
+
+    function openForm() {
+        document.getElementById("myChat").style.display = "block";
+        if (show_first_msg === false) {
+            setTimeout(function () {
+                bot_help_ans();
+                show_first_msg = true
+            }, 300);
+        }
+    }
+
+    function closeForm() {
+        document.getElementById("myChat").style.display = "none";
+    }
+
+    function bot_help_ans() {
+        $('<li class="replies"><p>' + 'Hi! 我是系統教學小幫手，讓我知道你的疑問吧！' + '</p></li>').appendTo($('.chat-messages ul'));
+        var intent_btn = '<button type="button" class="btn btn-sm btn-outline-success" onClick="q_intent()">意圖</button>';
+        var entity_btn = '<button type="button" class="btn btn-sm btn-outline-success" onClick="q_entity()">關鍵字</button>';
+        var utterance_btn = '<button type="button" class="btn btn-sm btn-outline-success" onClick="q_utterance()">訓練語句</button>';
+        $('</br><p class="quick_reply_btn">' + intent_btn + entity_btn + utterance_btn + '</p>').appendTo($('.chat-messages ul'));
+    }
+
+    function q_intent() {
+        $('<li class="sent"><p>' + '意圖?' + '</p></li>').appendTo($('.chat-messages ul'));
+        var intent_ans = '所謂「意圖」，指的是提問者的問句，其目的為何？ 例Q:「今天台北天氣如何？」，此句意圖可命名為「問天氣」。';
+        $('<li class="replies"><p>' + intent_ans + '</p></li>').appendTo($('.chat-messages ul'));
+        var scrollHeight = $('.chat-messages').prop("scrollHeight");
+        $(".chat-messages").animate({scrollTop: scrollHeight}, "fast");
+    }
+
+    function q_entity() {
+        $('<li class="sent"><p>' + '關鍵字?' + '</p></li>').appendTo($('.chat-messages ul'));
+        var intent_ans = '所謂「關鍵字」，指的是提問者問句中的相關線索，已利推論出最接近的回覆 例Q:「今天台北天氣如何？」，此句「台北」可設名為「地方」的關鍵字(類)，「天氣」可設名為「天氣」的關鍵字(類)。';
+        $('<li class="replies"><p>' + intent_ans + '</p></li>').appendTo($('.chat-messages ul'));
+        var scrollHeight = $('.chat-messages').prop("scrollHeight");
+        $(".chat-messages").animate({scrollTop: scrollHeight}, "fast");
+    }
+
+    function q_utterance() {
+        $('<li class="sent"><p>' + '訓練語句?' + '</p></li>').appendTo($('.chat-messages ul'));
+        var intent_ans = '所謂「訓練語句」，指的是預設提問者可能的問句句型，其目的為訓練 AI 增加辨識成功率。';
+        $('<li class="replies"><p>' + intent_ans + '</p></li>').appendTo($('.chat-messages ul'));
+        var scrollHeight = $('.chat-messages').prop("scrollHeight");
+        $(".chat-messages").animate({scrollTop: scrollHeight}, "fast");
+    }
+
+    function bot_reply(bot_ans) {
+        $('<li class="replies"><p>' + bot_ans + '</p></li>').appendTo($('.chat-messages ul'));
+    }
+
+    function bot_response() {
+        return 'Hi! 我是系統教學小幫手，需要教學可以輸入[help]。';
+    }
+
+    function newChatMessage() {
+        message = $("#chat-message_input").val();
+        if ($.trim(message) == '') {
+            $('#chat-message_input').val(null);
+            return false;
+        }
+        $('<li class="sent"><p>' + message + '</p></li>').appendTo($('.chat-messages ul'));
+
+        if (message === 'help') {
+            bot_help_ans();
+        } else {
+            // help
+            bot_reply(bot_response());
+        }
+
+        $('#chat-message_input').val(null);
+        var scrollHeight = $('.chat-messages').prop("scrollHeight");
+        $(".chat-messages").animate({scrollTop: scrollHeight}, "fast");
+    }
+
+    $('#chat-submit').click(function () {
+        newChatMessage();
+    });
+
+    $(window).on('keydown', function (e) {
+        if (e.which === 13) {
+            newChatMessage();
+            return false;
+        }
+    });
+</script>
+
+</body>
+</html>

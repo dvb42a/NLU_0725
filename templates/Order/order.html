@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)https://getbootstrap.com/docs/4.5/examples/checkout/ -->
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v4.1.1">
+  <title>對話訓練平台 訂單系統</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
+
+  <!-- Bootstrap core CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+      <!-- Favicons -->
+  <link rel="apple-touch-icon" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/manifest.json">
+  <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
+  <meta name="theme-color" content="#563d7c">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+      .col-md-6 {
+      padding-right: 0 !important;
+      }
+    </style>
+    <!-- Custom styles for this template -->
+  <link id="avast_os_ext_custom_font" href="chrome-extension://mbckjcfnjmoiinpgddefodcighgikkgn/common/ui/fonts/fonts.css" rel="stylesheet" type="text/css">
+</head>
+<body class="bg-light">
+  <div class="container">
+    <div class="py-5 text-center">
+      <a class="navbar-brand" href="{% url "app:dashboard" %}">
+        <img class="my-0 mr-md-auto font-weight-normal" src="../static/images/logo.png" style="height:50px">
+      </a>
+      <br><br>
+      <h2>訂單系統</h2>
+
+    </div>
+
+    <div class="row">
+      <h4 style="text-align:left">訂單詳細資料:</h4><br>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th style="text-align:left">商品</th>
+          <th style="text-align:right">總計</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="table-light" style="text-align:left">
+            <div>
+              <h6 class="my-0">{{plan.plan_name}}</h6>
+              <br>
+              <small >方案內容:</small><br>
+              <small class="text-muted">{{plan.plan_app}}個任務數量</small><br>
+              <small class="text-muted">可創管理帳號{{plan.plan_employee}}個</small><br>
+              <small class="text-muted">單一APP最多由{{plan.plan_person}}名成員管理</small><br>
+              <small class="text-muted">單一APP上載檔案上限{{plan.plan_file}}個</small><br>
+              <small class="text-muted">可查詢次數:{{plan.plan_count}}次</small><br>
+              <small class="text-muted">{{plan.expired_at}}天使用期限</small><br>
+            </div>
+          </td>
+          <td class="table-light text-right align-bottom">
+            NT${{plan.plan_pay}}
+          </td>
+        </tr>
+        <tr style="text-align:right">
+          <td>
+            小計:
+          </td>
+          <td>
+            NT${{plan.plan_pay}}
+          </td>
+        </tr>
+        <tr style="text-align:right">
+          <td>
+            總計:
+          </td>
+          <td style="color:green">
+            NT${{plan.plan_pay}}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="4" style="text-align:left">
+            付款方式:匯款
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-md-6">
+        <form class="card p-2 w-100">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="優惠碼">
+            <div class="input-group-append">
+              <button type="submit" class="btn btn-secondary">送出</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <hr>
+
+    <form class="row" method="post" onkeydown="if(event.keyCode==13)return false;">
+      {% csrf_token %}
+      <div>
+        <input type="checkbox">&nbsp;我已確認上方之訂單資訊無誤並送出訂單。
+      </div>
+      <br><br>
+      <button class="btn btn-primary btn-lg btn-block">送出訂單</button>
+    </form>
+  </div>
+
+
+  <footer class="my-5 pt-5 text-muted text-center text-small">
+    <p class="mb-1">© 2017-2020 Company Name</p>
+    <ul class="list-inline">
+      <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.5/examples/checkout/#">Privacy</a></li>
+      <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.5/examples/checkout/#">Terms</a></li>
+      <li class="list-inline-item"><a href="https://getbootstrap.com/docs/4.5/examples/checkout/#">Support</a></li>
+    </ul>
+  </footer>
+  </div>
+</body>
+<script>
+  const price = document.getElementById('price').innerText;
+  const total = document.getElementById('total');
+  const submitBtn = document.getElementById('submitBtn');
+
+  total.innerText=price;
+  if (!price)
+  {
+    submitBtn.disabled = true;
+    console.log('123');
+  }
+
+</script>
+{% if message %}
+   <script>
+        alert("{{ message }}");
+   </script>
+{% endif %}
+</html>

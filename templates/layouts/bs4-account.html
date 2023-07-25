@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+    <title>對話訓練平台</title>
+    <!-- Favicon -->
+    {#  <link rel="icon" href="/static/bootstrapThemes/assets/img/brand/favicon.png" type="image/png">#}
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="/static/bootstrapThemes/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+    <link rel="stylesheet" href="/static/bootstrapThemes/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css"
+          type="text/css">
+    <!-- Page plugins -->
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="/static/bootstrapThemes/assets/css/argon.css?v=1.2.0" type="text/css">
+    <link rel="stylesheet" href="/static/accounts/css/mycss.css" type="text/css">
+
+
+    {% block css %}
+    {% endblock %}
+
+</head>
+
+<body >
+<!-- Sidenav -->
+<nav class="sidenav navbar navbar-vertical  fixed-left  navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+    <div class="scroll-wrapper scrollbar-inner">
+
+        <!-- Brand -->
+        <div class="sidenav-header d-flex align-items-center">
+            <a class="navbar-brand" href="{% url "app:dashboard" %}">
+                <h1 style="color: #274580;">對話訓練平台 s1.0</h1>
+                {#          <img src="/static/bootstrapThemes/assets/img/brand/blue.png" class="navbar-brand-img" alt="...">#}
+            </a>
+        </div>
+
+        <div class="navbar-inner">
+            <!-- Collapse -->
+            <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+                {% block nav_items %}
+                <!-- Nav items -->
+
+                {% endblock %}
+                <hr class="my-3">
+                <!-- Heading -->
+                <h6 class="navbar-heading p-0 text-muted">
+                    <span class="docs-normal">登入資訊</span>
+                </h6>
+                <!-- Navigation -->
+                <ul class="navbar-nav mb-md-3">
+                    <li class="nav-item">
+                        <a href="{% url "Accounts:logout" %}" class="nav-link">
+                            <i class="ni ni-user-run"></i>
+                            <span class="nav-link-text">登出</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="main-content" id="panel">
+
+    <!-- Topnav -->
+    <nav class="navbar navbar-top navbar-expand navbar-dark bg-primary border-bottom">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <!-- Navbar links -->
+                <ul class="navbar-nav align-items-center  ml-md-auto ">
+                    <li class="nav-item d-xl-none">
+                        <!-- Sidenav toggler -->
+                        <div class="pr-3 sidenav-toggler sidenav-toggler-dark" data-action="sidenav-pin"
+                             data-target="#sidenav-main">
+                            <div class="sidenav-toggler-inner">
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                                <i class="sidenav-toggler-line"></i>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                {% include "layouts/right-bar.html" %}
+            </div>
+        </div>
+    </nav>
+    <!-- Header -->
+    <div class="header bg-primary pb-6">
+        <div class="container-fluid">
+            <div class="header-body">
+                {% block path_bar %}
+                    <!-- 導航列 -->
+                    <div class="row align-items-center py-4">
+                        <div class="col-lg-6 col-7">
+                            <h6 class="h2 text-white d-inline-block mb-0">我的帳號</h6>
+                            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">編輯個人資料</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                {% endblock %}
+
+                {% block small_card %}
+                    <!-- Card stats -->
+                    <div class="row">
+                        <!-- Card 1 start-->
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-stats">
+                                <!-- Card body -->
+                            </div>
+                        </div>
+                        <!-- Card 1 end-->
+                    </div>
+                {% endblock %}
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Argon Scripts -->
+    <!-- Core -->
+    <script src="/static/bootstrapThemes/assets/vendor/jquery/dist/jquery.min.js"></script>
+    <script src="/static/bootstrapThemes/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/bootstrapThemes/assets/vendor/js-cookie/js.cookie.js"></script>
+    <script src="/static/bootstrapThemes/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="/static/bootstrapThemes/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+    <!-- Optional JS -->
+    <script src="/static/bootstrapThemes/assets/vendor/chart.js/dist/Chart.min.js"></script>
+    <script src="/static/bootstrapThemes/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+    <!-- Argon JS -->
+    {#  <script src="/static/bootstrapThemes/assets/js/argon.js?v=1.2.0"></script>#}
+    <!--my js-->
+    <script src="/static/accounts/js/bs4-pro.js"></script>
+    <script src="/static/bootstrapThemes/assets/js/argon.min.js"></script>
+
+
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+        {% block page_card %}
+
+        {% endblock %}
+        <!-- Footer -->
+        <footer class="footer pt-0" style="position: unset;">
+
+        </footer>
+    </div>
+    </div>
+</body>
+{% block jquery %}
+{% if message %}
+       <script>
+            alert("{{ message }}");
+       </script>
+{% endif %}
+{% endblock %}
+{% block modal_card %}
+
+{% endblock %}
+</html>

@@ -1,0 +1,1765 @@
+[
+   {
+      "q": "桃園天氣怎麼樣",
+      "intent": "None",
+      "score": "0.82",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "6.36 秒",
+      "ask_time": "2023-05-04 20:06:31"
+   },
+   {
+      "q": "桃園怎麼去",
+      "intent": "None",
+      "score": "0.51",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "2.11 秒",
+      "ask_time": "2023-05-04 20:06:55"
+   },
+   {
+      "q": "今天天氣怎麼樣",
+      "intent": "None",
+      "score": "0.82",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.13 秒",
+      "ask_time": "2023-05-04 20:07:10"
+   },
+   {
+      "q": "今天天氣如何",
+      "intent": "問時間設定",
+      "score": "0.93",
+      "ans": "本機台結合AI智慧能依據你的需求，自動調整運動負荷，建議運動時間為每一循環是30分鐘",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.65 秒",
+      "ask_time": "2023-05-04 20:07:23"
+   },
+   {
+      "q": "如何調整時間",
+      "intent": "問時間設定",
+      "score": "0.99",
+      "ans": "建議固定運動時間為30分鐘一循環。",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "調整",
+            "entity_category": "動作"
+         }
+      ],
+      "run_time": "1.07 秒",
+      "ask_time": "2023-05-04 20:07:47"
+   },
+   {
+      "q": "我的心情不太好",
+      "intent": "None",
+      "score": "0.60",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.11 秒",
+      "ask_time": "2023-05-04 20:08:18"
+   },
+   {
+      "q": "我想去上班",
+      "intent": "問上班時間",
+      "score": "0.99",
+      "ans": "營業時間：週一至週五 8:00 - 17:00",
+      "entities": [
+         {
+            "entity": "上班",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.19 秒",
+      "ask_time": "2023-05-04 20:08:39"
+   },
+   {
+      "q": "我想找業務",
+      "intent": "問業務人員",
+      "score": "0.99",
+      "ans": "想和我們的業務聯絡，請洽 (04) 224458515分機117業務 。",
+      "entities": [
+         {
+            "entity": "業務",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.09 秒",
+      "ask_time": "2023-05-04 20:09:18"
+   },
+   {
+      "q": "你們的業務如何聯絡",
+      "intent": "問業務人員",
+      "score": "0.99",
+      "ans": "想和我們的業務聯絡，請洽 (04) 224458515分機117業務 。",
+      "entities": [
+         {
+            "entity": "業務",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "聯絡",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.1 秒",
+      "ask_time": "2023-05-04 20:09:39"
+   },
+   {
+      "q": "怎麼去桃園",
+      "intent": "None",
+      "score": "0.76",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.1 秒",
+      "ask_time": "2023-05-04 20:10:32"
+   },
+   {
+      "q": "怎麼去高雄",
+      "intent": "None",
+      "score": "0.84",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.12 秒",
+      "ask_time": "2023-05-04 20:10:47"
+   },
+   {
+      "q": "怎麼去台灣",
+      "intent": "None",
+      "score": "0.75",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "台灣",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "3.33 秒",
+      "ask_time": "2023-05-05 10:46:08"
+   },
+   {
+      "q": "瓦特多少呢",
+      "intent": "None",
+      "score": "0.87",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "多少",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.58 秒",
+      "ask_time": "2023-05-05 10:46:40"
+   },
+   {
+      "q": "阻力減少",
+      "intent": "命令阻力減少",
+      "score": "0.99",
+      "ans": "OK，阻力已降低",
+      "entities": [
+         {
+            "entity": "阻力",
+            "entity_category": "功能"
+         },
+         {
+            "entity": "減少",
+            "entity_category": "命令"
+         }
+      ],
+      "run_time": "6.1 秒",
+      "ask_time": "2023-05-05 10:53:33"
+   },
+   {
+      "q": "今天天氣如何",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "5.77 秒",
+      "ask_time": "2023-05-05 10:54:38"
+   },
+   {
+      "q": "今天星期幾",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "5.11 秒",
+      "ask_time": "2023-05-05 10:56:05"
+   },
+   {
+      "q": "今天星期幾",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "5.96 秒",
+      "ask_time": "2023-05-05 11:04:42"
+   },
+   {
+      "q": "今天星期幾",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "6.2 秒",
+      "ask_time": "2023-05-05 11:06:56"
+   },
+   {
+      "q": "今天星期幾",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "15.58 秒",
+      "ask_time": "2023-05-05 11:07:47"
+   },
+   {
+      "q": "今天星期幾",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "5.23 秒",
+      "ask_time": "2023-05-05 11:08:13"
+   },
+   {
+      "q": "我的心情不太好",
+      "intent": "None",
+      "score": "0.60",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.12 秒",
+      "ask_time": "2023-05-05 11:11:39"
+   },
+   {
+      "q": "今天星期幾",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "5.18 秒",
+      "ask_time": "2023-05-05 11:11:54"
+   },
+   {
+      "q": "今天天氣如何",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "5.1 秒",
+      "ask_time": "2023-05-05 11:12:14"
+   },
+   {
+      "q": "今天天氣如何",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.29 秒",
+      "ask_time": "2023-05-05 11:24:57"
+   },
+   {
+      "q": "今天星期幾",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.21 秒",
+      "ask_time": "2023-05-05 11:25:07"
+   },
+   {
+      "q": "今天天氣如何",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.1 秒",
+      "ask_time": "2023-05-05 11:25:19"
+   },
+   {
+      "q": "怎麼去桃園",
+      "intent": "None",
+      "score": "0.76",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.12 秒",
+      "ask_time": "2023-05-05 11:26:53"
+   },
+   {
+      "q": "怎麼去台北",
+      "intent": "None",
+      "score": "0.56",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "台北",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "11.35 秒",
+      "ask_time": "2023-05-05 11:27:07"
+   },
+   {
+      "q": "有什麼好吃的介紹",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "介紹",
+            "entity_category": "說明"
+         }
+      ],
+      "run_time": "1.21 秒",
+      "ask_time": "2023-05-05 11:27:37"
+   },
+   {
+      "q": "可以幫我增加阻力嗎",
+      "intent": "None",
+      "score": "0.99",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "可以",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "我",
+            "entity_category": "操作"
+         },
+         {
+            "entity": "增加",
+            "entity_category": "命令"
+         },
+         {
+            "entity": "阻力",
+            "entity_category": "功能"
+         }
+      ],
+      "run_time": "1.26 秒",
+      "ask_time": "2023-05-05 11:50:54"
+   },
+   {
+      "q": "阻力減加",
+      "intent": "None",
+      "score": "0.99",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "阻力",
+            "entity_category": "功能"
+         },
+         {
+            "entity": "減",
+            "entity_category": "命令"
+         }
+      ],
+      "run_time": "1.14 秒",
+      "ask_time": "2023-05-05 11:52:32"
+   },
+   {
+      "q": "阻力減加",
+      "intent": "命令阻力增加",
+      "score": "0.99",
+      "ans": "收到，已將阻力調高",
+      "entities": [
+         {
+            "entity": "阻力",
+            "entity_category": "功能"
+         },
+         {
+            "entity": "減",
+            "entity_category": "命令"
+         }
+      ],
+      "run_time": "1.26 秒",
+      "ask_time": "2023-05-05 12:10:46"
+   },
+   {
+      "q": "請問你們的位置在哪",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "位置",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.18 秒",
+      "ask_time": "2023-05-05 12:11:25"
+   },
+   {
+      "q": "今天天氣如何",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.29 秒",
+      "ask_time": "2023-05-05 12:11:47"
+   },
+   {
+      "q": "今天星期機",
+      "intent": "None",
+      "score": "0.97",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.15 秒",
+      "ask_time": "2023-05-05 12:11:57"
+   },
+   {
+      "q": "有什麼好吃的介紹",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "介紹",
+            "entity_category": "說明"
+         }
+      ],
+      "run_time": "1.12 秒",
+      "ask_time": "2023-05-05 12:12:54"
+   },
+   {
+      "q": "電話多少",
+      "intent": "問公司電話",
+      "score": "0.99",
+      "ans": "公司電話是：(04) 22445815 ",
+      "entities": [
+         {
+            "entity": "電話",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "多少",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.26 秒",
+      "ask_time": "2023-05-05 12:13:28"
+   },
+   {
+      "q": "我想談經銷",
+      "intent": "None",
+      "score": "0.99",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.17 秒",
+      "ask_time": "2023-05-05 12:14:43"
+   },
+   {
+      "q": "明天的天氣",
+      "intent": "None",
+      "score": "0.84",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.04 秒",
+      "ask_time": "2023-05-05 12:15:46"
+   },
+   {
+      "q": "這星期的天氣",
+      "intent": "選周數據",
+      "score": "0.99",
+      "ans": "你可以在數據分析畫面上，左右滑動顯示每周的運動數據",
+      "entities": [],
+      "run_time": "1.21 秒",
+      "ask_time": "2023-05-05 12:16:01"
+   },
+   {
+      "q": "這星期的天氣",
+      "intent": "選周數據",
+      "score": "0.99",
+      "ans": "你可以在數據分析畫面上，左右滑動顯示每周的運動數據",
+      "entities": [],
+      "run_time": "1.24 秒",
+      "ask_time": "2023-05-05 12:16:21"
+   },
+   {
+      "q": "今天星期幾",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.13 秒",
+      "ask_time": "2023-05-05 12:51:19"
+   },
+   {
+      "q": "今天天氣如何",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.24 秒",
+      "ask_time": "2023-05-05 12:51:40"
+   },
+   {
+      "q": "阻力減少",
+      "intent": "命令阻力減少",
+      "score": "0.99",
+      "ans": "收到，已將阻力調低",
+      "entities": [
+         {
+            "entity": "阻力",
+            "entity_category": "功能"
+         },
+         {
+            "entity": "減少",
+            "entity_category": "命令"
+         }
+      ],
+      "run_time": "1.02 秒",
+      "ask_time": "2023-05-05 12:51:49"
+   },
+   {
+      "q": "閃電閘的機器人",
+      "intent": "None",
+      "score": "0.69",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "電",
+            "entity_category": "功能"
+         }
+      ],
+      "run_time": "1.1 秒",
+      "ask_time": "2023-05-05 12:52:26"
+   },
+   {
+      "q": "你是誰",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，小凱客服機器人在此為你服務",
+      "entities": [
+         {
+            "entity": "你是誰",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.12 秒",
+      "ask_time": "2023-05-05 12:53:05"
+   },
+   {
+      "q": "怎麼減脂",
+      "intent": "問減脂",
+      "score": "0.99",
+      "ans": "騎健身車，挑選自己適合的程序來運動，也可以達到效果",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "減脂",
+            "entity_category": "目的"
+         }
+      ],
+      "run_time": "1.51 秒",
+      "ask_time": "2023-05-05 12:53:45"
+   },
+   {
+      "q": "怎麼減肥",
+      "intent": "問減肥",
+      "score": "0.99",
+      "ans": "除了控制飲食之外，每天持續運動1小時以上，會有不錯的效果",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "減肥",
+            "entity_category": "目的"
+         }
+      ],
+      "run_time": "1.15 秒",
+      "ask_time": "2023-05-05 12:54:10"
+   },
+   {
+      "q": "今天天氣如何",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.88 秒",
+      "ask_time": "2023-05-08 14:48:44"
+   },
+   {
+      "q": "怎麼減肥",
+      "intent": "問減肥",
+      "score": "0.99",
+      "ans": "除了控制飲食之外，每天持續運動1小時以上，會有不錯的效果",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "減肥",
+            "entity_category": "目的"
+         }
+      ],
+      "run_time": "7.92 秒",
+      "ask_time": "2023-05-09 10:34:13"
+   },
+   {
+      "q": "怎麼減肥",
+      "intent": "問減肥",
+      "score": "0.99",
+      "ans": "除了控制飲食之外，每天持續運動1小時以上，會有不錯的效果",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "減肥",
+            "entity_category": "目的"
+         }
+      ],
+      "run_time": "1.16 秒",
+      "ask_time": "2023-05-09 10:34:34"
+   },
+   {
+      "q": "最近有好看的電影嗎",
+      "intent": "None",
+      "score": "0.31",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.57 秒",
+      "ask_time": "2023-05-09 11:16:20"
+   },
+   {
+      "q": "你會做什麼",
+      "intent": "None",
+      "score": "0.99",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.28 秒",
+      "ask_time": "2023-05-09 11:16:40"
+   },
+   {
+      "q": "今天天氣如何",
+      "clu_intent": "問時間設定",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.15 秒",
+      "ask_time": "2023-05-09 15:10:18"
+   },
+   {
+      "q": "今天天氣如何",
+      "clu_intent": "問時間設定",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "如何",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.13 秒",
+      "ask_time": "2023-05-09 15:12:22"
+   },
+   {
+      "q": "你會做什麼",
+      "clu_intent": "問操作方式",
+      "intent": "None",
+      "score": "0.99",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.13 秒",
+      "ask_time": "2023-05-09 15:13:21"
+   },
+   {
+      "q": "你有幾種功能",
+      "clu_intent": "問操作方式",
+      "intent": "None",
+      "score": "0.99",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "幾種",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "功能",
+            "entity_category": "功能"
+         }
+      ],
+      "run_time": "1.11 秒",
+      "ask_time": "2023-05-09 15:13:52"
+   },
+   {
+      "q": "你會做什麼",
+      "clu_intent": "問操作方式",
+      "intent": "問操作方式",
+      "score": "0.99",
+      "ans": "可以詢問現場的服務人員，請他協助介紹",
+      "entities": [],
+      "run_time": "1.25 秒",
+      "ask_time": "2023-05-09 15:15:19"
+   },
+   {
+      "q": "你有什麼功能",
+      "clu_intent": "問操作方式",
+      "intent": "None",
+      "score": "0.99",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "功能",
+            "entity_category": "功能"
+         }
+      ],
+      "run_time": "1.13 秒",
+      "ask_time": "2023-05-09 15:15:43"
+   },
+   {
+      "q": "桃園天氣怎麼樣",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.82",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.1 秒",
+      "ask_time": "2023-05-09 15:16:19"
+   },
+   {
+      "q": "桃園怎麼去",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.51",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "5.79 秒",
+      "ask_time": "2023-05-09 15:16:31"
+   },
+   {
+      "q": "我不太會設定",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.82",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "設定",
+            "entity_category": "動作"
+         }
+      ],
+      "run_time": "1.15 秒",
+      "ask_time": "2023-05-09 15:16:51"
+   },
+   {
+      "q": "設定參數怎麼調",
+      "clu_intent": "問段數設定",
+      "intent": "問段數設定",
+      "score": "0.99",
+      "ans": "在運動中，你可以語音下達命令，先喚醒小凱小楷，再下達增加負載或負載減少的命令，來調整負載段數",
+      "entities": [
+         {
+            "entity": "設定",
+            "entity_category": "動作"
+         },
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "調",
+            "entity_category": "動作"
+         }
+      ],
+      "run_time": "1.28 秒",
+      "ask_time": "2023-05-09 15:17:15"
+   },
+   {
+      "q": "有關防菌魚",
+      "clu_intent": "防菌魚相關",
+      "intent": "防菌魚相關",
+      "score": "0.99",
+      "ans": "市價為每只 100 元，防疫期間買 10 只以上享買一送一之優惠，購買1000 只以上有團購價格，且可以幫您雷射雕刻客製化的字樣或圖示；購買防菌魚請洽王道業務 04-22475115 或 0938-388651。",
+      "entities": [
+         {
+            "entity": "防菌魚",
+            "entity_category": "產品"
+         }
+      ],
+      "run_time": "1.27 秒",
+      "ask_time": "2023-05-09 15:18:32"
+   },
+   {
+      "q": "你們在哪裡",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.58",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "哪裡",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.22 秒",
+      "ask_time": "2023-05-09 15:18:51"
+   },
+   {
+      "q": "你們公司在哪裡",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "哪裡",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.12 秒",
+      "ask_time": "2023-05-09 15:19:08"
+   },
+   {
+      "q": "地址在哪",
+      "clu_intent": "問公司地址",
+      "intent": "None",
+      "score": "0.99",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "地址",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.94 秒",
+      "ask_time": "2023-05-09 15:19:21"
+   },
+   {
+      "q": "地址在哪",
+      "clu_intent": "問公司地址",
+      "intent": "None",
+      "score": "0.99",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "地址",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.07 秒",
+      "ask_time": "2023-05-09 15:19:47"
+   },
+   {
+      "q": "你們的位置在哪",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "位置",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.19 秒",
+      "ask_time": "2023-05-09 15:21:00"
+   },
+   {
+      "q": "你們的位置在哪",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "位置",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.51 秒",
+      "ask_time": "2023-05-09 15:21:10"
+   },
+   {
+      "q": "你們的地址",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "地址",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.09 秒",
+      "ask_time": "2023-05-09 15:21:37"
+   },
+   {
+      "q": "公司電話",
+      "clu_intent": "問公司電話",
+      "intent": "問公司電話",
+      "score": "0.99",
+      "ans": "公司電話是：(04) 22445815 ",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "電話",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.2 秒",
+      "ask_time": "2023-05-09 15:22:50"
+   },
+   {
+      "q": "公司地址",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "地址",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.2 秒",
+      "ask_time": "2023-05-09 15:23:03"
+   },
+   {
+      "q": "我想要買",
+      "clu_intent": "問價格",
+      "intent": "問價格",
+      "score": "0.99",
+      "ans": "本商品價格有優惠，請洽詢業務人員",
+      "entities": [
+         {
+            "entity": "買",
+            "entity_category": "費用"
+         }
+      ],
+      "run_time": "2.98 秒",
+      "ask_time": "2023-05-10 08:10:29"
+   },
+   {
+      "q": "價格",
+      "clu_intent": "問價格",
+      "intent": "問價格",
+      "score": "0.99",
+      "ans": "本商品價格有優惠，請洽詢業務人員",
+      "entities": [
+         {
+            "entity": "價格",
+            "entity_category": "費用"
+         }
+      ],
+      "run_time": "1.75 秒",
+      "ask_time": "2023-05-10 08:11:01"
+   },
+   {
+      "q": "地址在哪",
+      "clu_intent": "問公司地址",
+      "intent": "None",
+      "score": "0.99",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "地址",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.06 秒",
+      "ask_time": "2023-05-10 08:11:08"
+   },
+   {
+      "q": "地址在哪",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "地址",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "2.49 秒",
+      "ask_time": "2023-05-10 08:21:14"
+   },
+   {
+      "q": "給我地址",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "地址",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.16 秒",
+      "ask_time": "2023-05-10 08:21:25"
+   },
+   {
+      "q": "地址是",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "地址",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.08 秒",
+      "ask_time": "2023-05-10 08:21:36"
+   },
+   {
+      "q": "電話是",
+      "clu_intent": "問公司電話",
+      "intent": "問公司電話",
+      "score": "0.99",
+      "ans": "公司電話是：(04) 22445815 ",
+      "entities": [
+         {
+            "entity": "電話",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.16 秒",
+      "ask_time": "2023-05-10 08:21:47"
+   },
+   {
+      "q": "我想談代理",
+      "clu_intent": "問代理",
+      "intent": "問代理",
+      "score": "0.99",
+      "ans": "要經銷、代理，可洽詢本公司業務人員",
+      "entities": [],
+      "run_time": "1.11 秒",
+      "ask_time": "2023-05-10 08:21:59"
+   },
+   {
+      "q": "能告訴你們的地址嗎",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "能",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "地址",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "3.14 秒",
+      "ask_time": "2023-05-10 12:11:32"
+   },
+   {
+      "q": "怎麼美容",
+      "clu_intent": "問美容",
+      "intent": "問美容",
+      "score": "0.99",
+      "ans": "要身體美容，可以騎健身車，每日持續運動30分鐘以上，效果好",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "美容",
+            "entity_category": "目的"
+         }
+      ],
+      "run_time": "1.47 秒",
+      "ask_time": "2023-05-10 12:12:01"
+   },
+   {
+      "q": "我想去你們公司上班",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.70",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "上班",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "2.07 秒",
+      "ask_time": "2023-05-10 12:12:44"
+   },
+   {
+      "q": "地址在哪",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "地址",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.25 秒",
+      "ask_time": "2023-05-10 12:13:08"
+   },
+   {
+      "q": "你們公司是做什麼的",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "1.47 秒",
+      "ask_time": "2023-05-10 12:13:31"
+   },
+   {
+      "q": "你們公司賣什麼的",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.73",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "賣",
+            "entity_category": "費用"
+         }
+      ],
+      "run_time": "1.23 秒",
+      "ask_time": "2023-05-10 12:14:57"
+   },
+   {
+      "q": "你們公司賣什麼產品",
+      "clu_intent": "問金儀產品資訊",
+      "intent": "問金儀產品資訊",
+      "score": "0.99",
+      "ans": "包含健身車錶、電動跑步機錶、划船器錶,目前主打APP服務等AI智慧錶。可與我們聯絡，請洽 (04) 22445815 或 分機117業務部",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "賣",
+            "entity_category": "費用"
+         },
+         {
+            "entity": "產品",
+            "entity_category": "產品"
+         }
+      ],
+      "run_time": "1.14 秒",
+      "ask_time": "2023-05-10 12:15:29"
+   },
+   {
+      "q": "你們有什麼產品",
+      "clu_intent": "問金儀產品資訊",
+      "intent": "問金儀產品資訊",
+      "score": "0.99",
+      "ans": "包含健身車錶、電動跑步機錶、划船器錶,目前主打APP服務等AI智慧錶。可與我們聯絡，請洽 (04) 22445815 或 分機117業務部",
+      "entities": [
+         {
+            "entity": "產品",
+            "entity_category": "產品"
+         }
+      ],
+      "run_time": "1.22 秒",
+      "ask_time": "2023-05-10 12:15:44"
+   },
+   {
+      "q": "你們有什麼產品",
+      "clu_intent": "問金儀產品資訊",
+      "intent": "問金儀產品資訊",
+      "score": "0.99",
+      "ans": "金儀國際科技，營業項目為各式運動車錶及控制器等銷售與服務,目前主打APP服務等。包含健身車錶、電動跑步機錶、划船器錶等等AI智慧錶。",
+      "entities": [
+         {
+            "entity": "產品",
+            "entity_category": "產品"
+         }
+      ],
+      "run_time": "3.46 秒",
+      "ask_time": "2023-05-10 14:34:25"
+   },
+   {
+      "q": "你們有什麼產品",
+      "clu_intent": "問金儀產品資訊",
+      "intent": "問金儀產品資訊",
+      "score": "0.99",
+      "ans": "金儀國際科技，營業項目為各式運動車錶及控制器等銷售與服務,目前主打APP服務等。包含健身車錶、電動跑步機錶、划船器錶等等AI智慧錶。",
+      "entities": [
+         {
+            "entity": "產品",
+            "entity_category": "產品"
+         }
+      ],
+      "run_time": "3.64 秒",
+      "ask_time": "2023-05-11 12:59:02"
+   },
+   {
+      "q": "怎麼去桃園",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.76",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "2.16 秒",
+      "ask_time": "2023-05-11 15:59:38"
+   },
+   {
+      "q": "怎麼去你們公司",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "2.17 秒",
+      "ask_time": "2023-05-11 15:59:53"
+   },
+   {
+      "q": "怎麼去你們桃園",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.57",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.3 秒",
+      "ask_time": "2023-05-11 16:00:15"
+   },
+   {
+      "q": "想問經銷",
+      "clu_intent": "問代理",
+      "intent": "問代理",
+      "score": "0.99",
+      "ans": "要經銷、代理，可洽詢本公司業務人員",
+      "entities": [],
+      "run_time": "1.14 秒",
+      "ask_time": "2023-05-11 16:00:54"
+   },
+   {
+      "q": "業務人員",
+      "clu_intent": "問業務人員",
+      "intent": "問業務人員",
+      "score": "0.99",
+      "ans": "想和我們的業務聯絡，請洽 (04) 224458515分機117業務 。",
+      "entities": [
+         {
+            "entity": "業務",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.13 秒",
+      "ask_time": "2023-05-11 16:01:09"
+   },
+   {
+      "q": "火車站在哪",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.82",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "火車站",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.95 秒",
+      "ask_time": "2023-05-11 16:01:31"
+   },
+   {
+      "q": "現在幾點了",
+      "clu_intent": "問上班時間",
+      "intent": "問上班時間",
+      "score": "0.98",
+      "ans": "營業時間：週一至週五 8:00 - 17:00",
+      "entities": [],
+      "run_time": "1.24 秒",
+      "ask_time": "2023-05-11 16:01:52"
+   },
+   {
+      "q": "明天星期幾",
+      "clu_intent": "選周數據",
+      "intent": "選周數據",
+      "score": "0.98",
+      "ans": "你可以在數據分析畫面上，左右滑動顯示每周的運動數據",
+      "entities": [],
+      "run_time": "1.26 秒",
+      "ask_time": "2023-05-11 16:03:40"
+   },
+   {
+      "q": "明天星期幾",
+      "clu_intent": "選周數據",
+      "intent": "選周數據",
+      "score": "0.98",
+      "ans": "你可以在數據分析畫面上，左右滑動顯示每周的運動數據",
+      "entities": [],
+      "run_time": "1.32 秒",
+      "ask_time": "2023-05-11 16:04:17"
+   },
+   {
+      "q": "明天星期幾",
+      "clu_intent": "選周數據",
+      "intent": "None",
+      "score": "0.98",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.19 秒",
+      "ask_time": "2023-05-11 16:09:05"
+   },
+   {
+      "q": "現在幾點了",
+      "clu_intent": "問上班時間",
+      "intent": "None",
+      "score": "0.98",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.1 秒",
+      "ask_time": "2023-05-11 16:09:25"
+   },
+   {
+      "q": "你們是賣什麼的",
+      "clu_intent": "問價格",
+      "intent": "問價格",
+      "score": "0.99",
+      "ans": "本商品的售價，請洽詢本公司業務人員",
+      "entities": [
+         {
+            "entity": "賣",
+            "entity_category": "費用"
+         }
+      ],
+      "run_time": "1.13 秒",
+      "ask_time": "2023-05-11 16:09:56"
+   },
+   {
+      "q": "你們有什麼產品",
+      "clu_intent": "問金儀產品資訊",
+      "intent": "問金儀產品資訊",
+      "score": "0.99",
+      "ans": "包含健身車錶、電動跑步機錶、划船器錶,目前主打APP服務等AI智慧錶。可與我們聯絡，請洽 (04) 22445815 或 分機117業務部",
+      "entities": [
+         {
+            "entity": "產品",
+            "entity_category": "產品"
+         }
+      ],
+      "run_time": "1.1 秒",
+      "ask_time": "2023-05-11 16:10:10"
+   },
+   {
+      "q": "產品的相關",
+      "clu_intent": "問金儀產品資訊",
+      "intent": "問金儀產品資訊",
+      "score": "0.99",
+      "ans": "包含健身車錶、電動跑步機錶、划船器錶,目前主打APP服務等AI智慧錶。可與我們聯絡，請洽 (04) 22445815 或 分機117業務部",
+      "entities": [
+         {
+            "entity": "產品",
+            "entity_category": "產品"
+         }
+      ],
+      "run_time": "1.24 秒",
+      "ask_time": "2023-05-11 16:10:21"
+   },
+   {
+      "q": "我想去上班",
+      "clu_intent": "問上班時間",
+      "intent": "問上班時間",
+      "score": "0.99",
+      "ans": "營業時間：週一至週五 8:00 - 17:00",
+      "entities": [
+         {
+            "entity": "上班",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.19 秒",
+      "ask_time": "2023-05-11 16:10:44"
+   },
+   {
+      "q": "我想去你們公司上班",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.70",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "上班",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.03 秒",
+      "ask_time": "2023-05-11 16:11:05"
+   },
+   {
+      "q": "上班",
+      "clu_intent": "問上班時間",
+      "intent": "問上班時間",
+      "score": "0.99",
+      "ans": "營業時間：週一至週五 8:00 - 17:00",
+      "entities": [
+         {
+            "entity": "上班",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.12 秒",
+      "ask_time": "2023-05-11 16:11:19"
+   },
+   {
+      "q": "下班",
+      "clu_intent": "問上班時間",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.11 秒",
+      "ask_time": "2023-05-11 16:11:29"
+   },
+   {
+      "q": "明天天氣",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.89",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "1.07 秒",
+      "ask_time": "2023-05-11 16:11:40"
+   },
+   {
+      "q": "你是誰",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是小凱客服機器人，很高興能為你服務",
+      "entities": [
+         {
+            "entity": "你是誰",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.07 秒",
+      "ask_time": "2023-05-11 16:11:50"
+   },
+   {
+      "q": "我有很多不會的東西",
+      "clu_intent": "問操作方式",
+      "intent": "問操作方式",
+      "score": "0.99",
+      "ans": "你可用按右邊的清單按紐，或是用語音對話，來選擇想要操作設定的功能",
+      "entities": [
+         {
+            "entity": "有很多",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.22 秒",
+      "ask_time": "2023-05-11 16:12:10"
+   },
+   {
+      "q": "台北怎麼去",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.85",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [
+         {
+            "entity": "台北",
+            "entity_category": "公司資訊"
+         },
+         {
+            "entity": "怎麼",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "1.6 秒",
+      "ask_time": "2023-05-11 16:12:44"
+   },
+   {
+      "q": "心情不好怎麼辦",
+      "clu_intent": "問心肺介紹",
+      "intent": "None",
+      "score": "0.98",
+      "ans": "我只能提供金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "2.43 秒",
+      "ask_time": "2023-05-11 16:15:13"
+   },
+   {
+      "q": "產品介紹",
+      "clu_intent": "問金儀產品資訊",
+      "intent": "問金儀產品資訊",
+      "score": "0.99",
+      "ans": "金儀國際科技，營業項目為各式運動車錶及控制器等銷售與服務,目前主打APP服務等。包含健身車錶、電動跑步機錶、划船器錶等等AI智慧錶。",
+      "entities": [
+         {
+            "entity": "產品",
+            "entity_category": "產品"
+         },
+         {
+            "entity": "介紹",
+            "entity_category": "說明"
+         }
+      ],
+      "run_time": "2.97 秒",
+      "ask_time": "2023-05-11 16:21:33"
+   },
+   {
+      "q": "阻力增加",
+      "clu_intent": "命令阻力增加",
+      "intent": "命令阻力增加",
+      "score": "0.99",
+      "ans": "OK，阻力已調升",
+      "entities": [
+         {
+            "entity": "阻力",
+            "entity_category": "功能"
+         },
+         {
+            "entity": "增加",
+            "entity_category": "命令"
+         }
+      ],
+      "run_time": "1.23 秒",
+      "ask_time": "2023-05-11 16:22:05"
+   },
+   {
+      "q": "阻力增加",
+      "clu_intent": "命令阻力增加",
+      "intent": "命令阻力增加",
+      "score": "0.99",
+      "ans": "好的，阻力已增加",
+      "entities": [
+         {
+            "entity": "阻力",
+            "entity_category": "功能"
+         },
+         {
+            "entity": "增加",
+            "entity_category": "命令"
+         }
+      ],
+      "run_time": "1.71 秒",
+      "ask_time": "2023-05-11 23:24:08"
+   },
+   {
+      "q": "心情不好怎麼辦",
+      "clu_intent": "問心肺介紹",
+      "intent": "None",
+      "score": "0.98",
+      "ans": "抱歉，我只能回答金儀公司的AI健身車錶的資訊",
+      "entities": [],
+      "run_time": "3.19 秒",
+      "ask_time": "2023-05-15 14:06:42"
+   },
+   {
+      "q": "金儀",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "金儀公司地址是：台中市北屯區僑孝街65號",
+      "entities": [
+         {
+            "entity": "金儀",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "1.6 秒",
+      "ask_time": "2023-05-15 14:07:50"
+   },
+   {
+      "q": "123",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是小凱客服機器人，很高興能為你服務",
+      "entities": [],
+      "run_time": "2.17 秒",
+      "ask_time": "2023-07-06 11:16:03"
+   }
+]

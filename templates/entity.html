@@ -1,0 +1,124 @@
+{% extends "layouts/base-dashboard.html" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block main_title %}{{title}}{% endblock %}
+
+{% block nav_items %}
+    {% include "layouts/base-dashboard_left.html" %}
+{% endblock %}
+
+
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">Entity(實體)</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><a>{{ app_name }}</a></li>
+                    <li class="breadcrumb-item"><a>建置</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Entity(實體)</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block small_card %}
+    <!-- Card stats -->
+    <div class="row">
+        <!-- Card 1 start-->
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Entity 數量：</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ entity_list_count }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                <i class="ni ni-tag"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 1 end-->
+    </div>
+{% endblock %}
+
+
+{% block page_card %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">Entity list</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">名稱</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">語句數量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if entity_list_count == 0 %}
+                            <tr>
+                                <th scope="row">
+                                    <span class="text-primary">No items created</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        {% for entity in entity_list %}
+                            <tr>
+                                <th scope="row">
+                                    {{ forloop.counter }}. <a
+                                        href="{% url "app:entity_utter" %}?{{ url }}&entityName={{ entity.name }}">{{ entity.name }}</a>
+                                </th>
+                                <td>
+                                    <span>Simple</span>
+                                </td>
+                                <td>
+                                    <span>{{ entity.utterance_count }}</span>
+                                </td>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block modal_card %}
+{% endblock %}
+
+
+{% block jquery %}
+    <script src="/static/accounts/js/myjs_entity.js"></script>
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        });
+    </script>
+{% endblock %}

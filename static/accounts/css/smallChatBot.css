@@ -1,0 +1,151 @@
+.chat-btn {
+    display: inline-block;
+    text-decoration: none;
+    background: #5e72e4;
+    color: #FFF;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+    overflow: hidden;
+    transition: .4s;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+}
+
+@media (max-width: 700px) {
+    .chat-btn {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+    }
+}
+
+.chat-btn:hover {
+    background: #668ad8;
+}
+
+.chat-messages {
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.chat-header {
+    background: #172b4d;
+    padding: 0.4rem 1.5rem;
+}
+
+.chat-header_title {
+    color: #f4f5f7;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Button used to open the chat form - fixed at the bottom of the page */
+.open-button {
+    background-color: #555;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+    position: fixed;
+    bottom: 23px;
+    right: 28px;
+    width: 280px;
+}
+
+/* The popup chat - hidden by default */
+.chat-popup {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    /*border: 3px solid #f1f1f1;*/
+    z-index: 9;
+    width: 320px;
+}
+
+/* Add styles to the form container */
+.form-container {
+    max-width: 300px;
+    padding: 10px;
+    background-color: white;
+}
+
+/* chat message*/
+#frame .chat-messages {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#frame .chat-messages::-webkit-scrollbar {
+    width: 8px;
+    background: transparent;
+}
+
+#frame .chat-messages::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#frame .chat-messages ul {
+    padding: 0;
+}
+
+#frame .chat-messages ul li {
+    display: inline-block;
+    clear: both;
+    float: left;
+    width: calc(100% - 25px);
+    font-size: 0.9em;
+}
+
+#frame .chat-messages ul li:nth-last-child(1) {
+    margin-bottom: 20px;
+}
+
+#frame .chat-messages ul li.replies img {
+    margin: 0 8px 0 0;
+}
+
+#frame .chat-messages ul li.replies p {
+    background: #435f7a;
+    color: #f5f5f5;
+}
+
+#frame .chat-messages ul p.quick_reply_btn {
+}
+
+#frame .chat-messages ul li.sent img {
+    float: right;
+    margin: 6px 0 0 8px;
+}
+
+#frame .chat-messages ul li.sent p {
+    background: #f5f5f5;
+    float: right;
+}
+
+#frame .chat-messages ul li img {
+    width: 45px;
+    border-radius: 50%;
+    float: left;
+}
+
+#frame .chat-messages ul li p {
+    display: inline-block;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 205px;
+    line-height: 130%;
+}

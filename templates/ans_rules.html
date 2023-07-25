@@ -1,0 +1,91 @@
+{% extends "layouts/base-dashboard.html" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block main_title %}{{title}}{% endblock %}
+
+{% block nav_items %}
+    {% include "layouts/base-dashboard_left.html" %}
+{% endblock %}
+
+{% block path_bar %}
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">(任務)意圖回應</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><a>{{ app_name }}</a></li>
+                    <li class="breadcrumb-item"><a>對話管理</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">(任務)意圖回應</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+{% block small_card %}
+{% endblock %}
+
+{% block page_card %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col-2">
+                            <h3 class="mb-0">意圖列表</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <div class="accordion" id="accordionExample">
+                         {% if ans %}
+                            {% for intent in intent_list %}
+                                {% for ans in ans_list %}
+                                    {% if ans.name == intent.name %}
+                                            <div class="card-header" id="heading_{{ forloop.counter0 }}"
+                                                 data-toggle="collapse" data-target="#collapse_{{ forloop.counter0 }}"
+                                                 aria-expanded="false" aria-controls="collapse_{{ forloop.counter0 }}">
+                                                    <div class="custom-control custom-radio mb-3 intent-radio"
+                                                         style="display: none;">
+                                                        <input type="radio" id="{{ intent.name }}" value="{{ intent.name }}"
+                                                               name="intentRadio" class="custom-control-input">
+                                                        <label class="custom-control-label" for="{{ intent.name }}"></label>
+                                                    </div>
+                                                    <h5 class="mb-0" style="font-size: 1.3rem;">{{ intent.name }}<span
+                                                            class="badge badge-default"
+                                                            style="margin-left: 10px;">{{ ans.ans | length }}</span>
+                                                    </h5>
+                                            </div>
+                                            <div id="collapse_{{ forloop.counter0 }}" class="collapse"
+                                                 aria-labelledby="heading_{{ forloop.counter0 }}"
+                                                 data-parent="#accordionExample">
+                                                <div class="card-body">
+                                                    <ul class="list-group list-group-flush list my--3">
+                                                        <br>回應答案：{{ ans.ans }}
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                         {% else %}
+                            <div class="card-body" >
+                                <h4 class="mb-0">尚未建立...</h4>
+                            </div>
+                         {% endif%}
+                    </div>
+                </div>
+                <br>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block modal_card %}
+{% endblock %}
+
+{% block jquery %}
+{% endblock %}

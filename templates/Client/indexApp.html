@@ -1,0 +1,158 @@
+{% extends "layouts/bs4-account.html" %}\
+{% block nav_items %}
+    {% include "layouts/left-bar-order.html" %}
+{% endblock %}
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">方案與訂單</h6>
+             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">方案-{{ clientPlan }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+{% block page_card %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">方案狀態</h3>
+                        </div>
+                     </div>
+                </div>
+
+                <!-- Card body -->
+                <div class="card-body">
+                    <!-- Form groups used in grid -->
+                    <table class="table table-hover">
+                        <tbody>
+                          <tr>
+                            <td style="text-align:right">訂單建立時間</td>
+                            <td style="text-align:left">{{clientPlan.order.order_time | date:"Y年m月d日 h點i分 "}}</td>
+                          </tr>
+                          <tr>
+                            <td style="text-align:right">確認已匯款時間</td>
+                            <td style="text-align:left">{{clientPlan.order.pay_time | date:"Y年m月d日 h點i分 "}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align:right">開通服務時間</td>
+                            <td style="text-align:left">
+                                {{clientPlan.order.sucess_time | date:"Y年m月d日 h點i分 "}}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align:right">完成訂單時間</td>
+                            <td style="text-align:left ;color:green">
+                                {{clientPlan.order.sucess_time | date:"Y年m月d日 h點i分 "}}
+                            </td>
+                          </tr>
+                          {% if mission_data %}
+                            {% for mission in mission_data%}
+                            <tr>
+                                <td style="text-align:right">新增第{{forloop.counter}}個APP時間 </td>
+                                <td>{{mission.created_at | date:"Y年m月d日 h點i分 "}}</td>
+                            </tr>
+                            {% endfor %}
+                          {% endif %}
+                        </tbody>
+                  </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                <!-- luis card 3 -->
+                <div class="card">
+
+                    <div class="card-header border-0">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">任務 App list</h3>
+                            </div>
+                            <div class="col text-right">
+                                <span data-toggle="tooltip" data-original-title="新增任務App">
+                                      <button type="button" class="btn btn-primary btn-icon" data-toggle="modal"
+                                              data-target="#exampleModalCenter">
+                                          <span class="btn-inner--icon">
+                                              <i class="ni ni-fat-add" style="transform: scale(1.5, 1.5)"></i>
+                                          </span>
+                                          <span class="btn-inner--text">任務App</span>
+                                      </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <!-- Projects table -->
+                        <table class="table align-items-center table-flush">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">App name</th>
+                                <th scope="col">建立時間</th>
+                                <th scope="col" style="text-align:center" >...</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% if mission_data %}
+                                {% for app in mission_data %}
+                                    <tr>
+                                        <th scope="row">
+                                            <a href="">{{ app.mission_name }}</a>
+                                        </th>
+                                        <td>
+                                            <span>{{ app.created_at | date:"Y年m月d日 h點i分" }}</span>
+                                        </td>
+                                        <td style="text-align:center">
+                                            {#                                    <button type="button" class="btn btn-success" disabled>匯出</button>#}
+                                            <button type="button" class="btn btn-danger" data-toggle="modal"
+                                                    data-target="#deleteAppModalCenter-{{ app.id }}">刪除
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <th scope="row">
+                                        <span class="text-primary">尚未建立任務型專案。</span>
+                                    </th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- luis card 3 end -->
+        </div>
+    </div>
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">訂單詳細資料</h3>
+                        </div>
+                        {% if order.status != 1 and  order.status != 2 and order.status != 3 %}
+                        <div class="col text-right">
+                            <a href=""> 查看</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

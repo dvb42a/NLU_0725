@@ -1,0 +1,251 @@
+{% extends "layouts/base-dashboard.html" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block main_title %}{{title}}{% endblock %}
+
+{% block nav_items %}
+    {% include "layouts/base-dashboard_left.html" %}
+{% endblock %}
+
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">資訊</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item">{{ app.app_name }}</li>
+                    <li class="breadcrumb-item">App 管理</li>
+                    <li class="breadcrumb-item active" aria-current="page">資訊</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block small_card %}
+{% endblock %}
+
+
+{% block page_card %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header">
+                    <h3 class="mb-0">App 資訊</h3>
+                </div>
+                <!-- Card body -->
+                <div class="card-body">
+                    <!-- Form groups used in grid -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="updateCheck">
+                                <label class="form-check-label" for="updateCheck">
+                                    更新
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputName">App 名稱</label>
+                                <input type="text" class="form-control" id="inputName" value="{{ app.app_name }}"
+                                       required disabled>
+                                <div class="valid-feedback">
+                                    更新完成!
+                                </div>
+                                <div class="invalid-feedback">
+                                    請輸入正確格式(不可空白或名稱含有非法字元ex.-!#%&*@)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputAppId">建立時間</label>
+                                <span style="display: none" id="account_name_span"></span>
+                                {%load filter %}
+                                <input type="text" class="form-control" id="inputAppId" value="{{app.created_date | show_date}}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputDescription">描述</label>
+                                <textarea rows="5" class="form-control" id="inputDescription" placeholder="輸入 App 描述..."
+                                          disabled>{{ app.app_desc }}</textarea>
+                                <div class="valid-feedback">
+                                    更新完成!
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputCulture">對話語系</label>
+                                <input type="text" class="form-control" id="inputCulture" value="{{ app.app_culture }}"
+                                       disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <div class="card mb-4">
+                    <!-- Card header -->
+                    <div class="card-header">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0">API 發布(Publish)</h3>
+                            </div>
+                            <div class="col text-right" id="publish_btn_div">
+                                {% if deployed == 1 and trained == 1 %}
+                                    <button type="button" class="btn btn-primary btn-icon"  disabled>
+                                        <span class="btn-inner--text" >已發布</span>
+                                    </button>
+                                {% elif trained == 0 %}
+                                    <button type="button" class="btn btn-primary btn-icon" disabled >
+                                        <span class="btn-inner--text" disabled>未訓練完成，無法發佈</span>
+                                    </button>
+                                {% else %}
+                                    <button type="button" class="btn btn-primary btn-icon" id="publish_btn" >
+                                        <span class="btn-inner--text" >發布</span>
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card body -->
+                    <div class="card-body">
+                        <!-- Form groups used in grid -->
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                {%load filter %}
+                                <div class="form-group">
+                                    <label class="form-control-label" for="endpoint_public_status">發布狀態</label>
+                                    {% if deployed == 1 %}
+                                        <input type="text" class="form-control" id="endpoint_public_status"
+                                               value="上次發布時間：{{ app.last_deployed_date | show_date }}" disabled>
+                                    {% else %}
+                                        <input type="text" class="form-control" value="尚未發布" disabled>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="endpoint_public_status">API URL</label>
+                                    {% if deployed == 1 %}
+                                        <input type="text" class="form-control" id="endpoint_url"
+                                               value="{{ endpoint_url }}"
+                                               disabled>
+                                    {% else %}
+                                        <input type="text" class="form-control" value="-" disabled>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group">
+                                    <label class="form-control-label">嵌入</label>
+                                    {% if deployed == 1 %}
+                                        <textarea class="form-control" rows="4" resize="none" disabled>{{ chat_bubble }}</textarea>
+                                    {% else %}
+                                        <input type="text" class="form-control" value="-" disabled>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block modal_card %}
+{% endblock %}
+
+
+{% block jquery %}
+    <script>
+        jQuery(function () {
+            $(document).ready(function () {
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                });
+            });
+
+            $('#updateCheck').change(function () {
+                if (this.checked) {
+<!--                    $('#inputName').attr('disabled', false);-->
+                    $('#inputDescription').attr('disabled', false);
+                } else {
+<!--                    $('#inputName').attr('disabled', true);-->
+                    $('#inputDescription').attr('disabled', true);
+                }
+            });
+
+            // change event
+
+            $('#inputDescription').change(function () {
+                var new_app_description = $('#inputDescription').val();
+                if (new_app_description !== null) {
+                    $.ajax({
+                        url: "{% url "app:info_update_app_desc" %}?app={{ app.app_name }}",
+                        data: {
+                            'app_name' : '{{ app.app_name }}',
+                            'put_app_description': new_app_description
+                        },//你要傳的參數
+                        type: "POST",
+                        dataTypes: "json",
+                        success: function (data) {
+                            window.location.replace("{% url "app:manage_info" %}?app={{ app.app_name }}");
+                        },
+                        error: function (data) {
+                            alert(data);
+                        }
+                    });
+                }
+            });
+
+            $('#publish_btn').click(function () {
+                $(this).attr('hidden', true);
+                $('#publish_btn_div').append('<button type="button" class="btn btn-primary" id="publish_btn_loading" disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> 發布</button>');
+                $.ajax({
+                    url: "{% url "app:app_publish" %}?{{ url }}",
+                    type: "GET",
+                    success: function (data) {
+                        report = data.report
+                        if (report == 'success'){
+                            alert('發佈成功');
+                            window.location.reload()
+                        }
+                    },
+                    error: function (data) {
+                        alert('找不到相關訓練模型，請確認是否已完成訓練。');
+                        window.location.reload()
+                    }
+                });
+            });
+
+            function check_deploy() {
+                $.ajax({
+                    url: "{% url "app:app_publish" %}?{{ url }}",
+                    type: "GET",
+                    success: function (data) {
+                    },
+                    error: function (data) {
+                        alert(data['responseJSON']['error_msg']);
+                        window.location.reload()
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}

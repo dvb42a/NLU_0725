@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteMappingsManager">
+    <list>
+      <list>
+        <remote-mappings server-id="python@cae8904d-b8ba-4f0c-a57a-5532b74ee4ab" />
+        <remote-mappings server-id="python@sftp://root@0.0.0.0:8022/root/envs/nlu/bin/python3">
+          <settings>
+            <list>
+              <mapping local-root="$PROJECT_DIR$" remote-root="/mac_dev_dict/Project/LUIS_NLU" />
+            </list>
+          </settings>
+        </remote-mappings>
+      </list>
+    </list>
+  </component>
+</project>

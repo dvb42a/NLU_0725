@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>404 HTML Template by Colorlib</title>
+    <!-- Google font -->
+	<link href="https://fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet">
+
+	<!-- Custom stlylesheet -->
+	<link type="text/css" rel="stylesheet" href="/static/other/css/style.css" />
+
+</head>
+<body>
+    <div id="notfound">
+		<div class="notfound">
+			<div class="notfound-404">
+				<div></div>
+				<h1>404</h1>
+			</div>
+			<h2>Page not found</h2>
+			<h1 id="msg_txt"></h1>
+{#			<a href="#">home page</a>#}
+            <a type="button" onclick="history.back()">回到上一頁</a>
+		</div>
+	</div>
+
+<script src="/static/bootstrapThemes/assets/vendor/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+         getRandom();
+    });
+    function getRandom() {
+        msg_txt = new Array(4);
+        msg_txt[0] = "你走錯路了吧？！";
+        msg_txt[1] = "不管你是麋鹿還是馴鹿，我知道你走錯路了。";
+        msg_txt[2] = "沒事不要亂看，我都知道唷！";
+        msg_txt[3] = "前方路況不佳，建議返航。";
+        index = Math.floor(Math.random() * msg_txt.length);
+        $('#msg_txt').text(msg_txt[index]);
+    }
+
+</script>
+
+</body>
+</html>

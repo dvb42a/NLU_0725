@@ -1,0 +1,85 @@
+{% extends "layouts/bs4-account.html" %}\
+{% block nav_items %}
+    {% include "layouts/left-bar-order.html" %}
+{% endblock %}
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">方案與訂單</h6>
+             <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active" aria-current="page">方案-{{ clientPlan }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+{% block page_card %}
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">方案狀態</h3>
+                        </div>
+                     </div>
+                </div>
+
+                <!-- Card body -->
+                <div class="card-body">
+                    <!-- Form groups used in grid -->
+                    <table class="table table-hover">
+                        <tbody>
+                          <tr>
+                            <td style="text-align:right">訂單建立時間</td>
+                            <td style="text-align:left">
+                                {% if order_data.order_time%}
+                                    {{order_data.order_time | date:"Y年m月d日 h點i分 "}}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align:right">確認已匯款時間</td>
+                            <td style="text-align:left">
+                                {% if order.pay_time %}
+                                    {{order.pay_time | date:"Y年m月d日 h點i分 "}}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align:right">開通服務時間</td>
+                            <td style="text-align:left">
+                                {% if order.sucess_time %}
+                                    {{order.sucess_time | date:"Y年m月d日 h點i分 "}}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="text-align:right">完成訂單時間</td>
+                            <td style="text-align:left ;color:green">
+                                {% if order.pay_time %}
+                                    {{order.pay_time | date:"Y年m月d日 h點i分 "}}
+                                {% else%}
+                                    -
+                                {% endif %}
+                            </td>
+                          </tr>
+                        </tbody>
+                  </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

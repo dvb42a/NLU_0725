@@ -1,0 +1,147 @@
+{% extends "layouts/base-dashboard.html" %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block main_title %}{{title}}{% endblock %}
+
+{% block nav_items %}
+    {% include "layouts/base-dashboard_left.html" %}
+{% endblock %}
+
+
+{% block css %}
+    <link rel="stylesheet" href="/static/accounts/css/mychat.css" type="text/css">
+{% endblock %}
+
+
+{% block path_bar %}
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">問答測試</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item"><a>{{ app_name }}</a></li>
+                    <li class="breadcrumb-item"><a>測試</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">問答測試</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block small_card %}
+{% endblock %}
+
+
+{% block page_card %}
+    <div class="card mb-4">
+        <!-- Card header -->
+        <div class="card-header">
+            <h3 class="mb-0">QA Test</h3><span>輸入問答，對話系統會回覆推論出的意圖與關鍵字。</span>
+        </div>
+        <!-- Card body -->
+        <div class="card-body">
+            <!-- Form groups used in grid -->
+            <div class="mb-1" id="frame">
+                <div class="messages">
+                    <ul>
+                    </ul>
+                </div>
+
+                <div class="media align-items-center">
+                    <div class="media-body">
+                        <div class="input-group mb-3">
+                            <textarea class="form-control" id="message_input" placeholder="輸入問題..." rows="1"></textarea>
+                            <button class="btn btn-outline-primary" type="button" id="submit">送出</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block modal_card %}
+{% endblock %}
+
+
+{% block jquery %}
+    <script>
+        jQuery(function () {
+            $(document).ready(function () {
+                $.ajaxSetup({
+                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+                });
+            });
+
+            function qa_api(q_msg) {
+                $.ajax({
+                    url: '{% url "app:test_chat_api" %}',
+                    data: {
+                        'app_name': '{{ app_name }}',
+                        'q': q_msg
+                    },
+                    type: "POST",
+                    dataTypes: "json",
+                    success: function (data) {
+                        ans = data.replies_msg.ans;
+                        ans = ans.replace(/\n/g, "<br/>");
+                        ans = ans.replace("%20", "'");
+                        ans = ans.replace('%21', '"');
+                        if (ans == 'error'){
+                            publish_url = '</br><a href="{% url "app:manage_info" %}?{{ url }}"  style="color: #172b4d;">->點擊前往[發布App]</a>';
+                            $('<li class="replies"><img  src="/static/bootstrapThemes/assets/img/theme/react.jpg" alt="" /><p style="background: #f5365c;">App 尚未發布，請先發布後再繼續。' + publish_url + '</p></li>').appendTo($('.messages ul'));
+                            var scrollHeight = $('.messages').prop("scrollHeight");
+                            $(".messages").animate({scrollTop: scrollHeight}, "fast");
+                        }
+                        else{
+                            entities = data.replies_msg.entities;
+                            entities_ans = '';
+                            for (x in entities) {
+                                entities_ans += entities[x].entity_category + ':' + entities[x].entity + ', ';
+                            }
+                            entities_ans = '</br>關鍵字：[ ' + entities_ans + ']';
+                            intent_ans = data.replies_msg.intent;
+                            intent_ans = intent_ans.replace("%20", "'");
+                            intent_ans = intent_ans.replace('%21', '"');
+                            score_ans = data.replies_msg.score;
+                            //console.log(entities_ans);
+
+                            $('<li class="replies"><img  src="/static/bootstrapThemes/assets/img/theme/react.jpg" alt="" /><p>' + 'Ans: ' + ans + '</br>intent: ' + intent_ans + '</br>score: ' + score_ans + entities_ans + '</p></li>').appendTo($('.messages ul'));
+                            var scrollHeight = $('.messages').prop("scrollHeight");
+                            $(".messages").animate({scrollTop: scrollHeight}, "fast");
+                        }
+                    }
+                });
+            }
+            function newMessage() {
+                message = $("#message_input").val();
+                if ($.trim(message) == '') {
+                    $('#message_input').val(null);
+                    return false;
+                }
+                qa_api(message);
+                $('<li class="sent"><p>' + message + '</p></li>').appendTo($('.messages ul'));
+
+                $('#message_input').val(null);
+                var scrollHeight = $('.messages').prop("scrollHeight");
+                $(".messages").animate({scrollTop: scrollHeight}, "fast");
+            }
+
+            $('#submit').click(function () {
+                newMessage();
+            });
+
+            $(window).on('keydown', function (e) {
+                if (e.which == 13) {
+                    newMessage();
+                    return false;
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'login.html' %}
+
+{% block content_title %}
+    {% if code in 'register_success' %}
+        註冊成功!
+    {% elif code in 'account_secondary' %}
+        此為副帳號!
+    {% elif code in 'confirm_OK' %}
+        帳號、Email確認成功!
+    {% elif code in 'verify_OK' %}
+        驗證成功!
+    {% elif code in 'verify_NG' %}
+        驗證失敗!
+    {% elif code in 'verify_Pass' %}
+        發送成功!
+    {% elif code in 'already_verify' %}
+        成功激活!
+    {% elif code in 'Password_OK' %}
+        變更成功!
+    {% endif %}
+{% endblock %}
+
+
+{% block card %}
+    <div class="jumbotron mt-3" style="padding-bottom: 32px;margin-bottom: 64px;">
+        {% if code in 'register_success' %}
+            <h2>試用帳號 {{ account }} 己成功註冊完成</h2>
+            <h2>請至Email信箱檢查相關驗證信件，此驗證信件憑證有效時間為1小時，若超過時間請重新申請驗證!</h2><p></p>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary mr-2 ml-2" style="flex: 1; " onclick="window.location.href='{% url "Accounts:login" %}'">回登入頁</button>
+            </div>
+        {% elif code in 'account_secondary' %}
+            <h2>由於您的帳號屬於其他帳號所建立之帳號</h2>
+            <h2>所以無法核對您帳號的相關資訊</h2>
+            <h2>請和您的帳號建立者聯絡</h2><p></p>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary mr-2 ml-2" style="flex: 1; " onclick="window.location.href='{% url "Accounts:login" %}'">回登入頁</button>
+            </div>
+        {% elif code in 'confirm_OK' %}
+            <h2>資料核對正確!</h2>
+            <h2>已將更改密碼要求寄至註冊時所填寫信箱</h2>
+            <h2>請點選信件上連結進行密碼更新</h2>
+            <h2>此信件憑證有效時間為1小時，若超過時間請重新申請驗證!</h2><p></p>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary mr-2 ml-2" style="flex: 1; " onclick="window.location.href='{% url "Accounts:login" %}'">回登入頁</button>
+            </div>
+        {% elif code in 'verify_OK' %}
+            <h2>信箱驗證成功!</h2><p></p>
+            <h2>請點選回到登入頁，以當初您註冊的帳號、密碼登入NLU平台。試用帳號使用期限為30天，以正式登入平台後開始計算。</h2><p></p>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary mr-2 ml-2" style="flex: 1; " onclick="window.location.href='{% url "Accounts:login" %}'">回登入頁</button>
+            </div>
+        {% elif code in 'verify_NG'%}
+            <h2>信箱驗證失敗!</h2><p></p>
+            <h2>憑證已過期!可使用之前填寫的Email信箱進行驗證，也可以直接修改下列Email信箱再次進行驗證。</h2><p></p>
+            <div class="card-body" style="padding-bottom: 0px;">
+                <form role="form" action="" method="post" onkeydown="if(event.keyCode==13)return false;">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <div class="input-group input-group-merge input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                            </div>
+                            {{ form.email }}
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary mt-4">重發驗證信</button>
+                    </div>
+                </form>
+            </div>
+        {% elif code in 'verify_Pass' %}
+            <h2>驗證信已送出!</h2><p></p>
+            <h2>請至Email信箱檢查相關驗證信件，此驗證信件憑證有效時間為1小時，若超過時間請重新申請驗證!</h2><p></p>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary mr-2 ml-2" style="flex: 1; " onclick="window.location.href='{% url "Accounts:login" %}'">回登入頁</button>
+            </div>
+        {% elif code in 'already_verify' %}
+            <h2>您的帳號己成功激活</h2>
+            <h2>請點選回到登入頁，以當初您註冊的帳號、密碼登入NLU平台。</h2><p></p>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary mr-2 ml-2" style="flex: 1; " onclick="window.location.href='{% url "Accounts:login" %}'">回登入頁</button>
+            </div>
+        {% elif code in 'Password_OK' %}
+            <h2>密碼變更成功!</h2><p></p>
+            <h2>請點選回到登入頁，以新變更的密碼登入NLU平台。</h2><p></p>
+            <div class="text-center">
+                <button type="button" class="btn btn-primary mr-2 ml-2" style="flex: 1; " onclick="window.location.href='{% url "Accounts:login" %}'">回登入頁</button>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

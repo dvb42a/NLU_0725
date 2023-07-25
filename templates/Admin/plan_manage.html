@@ -1,0 +1,230 @@
+{% extends "Admin/bs4-admin.html" %}
+
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">方案管理</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item "><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item active">系統管理</li>
+                    <li class="breadcrumb-item active" aria-current="page">方案管理</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+    </div>
+{% endblock %}
+
+{% block small_card %}
+    <!-- Card stats -->
+    <div class="row">
+        <!-- Card 1 start-->
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">方案數量：</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ plan_list|length }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                <i class="fa fa-file" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 1 end-->
+    </div>
+{% endblock %}
+
+{% block page_card %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">方案列表</h3>
+                        </div>
+                        <div class="col text-right">
+                            <span data-toggle="tooltip" data-original-title="新增方案">
+                                  <button type="button" class="btn btn-primary btn-icon" data-toggle="modal"
+                                          data-target="#exampleModalCenter" id="open_modal">
+                                      <span class="btn-inner--icon">
+                                          <i class="ni ni-fat-add" style="transform: scale(1.5, 1.5)"></i>
+                                      </span>
+                                      <span class="btn-inner--text">方案</span>
+                                  </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">方案名稱</th>
+                            <th scope="col">新增時間</th>
+                            <th scope="col">最後更新時間</th>
+                            <th scope="col">...</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if plan_list %}
+                            {% for plan in plan_list %}
+                                <tr>
+                                    <th scope="row">
+                                        {{ forloop.counter }}. <a>{{ plan.plan_name }}</a>
+                                    </th>
+                                    <th scope="row">
+                                        {{ plan.created_at | date:"Y.m.d H:i:s"}}
+                                    </th>
+                                    <th scope="row">
+                                        {% if plan.updated_at %}
+                                            {{ plan.updated_at | date:"Y.m.d H:i:s" }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </th>
+                                    <th scope="row">
+                                        <a href="{% url "Admin:planEdit" plan.plan_id %}">
+                                            <span data-toggle="tooltip" data-original-title="編輯方案">
+                                                  <button type="button" class="btn btn-primary btn-icon" >
+                                                      <span class="btn-inner--text">編輯</span>
+                                                  </button>
+                                            </span>
+                                        </a>
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <th scope="row">
+                                    <span class="text-primary">沒有方案。</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+
+{% block modal_card %}
+    <!-- Modal_creat app -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">建立方案</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="/admin/plan/" method="post" onkeydown="if(event.keyCode==13)return false;">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="mat-dialog-content">
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_name.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_name}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_pay.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_pay}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_app.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                               {{form.plan_app}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_person.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_person}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_employee.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_employee}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_file.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_file}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.plan_count.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.plan_count}}
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <label for="app-name" class="m-label">{{form.expired_at.label}}
+                                    <small>(Required)：</small>
+                                </label>
+                                {{form.expired_at}}
+                            </div>
+                        </div>
+                    </div>
+                    {% if messages %}
+                        {{ message }}
+                    {% endif %}
+                    <div class="modal-footer" id="creat_Done_btn_div">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" id="creat_Done_btn">Done</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block jquery %}
+    <script>
+        const modal_button = document.getElementById('open_modal');
+
+    </script>
+    {% if message %}
+       <script>
+
+        modal_button.click();
+        alert("{{ message }}");
+
+       </script>
+    {% endif %}
+{% endblock %}

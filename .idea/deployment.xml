@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="(LUIS_NLU)root@0.0.0.0:8022" autoUploadExternalChanges="true">
+    <serverData>
+      <paths name="(LUIS_NLU)root@0.0.0.0:8022">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/mac_dev_dict/Project/LUIS_NLU" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

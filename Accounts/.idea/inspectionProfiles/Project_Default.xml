@@ -1,0 +1,39 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="4">
+            <item index="0" class="java.lang.String" itemvalue="easydict" />
+            <item index="1" class="java.lang.String" itemvalue="tensorflow" />
+            <item index="2" class="java.lang.String" itemvalue="opencv-python" />
+            <item index="3" class="java.lang.String" itemvalue="keras.preprocessing" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="tool" />
+          <option value="train" />
+          <option value="category" />
+          <option value="monitor" />
+          <option value="count_time" />
+          <option value="color_predict" />
+          <option value="convert_voc_to_txt" />
+          <option value="module_ai_yolo.py.train.nets" />
+          <option value="module_ai_yolo.py.train.utils" />
+          <option value="model" />
+          <option value="module_ai_yolo.py.module.yolo" />
+          <option value="kinglybot.app.chatbot" />
+          <option value="kinglybot.app.api" />
+          <option value="nlu_c" />
+          <option value="nlu_chn" />
+          <option value="nlu_eng" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
