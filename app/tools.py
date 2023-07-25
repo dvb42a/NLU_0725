@@ -1,4 +1,4 @@
-import os,openpyxl,re,numpy as np,datetime,time
+import os, openpyxl, re, numpy as np, datetime, time
 from collections import Counter
 from text2vec import Word2Vec
 from hanziconv import HanziConv
@@ -10,7 +10,8 @@ word2ver_model = Word2Vec("w2v-light-tencent-chinese")
 gate_clu = 0.99
 gate_w2v = 0.9
 
-def similar_compare(q1,list_q2):
+
+def similar_compare(q1, list_q2):
     x = word2ver_model.encode(HanziConv.toSimplified(q1))
     score = 0.0
     for i in list_q2:
@@ -39,10 +40,10 @@ def SaveQAHistory(app_id, result, create_time):
 
 def ReadQAHistory(file_path):
     if os.path.exists(file_path):
-        file_content = open(file_path, 'r',encoding="utf-8").read()
+        file_content = open(file_path, 'r', encoding="utf-8").read()
         if len(file_content) < 1:
             return []
-        with open(file_path, 'r',encoding="utf-8") as output:
+        with open(file_path, 'r', encoding="utf-8") as output:
             return json.load(output)
     else:
         return []
@@ -388,25 +389,25 @@ def check_qnot(s):
     """
     處理單、雙引號
     """
-    s = s.replace("'","%20")
+    s = s.replace("'", "%20")
     s = s.replace('"', '%21')
     return s
 
 
 def check_similar(q, app_id, intent):
-    config_id = app_id.replace('-','_')
-    with open( f'./config/{config_id}/intent.json', 'r', encoding='utf-8') as f:
+    config_id = app_id.replace('-', '_')
+    with open(f'./config/{config_id}/intent.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
         for i in data:
             if i['name'] in intent:
                 similar_list = sample(i['utterance'], 2)
-                score = similar_compare(q,similar_list)
+                score = similar_compare(q, similar_list)
                 print(q, similar_list)
                 print(score)
                 return score
 
 
-def predictCLU(time_start ,app_id, deploy_name, q):
+def predictCLU(time_start, app_id, deploy_name, q):
     res = predictApp(app_id, deploy_name, q)
     print(str(round((time.time() - time_start), 2)))
     if res.status_code == 200:
@@ -433,7 +434,7 @@ def predictCLU(time_start ,app_id, deploy_name, q):
                 'entity': entity,
                 'entity_category': entity_category
             })
-        new_app_id = app_id.replace("-","_")
+        new_app_id = app_id.replace("-", "_")
         ans_json = f'./config/{new_app_id}/ans.json'
         if not os.path.isfile(ans_json):
             ans = '找不到任何意圖回應檔!'
@@ -450,7 +451,7 @@ def predictCLU(time_start ,app_id, deploy_name, q):
         time_start = datetime.datetime.fromtimestamp(time_start).strftime("%Y-%m-%d %H:%M:%S")
         result = {
             'q': check_qnot(q),
-            'clu_intent':clu_intent,
+            'clu_intent': clu_intent,
             'intent': check_qnot(top_intent),
             'score': str(top_score)[:4],
             'ans': check_qnot(ans),
@@ -459,7 +460,7 @@ def predictCLU(time_start ,app_id, deploy_name, q):
             'ask_time': time_start
         }
         # print("LUIS result:\n", json.dumps(result, indent=4, ensure_ascii=False))
-        res = getAppInfo(app_id.split("-")[0],app_id.split("-")[1])
+        res = getAppInfo(app_id.split("-")[0], app_id.split("-")[1])
         dt = datetime.datetime.strptime(res['createdDateTime'], "%Y-%m-%dT%H:%M:%SZ")
         create_time = str((dt + datetime.timedelta(hours=8)).strftime("%Y%m%d%H%M"))[2:]
         SaveQAHistory(app_id, result, create_time)
