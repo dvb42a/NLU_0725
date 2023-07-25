@@ -1,4 +1,4 @@
-import shutil,logging,config
+import shutil, logging, config
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.generic.base import View
 from django.shortcuts import redirect, reverse, render
@@ -11,15 +11,17 @@ from Apps.models import Apps
 from Client.models import ClientPlan
 from BColor import SystemStatus
 
-logging.basicConfig(filename='log.txt',filemode='a')
+logging.basicConfig(filename='log.txt', filemode='a')
 
 LUIS_KEY = "b25e3e3c55204401bca92434148d298a"  # kingly.azure@gmail.com KinglyNLU金鑰
 # KINGlY_MAIN_APP_ID = "20201119T161907_5ut8Bd301QC1"  # 閒聊綁定專案id
 num_progress = 0
+
+
 # sim_model = Similarity()
 
 
-def sendconfig(Dict,request):
+def sendconfig(Dict, request):
     try:
         print(request.session['train_name'])
         app = Apps.objects.filter(app_name=request.session['train_name']).first()
@@ -48,8 +50,8 @@ class Dashboard(View):
         """
         # 當權限為 系統管理員/專案管理員 時可以查看 CLU 任務型資料
         account = context["account"]
-        client_plan = ClientPlan.objects.filter(ac=account.ac_name,plan_end__gt=timezone.now())     # 查詢登入帳號所持有還未到期的plan
-        apps = Apps.objects.filter(ac=account.ac_name).order_by('-created_date')     # 查詢登入帳號所持有的app清單
+        client_plan = ClientPlan.objects.filter(ac=account.ac_name, plan_end__gt=timezone.now())  # 查詢登入帳號所持有還未到期的plan
+        apps = Apps.objects.filter(ac=account.ac_name).order_by('-created_date')  # 查詢登入帳號所持有的app清單
         # print(client_plan[0].plan_apps.all()[0].app_name)
         context.update(dict(
             role=account.role,
@@ -59,7 +61,8 @@ class Dashboard(View):
             dashborad=True
         ))
         print(SystemStatus.INFO, f"context：{context}")
-        return render(request, 'dashboard.html', sendconfig(context,request))
+        return render(request, 'dashboard.html', sendconfig(context, request))
+
 
 @login_required
 def app_info_view(request, context):
@@ -83,11 +86,11 @@ def app_info_view(request, context):
         app=app,
         url=f"app={app_name}",
         endpoint_url=endpoint_url,
-        last_deployed_date = app.last_deployed_date,
+        last_deployed_date=app.last_deployed_date,
         trained=app.trained,
         deployed=app.deployed,
-        chat_bubble= chat_bubble))
-    return render(request, 'app_info.html', sendconfig(context,request))
+        chat_bubble=chat_bubble))
+    return render(request, 'app_info.html', sendconfig(context, request))
 
 
 @login_required
@@ -122,7 +125,7 @@ def app_intent(request, context):
         all_labeled_examples_count=all_count,
         trained=app.trained
     ))
-    return render(request, 'intent.html', sendconfig(context,request))
+    return render(request, 'intent.html', sendconfig(context, request))
 
 
 @login_required
@@ -151,7 +154,7 @@ def intent_utterance(request, context):
         labeled_examples=intent_data,
         labeled_examples_count=len(intent_data)
     ))
-    return render(request, 'intent_utterance.html', sendconfig(context,request))
+    return render(request, 'intent_utterance.html', sendconfig(context, request))
 
 
 @login_required
@@ -177,7 +180,7 @@ def app_entity(request, context):
         entity_list=entity_list,
         entity_list_count=len(entity_list)
     ))
-    return render(request, 'entity.html', sendconfig(context,request))
+    return render(request, 'entity.html', sendconfig(context, request))
 
 
 @login_required
@@ -207,7 +210,7 @@ def entity_utterance(request, context):
         labeled_examples=entity_data,
         labeled_examples_count=len(entity_data)
     ))
-    return render(request, 'entity_utterance.html', sendconfig(context,request))
+    return render(request, 'entity_utterance.html', sendconfig(context, request))
 
 
 @login_required
@@ -230,9 +233,9 @@ def ans_rules(request, context):
             try:
                 with open(intent_json, 'r', encoding='utf-8') as f:
                     intent_list = json.load(f)
-                with open(entity_json , 'r', encoding='utf-8') as f:
+                with open(entity_json, 'r', encoding='utf-8') as f:
                     entity_list = json.load(f)
-                with open(ans_json , 'r', encoding='utf-8') as f:
+                with open(ans_json, 'r', encoding='utf-8') as f:
                     ans_list = json.load(f)
                 ans = True
             except FileNotFoundError:
@@ -243,9 +246,9 @@ def ans_rules(request, context):
             intent_list=intent_list,
             entity_list=entity_list,
             ans_list=ans_list,
-            ans = ans
+            ans=ans
         ))
-        return render(request, 'ans_rules.html', sendconfig(context,request))
+        return render(request, 'ans_rules.html', sendconfig(context, request))
 
 
 class TestQAPage(View):
@@ -260,7 +263,7 @@ class TestQAPage(View):
             app_name=app_name,
             url=f"app={app_name}"
         ))
-        return render(request, 'test_chat.html', sendconfig(context,request))
+        return render(request, 'test_chat.html', sendconfig(context, request))
 
 
 @login_required
@@ -280,7 +283,7 @@ def qa_log(request, context):
         url=f"app={app_name}",
         log_list=input_data,
     ))
-    return render(request, 'qa_log.html', sendconfig(context,request))
+    return render(request, 'qa_log.html', sendconfig(context, request))
 
 
 class ChatBox(View):
@@ -334,7 +337,7 @@ def delete_app(request):
         shutil.rmtree(path)
     except OSError:
         pass
-    state = deleteApp(user_id,app_name)
+    state = deleteApp(user_id, app_name)
     if state == 202:
         print(f'[DELETE app]: {user_id}-{app_name}\nresponse:{state}')
         app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
@@ -356,11 +359,11 @@ def train_app(request):
     app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
     train_name = f"train_V{app.train_version}"
     print(f"{user_id}-----{app_name}-----{train_name}")
-    res = trainApp(user_id,app_name,train_name)
+    res = trainApp(user_id, app_name, train_name)
     if res.status_code == 202:
         app.deployed = 0
         app.training = 1
-        app.save(update_fields=['deployed','training'])
+        app.save(update_fields=['deployed', 'training'])
         request.session['train_name'] = app_name
         return HttpResponse(200)
     else:
@@ -376,8 +379,8 @@ def train_event(request):
             for i in range(len(train_dict["value"])):
                 if train_dict["value"][i]["status"] in "running":
                     r = i
-            train_process = int(train_dict["value"][r]["result"]["trainingStatus"]["percentComplete"]*0.8) + \
-                            int(train_dict["value"][r]["result"]["evaluationStatus"]["percentComplete"]*0.2)
+            train_process = int(train_dict["value"][r]["result"]["trainingStatus"]["percentComplete"] * 0.8) + \
+                            int(train_dict["value"][r]["result"]["evaluationStatus"]["percentComplete"] * 0.2)
             data = {'in_train_name': request.session['train_name'], 'train_process': train_process}
             yield u'data: %s\n\n' % str(json.dumps(data))
             time.sleep(3)
@@ -386,9 +389,10 @@ def train_event(request):
                 app.train_version = app.train_version + 1
                 app.trained = 1
                 app.training = 0
-                app.save(update_fields=['last_trained_date','train_version','trained','training'])
+                app.save(update_fields=['last_trained_date', 'train_version', 'trained', 'training'])
                 request.session['train_name'] = None
                 break
+
     response = StreamingHttpResponse(stream_generator(), content_type="text/event-stream")
     response['Cache-Control'] = 'no-cache'
     return response
@@ -420,7 +424,7 @@ def app_publish(request):
         app_name = request.GET.get('app')
         user_id = request.session['login_name']
         app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
-        train_name = f"train_V{app.train_version-1}"
+        train_name = f"train_V{app.train_version - 1}"
         deploy_name = f"deploy_V{app.deploy_version}"
         print(user_id, app_name, train_name, deploy_name)
         res = deployApp(user_id, app_name, train_name, deploy_name)
@@ -445,7 +449,6 @@ def app_publish(request):
         else:
             publish_dict = deployInfo(user_id, app_name, deploy_name)
             return JsonResponse({'error_msg': publish_dict['error']['code']}, status=400)
-
 
 
 def upload_base2excel(request):
@@ -557,6 +560,7 @@ def upload_base2excel(request):
         num_progress = 0
         return JsonResponse({'message': 'success'})
 
+
 def check_base(request):
     """
     任務-檢查base.excel
@@ -565,9 +569,9 @@ def check_base(request):
     app_name = request.POST.get('app_name')
     print(request)
     if os.path.isfile(f'./config/{user_id}_{app_name}/base.xlsx'):
-        return JsonResponse({'message':'exist'})
+        return JsonResponse({'message': 'exist'})
     else:
-        return JsonResponse({'message':'empty'})
+        return JsonResponse({'message': 'empty'})
 
 
 def upload_excel2json(request):
@@ -593,7 +597,7 @@ def upload_excel2json(request):
             return JsonResponse({'report': "same", 'same_entity': all_count[1]})
         num_progress = 50
         state = importApp(user_id, app_name)
-        if state !=  202:
+        if state != 202:
             return JsonResponse({'report': "fail"})
         num_progress = 75
         redefine_utter(user_id, app_name)
@@ -641,14 +645,14 @@ def send_q_to_bot(request):
         return JsonResponse({'replies_msg': result})
 
 
-
 def check_qnot(s):
     """
     處理單、雙引號
     """
-    s = s.replace("'","%20")
+    s = s.replace("'", "%20")
     s = s.replace('"', '%21')
     return s
+
 
 @api_view(['GET'])
 def qa_endpoint_api(request):
@@ -687,7 +691,7 @@ def qa_endpoint_api(request):
             'run_time': "0 秒",
             'ask_time': result['ask_time']
         }
-    return HttpResponse(json.dumps(result, indent=3, ensure_ascii=False),content_type="application/json")
+    return HttpResponse(json.dumps(result, indent=3, ensure_ascii=False), content_type="application/json")
 
 
 def page_not_found(request):
