@@ -18,9 +18,6 @@ LUIS_KEY = "b25e3e3c55204401bca92434148d298a"  # kingly.azure@gmail.com KinglyNL
 num_progress = 0
 
 
-# sim_model = Similarity()
-
-
 def sendconfig(Dict, request):
     try:
         print(request.session['train_name'])
