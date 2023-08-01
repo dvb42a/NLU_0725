@@ -73,7 +73,7 @@
                 <h4 class="my-0 font-weight-normal">{{plan.plan_name}}</h4>
               </div>
               <div class="card-body">
-                <h1 class="card-title pricing-card-title text-nowrap">NT ${{plan.plan_pay}} <small class="text-muted">/ {{plan.expired_at}}天</small></h1>
+                <h1 class="card-title pricing-card-title text-nowrap">NT ${{plan.plan_price}} <small class="text-muted">/ {{plan.expired_at}}天</small></h1>
                 <ul class="list-unstyled mt-3 mb-4">
                   <li>{{plan.plan_app}}個任務數量</li>
                   <li>可創管理帳號{{plan.plan_employee}}個</li>
@@ -82,7 +82,7 @@
                   <li>總查詢次數:{{plan.plan_count}}次/月</li>
                   <li>{{plan.expired_at}}天使用期限</li>
                 </ul>
-                {% if plan.plan_pay == 0 %}
+                {% if plan.plan_price == 0 %}
                   <a href="{% url "Accounts:login" %}">
                     <button type="button" class="btn btn-lg btn-block btn-outline-primary">登入免費使用</button>
                   </a>

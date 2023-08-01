@@ -16,14 +16,14 @@ class IndexView(View):
     @login_required
     def get(request, context):
         form = CreateForm()
-        plan_list = list(Plan.objects.all().order_by('plan_pay'))
+        plan_list = list(Plan.objects.all().order_by('plan_price'))
         return render(request, 'Admin/plan_manage.html', {'form': form, 'plan_list': plan_list})
 
     @staticmethod
     @login_required
     def post(request, context):
         form = CreateForm(request.POST)
-        plan_list = list(Plan.objects.all().order_by('plan_pay'))
+        plan_list = list(Plan.objects.all().order_by('plan_price'))
         if form.is_valid():
             plan_name = request.POST['plan_name']
             try:
@@ -34,7 +34,7 @@ class IndexView(View):
 
                 new_plan = Plan(
                     plan_name=request.POST['plan_name'],
-                    plan_pay=request.POST['plan_pay'],
+                    plan_price=request.POST['plan_price'],
                     plan_app=request.POST['plan_app'],
                     plan_person=request.POST['plan_person'],
                     plan_employee=request.POST['plan_employee'],

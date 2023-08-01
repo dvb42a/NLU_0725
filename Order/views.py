@@ -36,7 +36,7 @@ class create_order(View):
             ac_id=userid,
             status="0",
             plan_id=plan.plan_id,
-            price=plan.plan_pay,
+            price=plan.plan_price,
             order_time =datetime.datetime.now()
         )
         new_order.save()

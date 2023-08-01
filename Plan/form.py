@@ -5,7 +5,7 @@ class CreateForm(ModelForm):
 
     class Meta:
         model= Plan
-        fields = ('plan_name', 'plan_pay', 'plan_app', 'plan_person', 'plan_employee', 'plan_file', 'plan_count',
+        fields = ('plan_name', 'plan_price', 'plan_app', 'plan_person', 'plan_employee', 'plan_file', 'plan_count',
                   'expired_at')
         labels={
             'plan_name': '方案名稱',
@@ -22,7 +22,7 @@ class CreateForm(ModelForm):
                                            "placeholder": "請輸入方案名稱",
                                            "autocomplete" : "off"}
                                 ))
-    plan_pay = forms.IntegerField(label="費用",
+    plan_price = forms.IntegerField(label="費用",
                                 widget=forms.NumberInput(
                                     attrs={"class": "form-control",
                                            "placeholder": "輸入數量...",
