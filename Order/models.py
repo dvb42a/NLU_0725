@@ -1,14 +1,14 @@
 from django.db import models
-from Accounts.models import MainAccount
-
+from Accounts.models import Account
+from Plan.models import Plan
 class Order(models.Model):
     """
     訂單
     """
     order_no = models.CharField(primary_key=True,max_length=12)
-    ac_main = models.ForeignKey(MainAccount, on_delete=models.DO_NOTHING, related_name='order')
+    ac = models.ForeignKey(Account, on_delete=models.DO_NOTHING, related_name='order')
+    plan = models.ForeignKey(Plan, on_delete=models.DO_NOTHING ,related_name='order')
     status = models.IntegerField()
-    plan_name = models.CharField(max_length=20)
     price = models.IntegerField()
     order_time = models.DateTimeField()
     pay_time = models.DateTimeField(blank=True)

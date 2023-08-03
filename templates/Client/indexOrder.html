@@ -1,7 +1,8 @@
-{% extends "layouts/bs4-account.html" %}\
+{% extends "layouts/base-dashboard.html" %}
 {% block nav_items %}
-    {% include "layouts/left-bar-order.html" %}
+    {% include "layouts/base-dashboard_left.html" %}
 {% endblock %}
+
 {% block path_bar %}
     <!-- 導航列 -->
     <div class="row align-items-center py-4">
@@ -10,7 +11,7 @@
              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                     <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">方案-{{ clientPlan }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">訂單編號-{{ order_data.order_no }}</li>
                 </ol>
             </nav>
         </div>

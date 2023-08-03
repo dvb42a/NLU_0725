@@ -29,7 +29,7 @@ class create_order(View):
         order_no = str(year)+str(month)+str(day)+random
 
         user = get_user_info(request)
-        userid = user.ac_id
+        userid = user.ac_name
 
         new_order = Order(
             order_no=order_no,
