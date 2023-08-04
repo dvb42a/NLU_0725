@@ -47,6 +47,16 @@
                             </td>
                           </tr>
                           <tr>
+                            <td style="text-align:right">送出匯款資訊時間</td>
+                            <td style="text-align:left">
+                                {% if order.client_submit_time %}
+                                    {{order.client_submit_time | date:"Y年m月d日 h點i分 "}}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                          </tr>
+                          <tr>
                             <td style="text-align:right">確認已匯款時間</td>
                             <td style="text-align:left">
                                 {% if order.pay_time %}
@@ -80,7 +90,135 @@
                   </table>
                 </div>
             </div>
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">匯款資訊</h3>
+                        </div>
+                        {% if order.status != 1 and  order.status != 2 and order.status != 3 %}
+                        <div class="col text-right">
+                             <button type="button" class="btn btn-default" data-toggle="modal"
+                                  data-target="#ModalEdit" id="open_edit">
+                                  <span class="btn-inner--text">送出匯款資訊</span>
+                             </button>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Card body -->
+                <form method="post" onkeydown="if(event.keyCode==13)return false;" id="submitPaymentForm">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <!-- Form groups used in grid -->
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputName">匯款人姓名:</label>
+                                    <input type="text" class="form-control" id="inputName" value="{{ order_data.name }}" name="name"
+                                           required >
+                                    <div class="valid-feedback">
+                                        更新完成!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        請輸入正確格式(不可空白或名稱含有非法字元ex.-!#%&*@)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputBankNum">帳戶號碼(後四碼):</label>
+                                    <span style="display: none" id="account_name_span"></span>
+                                    <input type="text" class="form-control" id="inputBankNum" placeholder="XXXX" value="{{order_data.bankaccount}}" name="bankaccount" >
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputAccount">下訂帳號:</label>
+                                    <input type="text" class="form-control" id="inputAccount" value="{{ order_data.ac_id }}"
+                                           required disabled>
+                                    <div class="valid-feedback">
+                                        更新完成!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        請輸入正確格式(不可空白或名稱含有非法字元ex.-!#%&*@)
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="form-control-label" for="inputPhoneNumber">手機號碼</label>
+                                    <input type="text" class="form-control" id="inputPhoneNumber" placeholder="09XX XXX XXX" value="{{ order_data.phone_number }}" name="phone_number">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
+    <div class="modal fade" id="ModalEdit" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalCenterTitle"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">確認訂單資訊</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                    <input type="hidden" name="edit" value="statusConfirmCancel">
+                    <div class="modal-body">
+                        <div class="mat-dialog-content">
+                            <div class="form-row">
+                               <span class="form-control-label"><input type="checkbox" name="checked" id="check"> 是否確定匯款資訊並已完成匯款?</input></span>
+                            </div>
+                             <div id="checkWarming" hidden>
+                                <span class="form-control-label text-danger" >請勾選確認資訊無誤。</span>
+                             </div>
+                            <br>
+                        </div>
+                         {% if StatusMessage %}
+                                    <div>
+                                        <span class="form-control-label text-danger">
+                                            {{StatusMessage}}
+                                        </span>
+                                    </div>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer" id="creat_Done_btn_div">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary" id="creat_Done_btn">確認</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        const submitBtn=document.getElementById('creat_Done_btn');
+        const submitPaymentForm=document.getElementById('submitPaymentForm');
+        const check=document.getElementById('check');
+        const checkWarming=document.getElementById('checkWarming');
+
+        submitBtn.addEventListener('click' ,function(){
+            if(check.checked)
+            {
+             submitPaymentForm.submit();
+            }
+            else
+            {
+              checkWarming.hidden=false;
+            }
+        });
+
+
+    </script>
+
 {% endblock %}
+

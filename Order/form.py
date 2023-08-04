@@ -21,16 +21,16 @@ class CreateForm(ModelForm):
                                                 "autocomplete": "off"}
                                      ))
     name = forms.CharField(label="匯款人中文姓名",
-                              required=True,
-                              error_messages={
-                                  "required": "匯款人中文姓名不能為空",
-                                  "max_length": "匯款人中文姓名不能大於5字元",
-                              },
-                              widget=forms.TextInput(
-                                  attrs={"class": "form-control",
-                                         "placeholder": "請輸入匯款人中文姓名",
-                                         "autocomplete": "off"}
-                              ))
+                                  required=True,
+                                  error_messages={
+                                      "required": "匯款人中文姓名不能為空",
+                                      "max_length": "匯款人中文姓名不能大於5字元",
+                                  },
+                                  widget=forms.TextInput(
+                                      attrs={"class": "form-control",
+                                             "placeholder": "請輸入匯款人中文姓名",
+                                             "autocomplete": "off"}
+                                  ))
     phone_number = forms.CharField(label="電話號碼",
                                       required=True,
                                       error_messages={

@@ -9,4 +9,5 @@ def Homepage(request):
         account = get_user_info(request)
         ret['account'] = account
     ret['plan_list'] = plan_list
+
     return render(request, 'home.html' ,ret)

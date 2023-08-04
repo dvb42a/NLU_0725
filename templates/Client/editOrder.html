@@ -55,7 +55,7 @@
                                 <span class="text-white badge bg-danger">訂單取消</span>
                                 {% endif %}
                             </td>
-                            <td><a href="{% url 'Client:orderIndex' order.order_no %}"> 查看</a></td>
+                            <td><a href="{% url 'Client:orderIndex' order.order_no %}"> {%if order.status == 0 %} 填寫匯款內容 {% else %} 查看 {% endif %} </a></td>
                         </tr>
                     {% endfor %}
                 {% else %}

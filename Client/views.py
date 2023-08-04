@@ -7,7 +7,7 @@ from Order.models import Order
 from Client.models import ClientPlan
 from Apps.models import Apps
 from app.views import sendconfig
-
+from Order.form import CreateForm
 
 class app(View):
     @staticmethod
@@ -75,3 +75,28 @@ class order_index(View):
             dashborad=True
         ))
         return render(request, 'Client/indexOrder.html', sendconfig(context, request))
+
+    @staticmethod
+    def post(request,id):
+
+        order_data = Order.objects.get(order_no=id)
+        form = CreateForm(request.POST or None, instance=order_data)
+        #if form.is_valid():
+        order_data.name=request.POST['name']
+        order_data.save()
+        form.save()
+        print('123')
+        #else:
+        print('456')
+
+        context = {}
+        account = get_user_info(request)
+        order_data = Order.objects.get(order_no=id)
+        context['account'] = account
+        context['order_data'] = order_data
+        context.update(dict(
+            dashborad=True
+        ))
+        return render(request, 'Client/indexOrder.html', sendconfig(context, request))
+
+

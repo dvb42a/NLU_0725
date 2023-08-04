@@ -11,6 +11,7 @@ class Order(models.Model):
     status = models.IntegerField()
     price = models.IntegerField()
     order_time = models.DateTimeField()
+    client_submit_time = models.DateTimeField()
     pay_time = models.DateTimeField(blank=True)
     sucess_time = models.DateTimeField(blank=True)
 
