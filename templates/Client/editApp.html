@@ -85,18 +85,18 @@
                             {% for plan in clientPlan %}
                                 <tr>
                                     <th scope="row">
-                                        {{ plan.cplan_name}}
+                                        {{ plan.plan_name}}
                                     </th>
                                     <th scope="row" class="text-center">
-                                        {{plan.current_app| displayAppCount:plan.cplan_app }}/{{ plan.cplan_app}}
+                                        {{plan.max_app|minus:plan.current_app}}/{{plan.max_app}}
                                     </th>
                                     <th scope="row" class="text-center">
-                                        {{ plan.cplan_count}}
+                                        {{ plan.max_call}}
                                     </th>
                                     <th scope="row" class="text-center">
-                                        {{plan.expired_at | days_until}}
+                                        {{plan.plan_end | days_until}}
                                     </th>
-                                    <td ><a href="{% url "Client:appIndex" plan.cplan_id %}"> 查看</a></td>
+                                    <td > <a href="{% url "Client:appIndex" plan.id %}"> 查看 </a></td>
                                 </tr>
                             {% endfor %}
                         {% else %}

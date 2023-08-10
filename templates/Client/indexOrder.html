@@ -11,7 +11,7 @@
              <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
                 <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
                     <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
-                    <li class="breadcrumb-item active" aria-current="page">訂單編號-{{ order_data.order_no }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">訂單編號-{{ order.order_no }}</li>
                 </ol>
             </nav>
         </div>
@@ -39,8 +39,8 @@
                           <tr>
                             <td style="text-align:right">訂單建立時間</td>
                             <td style="text-align:left">
-                                {% if order_data.order_time%}
-                                    {{order_data.order_time | date:"Y年m月d日 h點i分 "}}
+                                {% if order.order_time%}
+                                    {{order.order_time | date:"Y年m月d日 h點i分 "}}<i class="fa fa-check-circle" aria-hidden="true"></i>
                                 {% else %}
                                     -
                                 {% endif %}
@@ -50,7 +50,7 @@
                             <td style="text-align:right">送出匯款資訊時間</td>
                             <td style="text-align:left">
                                 {% if order.client_submit_time %}
-                                    {{order.client_submit_time | date:"Y年m月d日 h點i分 "}}
+                                    {{order.client_submit_time | date:"Y年m月d日 h點i分 "}}<i class="fa fa-check-circle" aria-hidden="true"></i>
                                 {% else %}
                                     -
                                 {% endif %}
@@ -60,7 +60,7 @@
                             <td style="text-align:right">確認已匯款時間</td>
                             <td style="text-align:left">
                                 {% if order.pay_time %}
-                                    {{order.pay_time | date:"Y年m月d日 h點i分 "}}
+                                    {{order.pay_time | date:"Y年m月d日 h點i分 "}}<i class="fa fa-check-circle" aria-hidden="true"></i>
                                 {% else %}
                                     -
                                 {% endif %}
@@ -70,7 +70,7 @@
                             <td style="text-align:right">開通服務時間</td>
                             <td style="text-align:left">
                                 {% if order.sucess_time %}
-                                    {{order.sucess_time | date:"Y年m月d日 h點i分 "}}
+                                    {{order.sucess_time | date:"Y年m月d日 h點i分 "}}<i class="fa fa-check-circle" aria-hidden="true"></i>
                                 {% else %}
                                     -
                                 {% endif %}
@@ -79,9 +79,9 @@
                           <tr>
                             <td style="text-align:right">完成訂單時間</td>
                             <td style="text-align:left ;color:green">
-                                {% if order.pay_time %}
-                                    {{order.pay_time | date:"Y年m月d日 h點i分 "}}
-                                {% else%}
+                                {% if order.sucess_time %}
+                                    {{order.sucess_time | date:"Y年m月d日 h點i分 "}}<i class="fa fa-check-circle" aria-hidden="true"></i>
+                                {% else %}
                                     -
                                 {% endif %}
                             </td>
@@ -97,7 +97,7 @@
                         <div class="col">
                             <h3 class="mb-0">匯款資訊</h3>
                         </div>
-                        {% if order.status != 1 and  order.status != 2 and order.status != 3 %}
+                        {% if order.status != 1 and  order.status != 2 and order.status != 3 and order.client_submit_time == None %}
                         <div class="col text-right">
                              <button type="button" class="btn btn-default" data-toggle="modal"
                                   data-target="#ModalEdit" id="open_edit">
@@ -108,29 +108,68 @@
                     </div>
                 </div>
                 <!-- Card body -->
-                <form method="post" onkeydown="if(event.keyCode==13)return false;" id="submitPaymentForm">
-                    {% csrf_token %}
+                {% if order.client_submit_time == None %}
+                    <form method="post" onkeydown="if(event.keyCode==13)return false;" id="submitPaymentForm">
+                        {% csrf_token %}
+                        <div class="card-body">
+
+                            <!-- Form groups used in grid -->
+                            <div class="row">
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" >{{form.name.label}}</label>
+                                        {{form.name}}
+                                        <div style="color:red">{{form.name.errors}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" >{{form.bankaccount.label}}</label>
+                                        <span style="display: none" id="account_name_span"></span>
+                                        {{form.bankaccount}}
+                                        <div style="color:red">{{form.bankaccount.errors}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="inputAccount">下訂帳號:</label>
+                                        <input type="text" class="form-control" id="inputAccount" value="{{ order.ac_id }}"
+                                               required disabled>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-control-label" >{{form.phone_number.label}}</label>
+                                        {{form.phone_number}}
+                                        <div style="color:red">{{form.phone_number.errors}}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="margin-top: 5px;" >
+                                <input type="checkbox" name="noted"><span class="form-control-label"> 載入已儲存之匯款資訊</span>
+                            </div>
+                            <div >
+                                <input type="checkbox" name="saveInfo" ><span class="form-control-label"> 記住我的匯款資訊</span>
+                            </div>
+                        </div>
+                    </form>
+                {% else %}
                     <div class="card-body">
-                        <!-- Form groups used in grid -->
                         <div class="row">
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-control-label" for="inputName">匯款人姓名:</label>
-                                    <input type="text" class="form-control" id="inputName" value="{{ order_data.name }}" name="name"
-                                           required >
-                                    <div class="valid-feedback">
-                                        更新完成!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        請輸入正確格式(不可空白或名稱含有非法字元ex.-!#%&*@)
-                                    </div>
+                                    <input type="text" class="form-control" id="inputName"  value="{{ order.name }}" disabled>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-md-6">
+                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="inputBankNum">帳戶號碼(後四碼):</label>
-                                    <span style="display: none" id="account_name_span"></span>
-                                    <input type="text" class="form-control" id="inputBankNum" placeholder="XXXX" value="{{order_data.bankaccount}}" name="bankaccount" >
+                                    <label class="form-control-label" for="inputAppId">帳戶號碼(後五碼):</label>
+                                    <input type="text" class="form-control" id="inputAppId" value="{{order.bankaccount}}" disabled>
                                 </div>
                             </div>
                         </div>
@@ -138,26 +177,20 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="inputAccount">下訂帳號:</label>
-                                    <input type="text" class="form-control" id="inputAccount" value="{{ order_data.ac_id }}"
-                                           required disabled>
-                                    <div class="valid-feedback">
-                                        更新完成!
-                                    </div>
-                                    <div class="invalid-feedback">
-                                        請輸入正確格式(不可空白或名稱含有非法字元ex.-!#%&*@)
-                                    </div>
+                                    <label class="form-control-label" for="inputId">帳號</label>
+                                    <input type="text" class="form-control" id="inputId" value="{{order.ac_id}}" disabled>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="form-control-label" for="inputPhoneNumber">手機號碼</label>
-                                    <input type="text" class="form-control" id="inputPhoneNumber" placeholder="09XX XXX XXX" value="{{ order_data.phone_number }}" name="phone_number">
+                                    <label class="form-control-label" for="inputCulture">手機號碼</label>
+                                    <input type="text" class="form-control" id="inputCulture" value="+886 0{{ order.phone_number }}" disabled>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                {% endif %}
+
             </div>
         </div>
     </div>
@@ -176,13 +209,11 @@
                     <input type="hidden" name="edit" value="statusConfirmCancel">
                     <div class="modal-body">
                         <div class="mat-dialog-content">
+
                             <div class="form-row">
-                               <span class="form-control-label"><input type="checkbox" name="checked" id="check"> 是否確定匯款資訊並已完成匯款?</input></span>
+                               <span class="form-control-label"><input type="checkbox" name="checked" id="check"> 是否確定匯款資訊無誤並已完成匯款? 一旦送出資料無法更改。</span>
                             </div>
-                             <div id="checkWarming" hidden>
-                                <span class="form-control-label text-danger" >請勾選確認資訊無誤。</span>
-                             </div>
-                            <br>
+
                         </div>
                          {% if StatusMessage %}
                                     <div>
@@ -205,6 +236,11 @@
         const submitPaymentForm=document.getElementById('submitPaymentForm');
         const check=document.getElementById('check');
         const checkWarming=document.getElementById('checkWarming');
+        const inputName=document.getElementById('id_name');
+        const inputBankAccount=document.getElementById('id_backaccount');
+        const inputPhoneNumber=document.getElementById('id_phone_number');
+
+
 
         submitBtn.addEventListener('click' ,function(){
             if(check.checked)

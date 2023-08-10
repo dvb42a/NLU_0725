@@ -10,7 +10,7 @@ class Apps(models.Model):
     任務資訊
     """
     id = models.IntegerField(primary_key=True,blank=True)
-    plan = models.ForeignKey(ClientPlan, on_delete=models.DO_NOTHING, related_name='plan_apps')
+    plan = models.ForeignKey(ClientPlan, on_delete=models.DO_NOTHING, related_name='plan_app')
     ac = models.ForeignKey(Account, on_delete=models.DO_NOTHING, related_name='apps')
     state = models.IntegerField(default=0, blank=True)
     app_name = models.CharField(max_length=32)

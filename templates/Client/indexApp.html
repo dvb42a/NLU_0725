@@ -37,30 +37,30 @@
                         <tbody>
                           <tr>
                             <td style="text-align:right">訂單建立時間</td>
-                            <td style="text-align:left">{{clientPlan.order.order_time | date:"Y年m月d日 h點i分 "}}</td>
+                            <td style="text-align:left">{{clientPlan.order.order_time | date:"Y年m月d日 H點i分 "}}</td>
                           </tr>
                           <tr>
                             <td style="text-align:right">確認已匯款時間</td>
-                            <td style="text-align:left">{{clientPlan.order.pay_time | date:"Y年m月d日 h點i分 "}}
+                            <td style="text-align:left">{{clientPlan.order.pay_time | date:"Y年m月d日 H點i分 "}}
                             </td>
                           </tr>
                           <tr>
                             <td style="text-align:right">開通服務時間</td>
                             <td style="text-align:left">
-                                {{clientPlan.order.sucess_time | date:"Y年m月d日 h點i分 "}}
+                                {{clientPlan.order.sucess_time | date:"Y年m月d日 H點i分 "}}
                             </td>
                           </tr>
                           <tr>
                             <td style="text-align:right">完成訂單時間</td>
                             <td style="text-align:left ;color:green">
-                                {{clientPlan.order.sucess_time | date:"Y年m月d日 h點i分 "}}
+                                {{clientPlan.order.sucess_time | date:"Y年m月d日 H點i分 "}}
                             </td>
                           </tr>
                           {% if mission_data %}
                             {% for mission in mission_data%}
                             <tr>
                                 <td style="text-align:right">新增第{{forloop.counter}}個APP時間 </td>
-                                <td>{{mission.created_at | date:"Y年m月d日 h點i分 "}}</td>
+                                <td>{{mission.created_date | date:"Y年m月d日 h點i分 "}}</td>
                             </tr>
                             {% endfor %}
                           {% endif %}
@@ -107,10 +107,10 @@
                                 {% for app in mission_data %}
                                     <tr>
                                         <th scope="row">
-                                            <a href="">{{ app.mission_name }}</a>
+                                            <a href="{% url "app:manage_info" %}?app={{app.app_name}}">{{ app.app_name }}</a>
                                         </th>
                                         <td>
-                                            <span>{{ app.created_at | date:"Y年m月d日 h點i分" }}</span>
+                                            <span>{{ app.created_date | date:"Y年m月d日 h點i分" }}</span>
                                         </td>
                                         <td style="text-align:center">
                                             {#                                    <button type="button" class="btn btn-success" disabled>匯出</button>#}
@@ -142,17 +142,104 @@
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h3 class="mb-0">訂單詳細資料</h3>
+                            <h3 class="mb-0">匯款資訊</h3>
                         </div>
-                        {% if order.status != 1 and  order.status != 2 and order.status != 3 %}
-                        <div class="col text-right">
-                            <a href=""> 查看</a>
+                    </div>
+                </div>
+                <!-- Card body -->
+                <div class="card-body">
+                    <!-- Form groups used in grid -->
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputName">匯款人姓名:</label>
+                                <input type="text" class="form-control"  value="{{ clientPlan.order.name }}"
+                                       required disabled>
+                            </div>
                         </div>
-                        {% endif %}
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputAppId">帳戶號碼(後四碼):</label>
+                                <span style="display: none" id="account_name_span"></span>
+                                <input type="text" class="form-control" id="inputAppId" value="{{clientPlan.order.bankaccount}}" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputName">下訂帳號:</label>
+                                <input type="text" class="form-control" id="inputName" value="{{ clientPlan.order.ac_id }}"
+                                       required disabled>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="form-control-label" for="inputCulture">手機號碼</label>
+                                <input type="text" class="form-control" id="inputCulture" value="+886 0{{ clientPlan.order.phone_number }}"
+                                       disabled>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+            <div class="card mb-4">
+                <!-- Card header -->
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0">訂單詳細資料</h3>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Card body -->
+                <table class="table table-bordered">
+                  <thead>
+                      <tr>
+                        <th  style="text-align:left" >
+                            訂單編號:{{clientPlan.order.order_no}}
+                        </th>
+                      </tr>
+                    <tr>
+                      <th style="text-align:left" >商品</th>
+                      <th style="text-align:right">總計</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr >
+                      <th class="table-light" style="text-align:left">
+                        {{plan.plan_name}}
+                      </th>
+                      <th class="table-light" style="text-align:right">
+                        NT${{clientPlan.order.price}}
+                      </th>
+                    </tr>
+                    <tr style="text-align:right">
+                      <td >
+                        小計:
+                      </td>
+                      <th>
+                        NT${{clientPlan.order.price}}
+                      </th>
+                    </tr>
+                    <tr style="text-align:right">
+                      <td >
+                        總計:
+                      </td>
+                      <th style="color:green">
+                        NT${{clientPlan.order.price}}
+                      </th>
+                    </tr>
+                    <tr>
+                      <td colspan="4" style="text-align:left" >
+                        付款方式:匯款
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+    </div>
+ </div>
 {% endblock %}

@@ -1,6 +1,8 @@
 from django import forms
 from django.forms import ModelForm
 from Order.models import Order
+from django.core.validators import RegexValidator
+
 
 
 class CreateForm(ModelForm):
@@ -8,20 +10,35 @@ class CreateForm(ModelForm):
         model = Order
         fields = ('bankaccount', 'name', 'phone_number')
 
-    bankaccount = forms.IntegerField(label="匯款帳戶後四碼",
+    bankaccount = forms.CharField(label="匯款帳戶後五碼",
                                      required=True,
+                                     max_length=5,
+                                     min_length=5,
+                                     validators=[
+                                         RegexValidator(
+                                             regex=r'^\d*$',
+                                             message="只可輸入數字"
+                                         )
+                                     ],
                                      error_messages={
                                          "required": "銀行帳戶不能為空",
-                                         "max_length": "銀行帳戶不能大於4字元",
-                                         'invalid': "只可輸入數字"
+                                         "max_length": "銀行帳戶不能大於5字元",
+                                         "min_length": "銀行帳戶不能小於5字元",
                                      },
                                      widget=forms.TextInput(
                                          attrs={"class": "form-control",
-                                                "placeholder": "請輸入匯款帳戶後四碼",
+                                                "placeholder": "XXXXX",
                                                 "autocomplete": "off"}
                                      ))
     name = forms.CharField(label="匯款人中文姓名",
-                                  required=True,
+                                   required=True,
+                                   max_length=5,
+                                   validators=[
+                                       RegexValidator(
+                                           regex=r'^[\u4e00-\u9fa5]*$',
+                                           message="只可輸入中文"
+                                       )
+                                   ],
                                   error_messages={
                                       "required": "匯款人中文姓名不能為空",
                                       "max_length": "匯款人中文姓名不能大於5字元",
@@ -32,14 +49,22 @@ class CreateForm(ModelForm):
                                              "autocomplete": "off"}
                                   ))
     phone_number = forms.CharField(label="電話號碼",
-                                      required=True,
-                                      error_messages={
-                                          "required": "電話號碼不能為空",
-                                          "max_length": "電話號碼不能大於9字元",
-                                          'invalid': "只可輸入數字"
-                                      },
-                                      widget=forms.TextInput(
-                                          attrs={"class": "form-control",
-                                                 "placeholder": "請輸入電話號碼",
-                                                 "autocomplete": "off"}
-                                      ))
+                                  required=True,
+                                  max_length=10,
+                                  min_length=10,
+                                  validators=[
+                                       RegexValidator(
+                                           regex=r'^\d*$',
+                                           message="只可輸入數字"
+                                       )
+                                  ],
+                                  error_messages={
+                                      "required": "電話號碼不能為空",
+                                      "max_length": "電話號碼不能多於10個字元",
+                                      "min_length": "電話號碼不能少於10個字元"
+                                  },
+                                  widget=forms.TextInput(
+                                      attrs={"class": "form-control",
+                                             "placeholder": "09XX XXX XXX",
+                                             "autocomplete": "off"}
+                                  ))

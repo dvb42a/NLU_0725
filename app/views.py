@@ -10,6 +10,8 @@ from Accounts.required import login_required, get_user_info
 from Apps.models import Apps
 from Client.models import ClientPlan
 from BColor import SystemStatus
+from django.db.models import Count
+
 
 logging.basicConfig(filename='log.txt', filemode='a')
 
@@ -47,12 +49,13 @@ class Dashboard(View):
         """
         # 當權限為 系統管理員/專案管理員 時可以查看 CLU 任務型資料
         account = context["account"]
-        client_plan = ClientPlan.objects.filter(ac=account.ac_name, plan_end__gt=timezone.now())  # 查詢登入帳號所持有還未到期的plan
+        client_plan = ClientPlan.objects.filter(ac=account.ac_name, plan_end__gt=timezone.now()) # 查詢登入帳號所持有還未到期的plan
+        client_plan_withCountApp = client_plan.annotate(current_app=Count('plan_app'))
         apps = Apps.objects.filter(ac=account.ac_name).order_by('-created_date')  # 查詢登入帳號所持有的app清單
-        # print(client_plan[0].plan_apps.all()[0].app_name)
+
         context.update(dict(
             role=account.role,
-            client_plan=client_plan,
+            client_plan= client_plan_withCountApp,
             apps=apps,
             success="pass",
             dashborad=True
@@ -301,8 +304,10 @@ def creat_app(request):
     account = get_user_info(request)
     if request.method == 'POST':
         plan = ClientPlan.objects.get(id=request.POST['plan_id'])
+        current_app=Apps.objects.filter(plan_id=request.POST['plan_id']).count()
+
         # apps = Apps.objects.filter(plan_id=plan.id).count()
-        if plan.max_app > plan.current_app:
+        if plan.max_app > current_app:
             print("新建立中")
             Apps.objects.create(
                 plan=plan,
@@ -314,13 +319,11 @@ def creat_app(request):
             app_description = request.POST.get('app_description', None)
             status = addApp(new_app_name, app_description)
             if status == 201 or 200:
-                plan.current_app = plan.current_app + 1
-                plan.save(update_fields=['current_app'])
                 return JsonResponse({'report': 'success'})
             else:
                 return JsonResponse({'report': "error"})
-    else:
-        return redirect(reverse("app:dashboard"))
+        else:
+            return redirect(reverse("app:dashboard"))
 
 
 def delete_app(request):
@@ -338,9 +341,6 @@ def delete_app(request):
     if state == 202:
         print(f'[DELETE app]: {user_id}-{app_name}\nresponse:{state}')
         app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
-        plan = ClientPlan.objects.filter(id=app.plan_id).first()
-        plan.current_app = plan.current_app - 1
-        plan.save(update_fields=['current_app'])
         app.delete()
         return redirect(reverse("app:dashboard"))
     else:

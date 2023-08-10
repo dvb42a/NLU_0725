@@ -46,16 +46,20 @@
                             <td>TWD {{order.price}}</td>
                             <td>
                                 {% if order.status == 0 %}
-                                <span class="badge bg-light text-dark">尚未匯款</span>
+                                <span class="badge bg-light text-dark">等待匯款中</span>
                                 {% elif order.status == 1 %}
-                                <span class="badge bg-success">已匯款，等待開通</span>
+                                <span class="badge bg-success">已送出匯款資訊</span>
                                 {% elif order.status == 2 %}
-                                <span class="badge bg-success">已完成</span>
+                                <span class="badge bg-success">等待服務開通</span>
                                 {% elif order.status == 3 %}
-                                <span class="text-white badge bg-danger">訂單取消</span>
+                                <span class="text-white badge bg-danger">已開通服務</span>
+                                {% elif order.status == 4 %}
+                                <span class="badge bg-success">已完成</span>
+                                {% elif order.status == 5 %}
+                                <span class="text-white badge bg-danger">訂單已被取消</span>
                                 {% endif %}
                             </td>
-                            <td><a href="{% url 'Client:orderIndex' order.order_no %}"> {%if order.status == 0 %} 填寫匯款內容 {% else %} 查看 {% endif %} </a></td>
+                            <td><a href="{% url 'Client:orderIndex' order.order_no %}"> {% if order.status == 0  %} 填寫匯款內容 {% else %} 查看 {% endif %} </a></td>
                         </tr>
                     {% endfor %}
                 {% else %}
