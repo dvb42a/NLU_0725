@@ -178,26 +178,7 @@ class EditBase(forms.ModelForm):
     class Meta:
         model = Account
         fields = ('email',)
-    # last_name = forms.CharField(label="姓氏",
-    #                             required=True, max_length=10,
-    #                             error_messages={
-    #                                 "required": "姓氏不能為空",
-    #                                 "max_length": "姓氏不能超過10個字元",
-    #                             },
-    #                             widget=forms.TextInput(
-    #                                 attrs={"class": "form-control",
-    #                                        "placeholder": "請輸入姓氏"}
-    #                             ))
-    # name = forms.CharField(label="名字",
-    #                        required=True, max_length=50,
-    #                        error_messages={
-    #                            "required": "名稱不能為空",
-    #                            "max_length": "名稱不能超過50個字元",
-    #                        },
-    #                        widget=forms.TextInput(
-    #                            attrs={"class": "form-control",
-    #                                   "placeholder": "請輸入名字"}
-    #                        ))
+
     email = forms.CharField(label="電郵地址",
                             required=True , max_length=100,
                             error_messages={
@@ -277,7 +258,8 @@ class EditPassword(forms.ModelForm):
 class EditMain(forms.ModelForm):
     class Meta:
         model = MainAccount
-        fields = ('phone_number','real_name','bankaccount','transfer_name','company_name','tax_number')
+        fields = ('phone_number','real_name','bank_account','transfer_name','company_name','tax_number')
+
 
     phone_number = forms.CharField(label="手機號碼",
                                    required=False, min_length=10, max_length=10,
@@ -287,8 +269,8 @@ class EditMain(forms.ModelForm):
                                    },
                                    widget=forms.TextInput(
                                        attrs={"class": "form-control",
-                                              "placeholder": "請輸入手機號碼",
-                                              "value": "09"}
+                                              "placeholder": "09XX XXX XXX",
+                                              }
                                    ))
     real_name = forms.CharField(label="真實姓名",
                                 required=False, min_length=2, max_length=50,
@@ -301,7 +283,7 @@ class EditMain(forms.ModelForm):
                                            "placeholder": "請輸入真實姓名",
                                            "id": "RealName"}
                                 ))
-    bankaccount = forms.CharField(label="帳戶後五碼",
+    bank_account = forms.CharField(label="帳戶後五碼",
                                      required=False, min_length=5, max_length=5,
                                      error_messages={
                                          "required":"帳戶後五碼不能為空",
@@ -348,6 +330,7 @@ class EditMain(forms.ModelForm):
                                          "placeholder": "請輸入統一編號",
                                          "id": "TaxNum"}
                               ))
+
 
     def clean_phone_number(self):
         data=self.cleaned_data['phone_number']

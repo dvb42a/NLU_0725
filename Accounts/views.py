@@ -324,33 +324,50 @@ class edit(View):
 
     def get(request,context):
         account = get_user_info(request)
+        try :
+            main_account = MainAccount.objects.get(ac_id=account.ac_name)
+            context['main_form'] = EditMain(instance=main_account)
+        except MainAccount.DoesNotExist:
+            main_account = None
+            context['main_form'] = EditMain()
         context['base_form'] = EditBase(instance=account)
-        context['main_form'] = EditMain(instance=account)
         context['password_form'] = EditPassword(instance=account)
-        context['account']=account
+        context['account'] = account
         context["dashborad"] = True
         return render(request, 'Account/editAccount.html', sendconfig(context))
 
     @staticmethod
     @login_required
     def post(request,context):
-        # account=BaseLogin.objects.get(ac_name=get_user_name(request))
-        # print(get_user_name(request))
-        # print(account)
-        # form = EditForm(request.POST or None, instance=account)
-        # context['account']=account
-        # if form.is_valid():
-        #     form.save()
-        #     context['message']="更新完成!"
-        # context['form']=form
+
         account = get_user_info(request)
-        main_account = MainAccount.objects.get(ac_name=account.ac_name)
         base_form = EditBase(request.POST or None, instance=account)
-        main_form = EditMain(request.POST or None, instance=main_account)
-        if base_form.is_valid():
-            base_form.save()
+        try:
+            main_account = MainAccount.objects.get(ac_id=account.ac_name)
+            main_form = EditMain(request.POST or None)
+            print('is null')
+            if main_form.is_valid():
+                print('pass_valid')
+                new_data = MainAccount(
+                    ac_id=account.ac_name,
+                    real_name=request.POST['real_name'],
+                    bank_account=request.POST['bank_account'],
+                    phone_number=request.POST['phone_number'],
+                    transfer_name=request.POST['transfer_name'],
+                )
+                new_data.save()
+        except MainAccount.DoesNotExist:
+            main_form = EditMain(request.POST or None, instance=main_account)
             if main_form.is_valid():
                 main_form.save()
+            print('123')
+            main_form = EditMain(request.POST or None)
+
+
+
+
+        if base_form.is_valid():
+            base_form.save()
             context['message']="更新完成!"
         context['base_form'] = base_form
         context['main_form'] = main_form

@@ -10,6 +10,9 @@ from django.utils.html import format_html
 import config,re
 from Client.models import ClientPlan
 from Plan.models import Plan
+from django.utils.crypto import get_random_string
+from django.utils import timezone
+from Order.models import Order
 
 SECRET_KEY = 'kingly1370'
 
@@ -100,8 +103,15 @@ class Verify(View):
         elif is_token_valid(token, expiration_time):
             account.state = 1
             account.save(update_fields=['state'])
+            random = get_random_string(length=20)
+            current_timezone = timezone.now()
+            current_date = current_timezone.strftime('%Y%m%d')
+            random_cplan_code = current_date + random
             plan = Plan.objects.get(plan_id=1)
+
+
             ClientPlan.objects.create(
+                id=random_cplan_code,
                 ac=account,
                 plan_name=plan.plan_name,
                 max_app=plan.max_app,

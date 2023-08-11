@@ -104,14 +104,14 @@ class order_index(View):
             if request.POST['saveInfo'] == 'on' :
                 try:
                     account_info=MainAccount.objects.get(ac_id=order_data.ac_id)
-                    account_info.ac_id =request.POST['name'],
-                    account_info.real_name = request.POST['bankaccount'],
-                    account_info.phone_number=request.POST['phone_number']
+                    account_info.transfer_name = request.POST['name']
+                    account_info.bank_account = request.POST['bankaccount']
+                    account_info.phone_number = request.POST['phone_number']
                     account_info.save()
                 except MainAccount.DoesNotExist:
                     new_account_info=MainAccount(
                         ac_id = order_data.ac_id,
-                        transfor_name= request.POST['name'],
+                        transfer_name= request.POST['name'],
                         bank_account = request.POST['bankaccount'],
                         phone_number = request.POST['phone_number']
                     )
