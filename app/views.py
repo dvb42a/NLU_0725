@@ -346,6 +346,23 @@ def delete_app(request):
     else:
         return HttpResponse('<h1>App 刪除失敗</h1><br /><a href="/app/">Back page</a><br />' + str(state))
 
+def delete_app_in_ClientPlan(request):
+    app_name = request.GET.get('app')
+    user_id = request.session['login_name']
+    path = f'./config/{user_id}_{app_name}/'
+    try:
+        shutil.rmtree(path)
+    except OSError:
+        pass
+    state = deleteApp(user_id, app_name)
+    if state == 202:
+        print(f'[DELETE app]: {user_id}-{app_name}\nresponse:{state}')
+        app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
+        app.delete()
+        previous_page = request.META.get('HTTP_REFERER', '/')
+        return redirect(previous_page)
+    else:
+        return HttpResponse('<h1>App 刪除失敗</h1><br /><a href="/app/">Back page</a><br />' + str(state))
 
 def train_app(request):
     """

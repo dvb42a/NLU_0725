@@ -101,7 +101,7 @@ class order_index(View):
             order_data.client_submit_time = timezone.now()
             order_data.save()
 
-            if request.POST['saveInfo'] == 'on' :
+            if 'saveInfo' in request.POST:
                 try:
                     account_info=MainAccount.objects.get(ac_id=order_data.ac_id)
                     account_info.transfer_name = request.POST['name']

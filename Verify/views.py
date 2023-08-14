@@ -109,10 +109,26 @@ class Verify(View):
             random_cplan_code = current_date + random
             plan = Plan.objects.get(plan_id=1)
 
+            year = datetime.date.today().year
+            month = datetime.date.today().month
+            day = datetime.date.today().day
+            random = get_random_string(length=8)
+            order_no = str(year) + str(month) + str(day) + random
+
+            free_order = Order.objects.create(
+                order_no=order_no,
+                ac_id=account.ac_name,
+                status="4",
+                plan_id=plan.plan_id,
+                price=plan.plan_price,
+                order_time=datetime.datetime.now(),
+                sucess_time=datetime.datetime.now()
+            )
 
             ClientPlan.objects.create(
                 id=random_cplan_code,
                 ac=account,
+                order_id=free_order.order_no,
                 plan_name=plan.plan_name,
                 max_app=plan.max_app,
                 max_manager=plan.max_manager,

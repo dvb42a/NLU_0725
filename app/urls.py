@@ -33,6 +33,7 @@ urlpatterns += [
     path('task/create/', app.views.creat_app, name="task_app_create"),
     # 任務 App 刪除
     path('task/delete/', app.views.delete_app, name="task_app_delete"),
+    path('taskClient/delete/', app.views.delete_app_in_ClientPlan, name="taskClient_app_delete"),
     # 任務 App 訓練
     path('task/train/', app.views.train_app, name="train"),
     # 任務 App 訓練事件追蹤
