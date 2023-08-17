@@ -53,7 +53,7 @@
                             <h3 class="mb-0">正在使用的方案</h3>
                             <div class="d-inline-flex" >
                               <form method="get"  class="d-flex" style="margin-left:12px">
-                                  <input  class="form-control rounded" style="width:350px" placeholder="搜尋訂單編號/匯款人名稱/手機號碼/後四碼" aria-label="Search" name="search" value="{{search_input}}" />
+                                  <input  class="form-control rounded" style="width:350px" placeholder="搜尋方案名稱" aria-label="Search" name="search" value="{{search_input}}" />
                                   <button class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                   </button>
@@ -114,14 +114,14 @@
                     <div class="d-flex justify-content-center">
                         <nav aria-label="...">
                           <ul class="pagination pagination-lg">
-                            {% for num_page in order_list.paginator.page_range %}
-                                {% if num_page == order_list.number%}
+                            {% for num_page in clientPlan.paginator.page_range %}
+                                {% if num_page == clientPlan.number%}
                                 <li class="page-item disabled active">
                                     <a class="page-link">{{num_page}}</a>
                                 </li>
                                 {% else %}
                                 <li class="page-item">
-                                  <a class="page-link" href="" >{{num_page}}</a>
+                                  <a class="page-link" href="{% url "Client:app" %}?page={{num_page}}" >{{num_page}}</a>
                                 </li>
                                 {% endif %}
                             {% endfor %}
@@ -231,7 +231,7 @@
         const refresh_button =document.getElementById('refresh');
 
         refresh_button.addEventListener('click',function(){
-             window.location.href = ""
+             window.location.href = "{% url "Client:app" %}"
         });
 
     </script>

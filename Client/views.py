@@ -11,17 +11,35 @@ from app.views import sendconfig
 from Order.form import CreateForm
 from django.utils import timezone
 from django.db.models import Count
+from django.core.paginator import Paginator
+from django.db.models import Q
 
 class app(View):
     @staticmethod
     @login_required
     def get(request, context):
         account = get_user_info(request)
-        clientPlan=ClientPlan.objects.filter(ac=account.ac_name)
-        clientPlanCount=clientPlan.count()
-        client_plan_withCountApp = clientPlan.annotate(current_app=Count('plan_app'))
+        search_input = ""
+
+        page = request.GET.get('page')
+        if 'search' in request.GET:
+            search = request.GET['search']
+            plan_list = ClientPlan.objects.filter(
+                Q(plan_name__contains=search)).order_by('-plan_start')
+            plan_list= plan_list.filter(ac=account.ac_name)
+            search_input = search
+        else:
+            plan_list = ClientPlan.objects.filter(ac=account.ac_name).order_by('-plan_start')
+        client_plan_withCountApp = plan_list.annotate(current_app=Count('plan_app'))
+        plan = Paginator(client_plan_withCountApp, 5)
+        plan = plan.get_page(page)
+
+        clientPlanCount=plan_list.count()
+
+
+        context['search_input'] = search_input
         context['account']=account
-        context['clientPlan']=client_plan_withCountApp
+        context['clientPlan']=plan
         context['clientPlanCount']=clientPlanCount
         context.update(dict(
             dashborad=True
@@ -56,24 +74,36 @@ class member(View):
         print('456')
 
 class order(View):
-
     @staticmethod
     @login_required
-    def get(request,context):
+    def get(request, context):
         account = get_user_info(request)
-        clientPlan = ClientPlan.objects.filter(ac=account.ac_name)
-        clientPlanCount = clientPlan.count()
-        order = Order.objects.filter(ac_id=account.ac_name).order_by('-order_time')
-        context['orders'] = order
+
+        search_input = ""
+        if 'search' in request.GET:
+            search = request.GET['search']
+
+            order_querysetNotFilter = Order.objects.filter( Q(order_no__contains=search)
+                                                | Q(phone_number__contains=search) | Q(bankaccount__contains=search) | Q(name__contains=search))
+            order_queryset = order_querysetNotFilter.filter(ac_id= account.ac_name)
+            search_input = search
+        elif 'status' in request.GET:
+            order_querysetNotFilter = Order.objects.filter(Q(status=request.GET['status']))
+            order_queryset = order_querysetNotFilter.filter(ac_id=account.ac_name)
+        else:
+            order_queryset = Order.objects.filter(ac_id=account.ac_name).order_by('-order_time')
+
+        paginator = Paginator(order_queryset, 5)
+        order_page = request.GET.get('page')
+        orders = paginator.get_page(order_page)
+
+        context['orders'] = orders
         context['account'] = account
-        context['clientPlan'] = clientPlan
-        context['clientPlanCount'] = clientPlanCount
+        context['search_input'] = search_input
         context.update(dict(
             dashborad=True
         ))
-
-        return render(request, 'Client/editOrder.html',  sendconfig(context,request))
-
+        return render(request, 'Client/editOrder.html', sendconfig(context, request))
 
 class order_index(View):
     @staticmethod

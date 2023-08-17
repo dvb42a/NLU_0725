@@ -15,6 +15,7 @@ class Plan(models.Model):
     expiry_date = models.IntegerField()
     created_date = models.DateTimeField(default=timezone.now,blank=True)
     updated_date = models.DateTimeField(blank=True)
+    status = models.IntegerField()
 
     class Meta:
         db_table = 'kingly_plan'

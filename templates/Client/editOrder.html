@@ -20,8 +20,43 @@
 
 {% block page_card %}
     <div class="card mb-4">
-    <div class="card-header">
-        <h3 class="mb-0">訂單記錄</h3>
+    <div class="card-header border-0">
+         <div class="row align-items-center">
+             <div class="col d-flex justify-content-between">
+                <h3 class="mb-0">訂單記錄</h3>
+                <div class="d-inline-flex " >
+                  <form method="get"  class="d-flex" style="margin-left:12px">
+                      <input  class="form-control rounded" style="width:350px" placeholder="搜尋訂單編號/匯款人名稱/手機號碼/後五碼" aria-label="Search" name="search" value="{{search_input}}" />
+                      <button class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                      </button>
+                      <button  class="btn btn-primary" id="refresh" type="button">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                  </form>
+                </div>
+             </div>
+         </div>
+        <div class="mt-2">
+            <a href="{% url "Client:order" %}?status=0 "class="btn btn-secondary" >
+                尚未匯款
+            </a>
+            <a href="{% url "Client:order" %}?status=1 "class="btn btn-secondary">
+                已填寫匯款資訊及匯款
+            </a>
+            <a href="{% url "Client:order" %}?status=2 "class="btn btn-secondary">
+               已查收匯款
+            </a>
+            <a href="{% url "Client:order" %}?status=3 "class="btn btn-secondary">
+                已開通服務
+            </a>
+            <a href="{% url "Client:order" %}?status=4 "class="btn btn-secondary">
+                完成訂單
+            </a>
+            <a href="{% url "Client:order" %}?status=5 "class="btn btn-secondary">
+                訂單已被取消
+            </a>
+        </div>
     </div>
     <div class="card-body p-0">
 
@@ -75,6 +110,24 @@
                 {% endif %}
                 </tbody>
             </table>
+             <br>
+            <div class="d-flex justify-content-center">
+                        <nav aria-label="...">
+                          <ul class="pagination pagination-lg">
+                            {% for num_page in orders.paginator.page_range %}
+                                {% if num_page == orders.number%}
+                                <li class="page-item disabled active">
+                                    <a class="page-link">{{num_page}}</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item">
+                                  <a class="page-link" href="{% url "Client:order" %}?page={{num_page}}" >{{num_page}}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                          </ul>
+                        </nav>
+                    </div>
         </div>
     </div>
 </div>
@@ -177,7 +230,7 @@
         const refresh_button =document.getElementById('refresh');
 
         refresh_button.addEventListener('click',function(){
-             window.location.href = ""
+             window.location.href = "{% url "Client:order" %}"
         });
 
     </script>

@@ -1,2 +1,0 @@
-WARNING:django.request:Not Found: /order/receipt/Checkout example ¡P Bootstrap_files/form-validation.css
-WARNING:django.request:Not Found: /order/receipt/Checkout example ¡P Bootstrap_files/form-validation.css

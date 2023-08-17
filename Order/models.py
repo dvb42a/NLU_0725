@@ -16,7 +16,7 @@ class Order(models.Model):
     sucess_time = models.DateTimeField(blank=True)
     name = models.CharField(max_length=10)
     bankaccount=models.IntegerField()
-    phone_number=models.IntegerField()
+    phone_number=models.CharField(max_length=10)
 
 
     class Meta:
