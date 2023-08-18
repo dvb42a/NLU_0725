@@ -11,6 +11,7 @@ class CreateForm(ModelForm):
         fields = ('bankaccount', 'name', 'phone_number')
 
     bankaccount = forms.CharField(label="匯款帳戶後五碼",
+
                                      required=True,
                                      max_length=5,
                                      min_length=5,
@@ -28,7 +29,9 @@ class CreateForm(ModelForm):
                                      widget=forms.TextInput(
                                          attrs={"class": "form-control",
                                                 "placeholder": "XXXXX",
-                                                "autocomplete": "off"}
+                                                "autocomplete": "off",
+                                                "id":'InputBankAccount',
+    }
                                      ))
     name = forms.CharField(label="匯款人中文姓名",
                                    required=True,
@@ -46,7 +49,8 @@ class CreateForm(ModelForm):
                                   widget=forms.TextInput(
                                       attrs={"class": "form-control",
                                              "placeholder": "請輸入匯款人中文姓名",
-                                             "autocomplete": "off"}
+                                             "autocomplete": "off",
+                                             "id":'InputName',}
                                   ))
     phone_number = forms.CharField(label="電話號碼",
                                   required=True,
@@ -66,5 +70,6 @@ class CreateForm(ModelForm):
                                   widget=forms.TextInput(
                                       attrs={"class": "form-control",
                                              "placeholder": "09XX XXX XXX",
-                                             "autocomplete": "off"}
+                                             "autocomplete": "off",
+                                             "id":'InputPhoneNumber',}
                                   ))

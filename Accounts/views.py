@@ -344,10 +344,15 @@ class edit(View):
         base_form = EditBase(request.POST or None, instance=account)
         try:
             main_account = MainAccount.objects.get(ac_id=account.ac_name)
-            main_form = EditMain(request.POST or None)
-            print('is null')
+            main_form = EditMain(request.POST or None, instance=main_account)
+
+
             if main_form.is_valid():
                 print('pass_valid')
+                main_form.save()
+        except MainAccount.DoesNotExist:
+            main_form = EditMain(request.POST or None)
+            if main_form.is_valid():
                 new_data = MainAccount(
                     ac_id=account.ac_name,
                     real_name=request.POST['real_name'],
@@ -356,10 +361,7 @@ class edit(View):
                     transfer_name=request.POST['transfer_name'],
                 )
                 new_data.save()
-        except MainAccount.DoesNotExist:
-            main_form = EditMain(request.POST or None, instance=main_account)
-            if main_form.is_valid():
-                main_form.save()
+
             print('123')
             main_form = EditMain(request.POST or None)
 
@@ -414,38 +416,45 @@ class safety(View):
     @staticmethod
     @login_required
     def post(request, context):
-        print("password")
-        # account = BaseLogin.objects.get(ac_name=get_user_name(request))
-        # form = EditPassword(request.POST or None, instance=account)
-        # if form.is_valid():
-        #     password = request.POST.get('password', None)
-        #
-        #     new_password = request.POST.get('new_password',None)
-        #     new_password2= request.POST.get('new_passwordConfirm', None)
-        #
-        #     #hashing the input password and validate it
-        #     password_data=str.encode(password)
-        #     hash_object=hashlib.sha256()
-        #     hash_object.update(password_data)
-        #     hashed_pwd=hash_object.hexdigest()
-        #     if account.ac_pwd==hashed_pwd:
-        #         #hashing the new password
-        #         if new_password != new_password2:
-        #             context['newPwdMsg'] = "確認密碼輸入錯誤"
-        #             print('newpassword wrong')
-        #         else:
-        #             new_password_data=str.encode(new_password)
-        #             hash_object_newPassword = hashlib.sha256()
-        #             hash_object_newPassword.update(new_password_data)
-        #             hashed_new_password=hash_object_newPassword.hexdigest()
-        #             account.ac_pwd=hashed_new_password
-        #             account.save()
-        #             context['message']="已成功更新密碼!"
-        #             print('new_password is active')
-        #     else:
-        #         context['oldPwdMsg'] = "現有密碼輸入錯誤!"
-        # context['form'] = EditPassword(instance=account)
-        # context['account'] = account
-        context["dashborad"] = True
-        return render(request, 'Account/editAccount.html', sendconfig(context))
+         account = get_user_info(request)
+         form = EditPassword(request.POST or None, instance=account)
+         if form.is_valid():
+             password = request.POST.get('password', None)
+
+             new_password = request.POST.get('new_password',None)
+             new_password2= request.POST.get('new_passwordConfirm', None)
+
+             #hashing the input password and validate it
+             password_data=str.encode(password)
+             hash_object=hashlib.sha256()
+             hash_object.update(password_data)
+             hashed_pwd=hash_object.hexdigest()
+             if account.ac_pwd==hashed_pwd:
+                 #hashing the new password
+                 if new_password != new_password2:
+                     context['newPwdMsg'] = "確認密碼輸入錯誤"
+                     print('newpassword wrong')
+                 else:
+                     new_password_data=str.encode(new_password)
+                     hash_object_newPassword = hashlib.sha256()
+                     hash_object_newPassword.update(new_password_data)
+                     hashed_new_password=hash_object_newPassword.hexdigest()
+                     account.ac_pwd=hashed_new_password
+                     account.save()
+                     context['message']="已成功更新密碼!"
+                     print('new_password is active')
+             else:
+                 context['oldPwdMsg'] = "現有密碼輸入錯誤!"
+         try:
+             main_account = MainAccount.objects.get(ac_id=account.ac_name)
+             context['main_form'] = EditMain(instance=main_account)
+         except MainAccount.DoesNotExist:
+             main_account = None
+             context['main_form'] = EditMain()
+         context['password_form'] = EditPassword(instance=account)
+         context['base_form'] = EditBase(instance=account)
+         context['password_form'] = EditPassword(instance=account)
+         context['account'] = account
+         context["dashborad"] = True
+         return render(request, 'Account/editAccount.html', sendconfig(context))
 

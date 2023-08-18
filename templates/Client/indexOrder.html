@@ -150,7 +150,7 @@
                             </div>
 
                             <div class="margin-top: 5px;" >
-                                <input type="checkbox" name="noted"><span class="form-control-label"> 載入已儲存之匯款資訊</span>
+                                <input type="checkbox" id="loadHistory" name="noted"><span class="form-control-label"> 載入已儲存之匯款資訊</span>
                             </div>
                             <div >
                                 <input type="checkbox" name="saveInfo" ><span class="form-control-label"> 記住我的匯款資訊</span>
@@ -235,11 +235,45 @@
         const submitPaymentForm=document.getElementById('submitPaymentForm');
         const check=document.getElementById('check');
         const checkWarming=document.getElementById('checkWarming');
-        const inputName=document.getElementById('id_name');
-        const inputBankAccount=document.getElementById('id_backaccount');
-        const inputPhoneNumber=document.getElementById('id_phone_number');
+        const inputName=document.getElementById('InputName');
+        const inputBankAccount=document.getElementById('InputBankAccount');
+        const inputPhoneNumber=document.getElementById('InputPhoneNumber');
+        const loadHistoryBtn=document.getElementById('loadHistory');
 
+        //base setting
+        submitBtn.disabled=true;
 
+        //Listning items
+        loadHistoryBtn.addEventListener('click',function(){
+            if(loadHistoryBtn.checked)
+            {
+                data_bankAccount="{{inputHistory.bank_account}}";
+                data_phoneNumber="{{inputHistory.phone_number}}";
+                data_name="{{inputHistory.transfer_name}}";
+
+                console.log(data_bankAccount);
+                inputBankAccount.value=data_bankAccount;
+                inputPhoneNumber.value=data_phoneNumber;
+                inputName.value=data_name;
+            }
+            else
+            {
+                inputBankAccount.value="";
+                inputPhoneNumber.value="";
+                inputName.value="";
+            }
+        });
+
+        check.addEventListener('click',function () {
+            if(check.checked)
+            {
+                submitBtn.disabled=false;
+            }
+            else
+            {
+                submitBtn.disabled=true;
+            }
+        });
 
         submitBtn.addEventListener('click' ,function(){
             if(check.checked)

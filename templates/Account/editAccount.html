@@ -222,12 +222,21 @@
     const TaxNum = document.getElementById('TaxNum');
     const IsCompanyBtn = document.getElementById('IsCompany');
 
+
     function disabledInput()
     {
         CompanyName.disabled=true;
         TaxNum.disabled=true;
     }
-    disabledInput();
+
+    if( CompanyName.value == "" && TaxNum.value == "" )
+    {
+        disabledInput();
+    }
+    else
+    {
+        IsCompanyBtn.checked=true;
+    }
 
     function toggleCompany()
     {
@@ -247,11 +256,10 @@
     function transferNameFillIn()
     {
         if(SameBtn.checked){
-            transfer.value=RealName.value;
-        }
-        else
-        {
-            transfer.value='';
+            if(RealName.value !== "")
+            {
+                transfer.value=RealName.value;
+            }
         }
     }
     SameBtn.addEventListener('change', transferNameFillIn) ;

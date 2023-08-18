@@ -111,9 +111,11 @@ class order_index(View):
         context = {}
         account = get_user_info(request)
         order_data = Order.objects.get(order_no=id)
+        inputHistory = MainAccount.objects.get(ac_id = account.ac_name)
         context['account'] = account
         context['order'] = order_data
         context['form'] = CreateForm(instance=order_data)
+        context['inputHistory']=inputHistory
         context.update(dict(
             dashborad=True
         ))
