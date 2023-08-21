@@ -11,7 +11,6 @@
   <title>對話訓練平台 訂單系統</title>
 
   <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/checkout/">
-
   <!-- Bootstrap core CSS -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -21,7 +20,6 @@
   <link rel="manifest" href="https://getbootstrap.com/docs/4.5/assets/img/favicons/manifest.json">
   <meta name="msapplication-config" content="/docs/4.5/assets/img/favicons/browserconfig.xml">
   <meta name="theme-color" content="#563d7c">
-
 
     <style>
       .bd-placeholder-img {
@@ -72,12 +70,11 @@
               <h6 class="my-0">{{plan.plan_name}}</h6>
               <br>
               <small >方案內容:</small><br>
-              <small class="text-muted">{{plan.plan_app}}個任務數量</small><br>
-              <small class="text-muted">可創管理帳號{{plan.plan_employee}}個</small><br>
-              <small class="text-muted">單一APP最多由{{plan.plan_person}}名成員管理</small><br>
-              <small class="text-muted">單一APP上載檔案上限{{plan.plan_file}}個</small><br>
-              <small class="text-muted">可查詢次數:{{plan.plan_count}}次</small><br>
-              <small class="text-muted">{{plan.expired_at}}天使用期限</small><br>
+              <small class="text-muted">{{plan.max_app}}個任務數量</small><br>
+              <small class="text-muted">可創管理帳號{{plan.max_secondary}}個</small><br>
+              <small class="text-muted">單一APP最多由{{plan.max_manager}}名成員管理</small><br>
+              <small class="text-muted">可查詢次數:{{plan.max_call}}次</small><br>
+              <small class="text-muted">{{plan.expiry_date}}天使用期限</small><br>
             </div>
           </td>
           <td class="table-light text-right align-bottom">

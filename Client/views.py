@@ -111,7 +111,10 @@ class order_index(View):
         context = {}
         account = get_user_info(request)
         order_data = Order.objects.get(order_no=id)
-        inputHistory = MainAccount.objects.get(ac_id = account.ac_name)
+        try:
+            inputHistory = MainAccount.objects.get(ac_id = account.ac_name)
+        except MainAccount.DoesNotExist:
+            inputHistory= ""
         context['account'] = account
         context['order'] = order_data
         context['form'] = CreateForm(instance=order_data)
@@ -123,7 +126,7 @@ class order_index(View):
 
     @staticmethod
     def post(request,id):
-
+        account = get_user_info(request)
         context = {}
         order_data = Order.objects.get(order_no=id)
         form = CreateForm(request.POST or None, instance=order_data)
@@ -151,11 +154,17 @@ class order_index(View):
 
             context['form'] = CreateForm(instance=order_data)
         else:
+            try:
+                inputHistory = MainAccount.objects.get(ac_id=account.ac_name)
+            except MainAccount.DoesNotExist:
+                inputHistory = ""
             context['form']=form
+            context['inputHistory'] = inputHistory
         account = get_user_info(request)
         order_data = Order.objects.get(order_no=id)
         context['account'] = account
         context['order'] = order_data
+
         context.update(dict(
             dashborad=True
         ))
