@@ -11,6 +11,13 @@ from Apps.models import Apps
 from Client.models import ClientPlan
 from BColor import SystemStatus
 from django.db.models import Count
+import os
+import json
+from django.shortcuts import render
+from collections import Counter
+import re
+from datetime import datetime, timedelta
+from django.urls import reverse
 
 
 logging.basicConfig(filename='log.txt', filemode='a')
@@ -92,6 +99,109 @@ def app_info_view(request, context):
         chat_bubble=chat_bubble))
     return render(request, 'app_info.html', sendconfig(context, request))
 
+@login_required
+def app_result_view(request, context):
+    """
+    任務-App資訊頁
+    context內的值從required繼承而來
+    """
+    app_name = request.GET.get('app')
+    user_id = request.session['login_name']
+    app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
+    app_datetime=app.created_date.strftime('%y%m%d%H%M')
+    dataFileName=user_id+'-'+app_name+'-'+app_datetime
+    project_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # 构建 JSON 文件的完整路径
+    json_file_path = os.path.join(project_path, 'QAHistory/'+dataFileName+'.json')
+
+    try:
+        # 打开并读取 JSON 文件
+        with open(json_file_path, 'r', encoding='utf-8') as json_file:
+
+            json_data = json.load(json_file)
+            item_count = len(json_data)
+
+            if "date" in request.GET:
+                current_date = datetime.now().date()
+                date = request.GET['date']
+                if date == "half":
+                    countDate = 15
+                if date == "1":
+                    countDate = 30
+                if date == "3":
+                    countDate = 90
+                if date == "6":
+                    countDate = 180
+
+                end_date = current_date
+                start_date = current_date - timedelta(days=countDate)
+                all_values = [item['clu_intent'] for item in json_data if item['clu_intent'] is not None
+                              and start_date <= datetime.strptime(item['ask_time'], '%Y-%m-%d %H:%M:%S').date() <= end_date]
+                location="intentTable"
+            else:
+                all_values = [item['clu_intent'] for item in json_data if item['clu_intent'] is not None]
+            value_counter = Counter(all_values)
+            result = [{"name": value, "count": count} for value, count in value_counter.items()]
+            sorted_result=sorted(result , key=lambda x: x['count'], reverse=True)
+            print(sorted_result)
+            context['results']=sorted_result
+    except FileNotFoundError:
+        print('445')
+
+    context.update(dict(
+        app=app,
+        url= f"app={app_name}",
+        last_deployed_date=app.last_deployed_date,
+        trained=app.trained,
+        deployed=app.deployed,))
+    return render(request, 'app_result.html', sendconfig(context, request))
+
+@login_required
+def app_none_view(request, context):
+    """
+    任務-App資訊頁
+    context內的值從required繼承而來
+    """
+    app_name = request.GET.get('app')
+    user_id = request.session['login_name']
+    app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
+    datetime=app.created_date.strftime('%y%m%d%H%M')
+    dataFileName=user_id+'-'+app_name+'-'+datetime
+    project_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # 构建 JSON 文件的完整路径
+    json_file_path = os.path.join(project_path, 'QAHistory/'+dataFileName+'.json')
+
+    try:
+        # 打开并读取 JSON 文件
+        with open(json_file_path, 'r', encoding='utf-8') as json_file:
+
+            json_data = json.load(json_file)
+            item_count = len(json_data)
+
+            # 提取所有值到一个列表中
+            if 'search' in request.GET:
+                search_term = request.GET.get('search')  # Get the search term from the request
+                pattern = re.compile(search_term, re.IGNORECASE)  # Create a pattern for case-insensitive search
+
+                all_values = [item for item in json_data if
+                              item['clu_intent'] == "None" and
+                              (re.search(pattern, item['q']) or
+                               any(re.search(pattern, e['entity']) for e in item['entities']) or
+                               any(re.search(pattern, e['entity_category']) for e in item['entities']))]
+            else:
+                all_values = [item for item in json_data if item['clu_intent'] == "None"]
+            context['results']=all_values
+    except FileNotFoundError:
+        print('445')
+
+    context.update(dict(
+        app=app,
+        url=f"app={app_name}",
+        last_deployed_date=app.last_deployed_date,
+        trained=app.trained,
+        deployed=app.deployed,))
+    return render(request, 'app_noneList.html', sendconfig(context, request))
+
 
 @login_required
 def app_intent(request, context):
@@ -125,6 +235,7 @@ def app_intent(request, context):
         all_labeled_examples_count=all_count,
         trained=app.trained
     ))
+
     return render(request, 'intent.html', sendconfig(context, request))
 
 
@@ -710,3 +821,4 @@ def qa_endpoint_api(request):
 
 def page_not_found(request):
     return render(request, '404.html')
+

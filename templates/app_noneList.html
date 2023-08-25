@@ -1,0 +1,133 @@
+{% extends "layouts/base-dashboard.html" %}
+{% block nav_items %}
+     {% include "layouts/base-dashboard_left.html" %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">資訊</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item">App 管理</li>
+                    <li class="breadcrumb-item">{{ app.app_name }}</li>
+                    <li class="breadcrumb-item "><a href="{% url "app:result_info" %}?{{ url }}">統計數據</a></li>
+                     <li class="breadcrumb-item active" aria-current="page">None報告</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+    </div>
+{% endblock %}
+
+{% block page_card %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col d-flex justify-content-between">
+                            <h3 class="mb-0">所有無法正常回應的客戶問題</h3>
+                            <div class="d-inline-flex" >
+                              <form method="get"  class="d-flex" style="margin-left:12px">
+                                  <input type="text" hidden name="app" value="{{app}}">
+                                  <input  class="form-control rounded" style="width:350px" placeholder="搜尋用戶提問" aria-label="Search" name="search" value="{{search_input}}" />
+                                  <button class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                  </button>
+                                  <button  class="btn btn-primary" id="refresh" type="button">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                  </button>
+                              </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">用戶的提問</th>
+                            <th scope="col">系統預測關鍵字</th>
+                            <th scope="col">系統預測分類</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if results %}
+                            {% for result in results  %}
+                                <tr>
+                                    <th scope="row">
+                                        {{result.q}}
+                                    </th>
+                                    <th scope="row">
+                                        {% if result.entities %}
+                                            {% for name in result.entities %}
+                                                [{{ name.entity }}]
+                                            {% endfor %}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </th>
+                                    <th scope="row">
+                                        {% if result.entities %}
+                                            {% for name in result.entities %}
+                                                [{{name.entity_category}}]
+                                            {% endfor %}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <th scope="row">
+                                    <span class="text-primary">沒有資料。</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <nav aria-label="...">
+                          <ul class="pagination pagination-lg">
+                            {% for num_page in account_list.paginator.page_range %}
+                                {% if num_page == order_list.number%}
+                                <li class="page-item disabled active">
+                                    <a class="page-link">{{num_page}}</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item">
+                                  <a class="page-link" href="{% url "Admin:account" %}?page={{num_page}}" >{{num_page}}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                          </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        const modal_button = document.getElementById('open_modal');
+        const refresh_button =document.getElementById('refresh');
+
+        refresh_button.addEventListener('click',function(){
+             window.location.href = "{% url "app:result_none" %}?{{ url }} "
+        });
+
+    </script>
+{% endblock %}

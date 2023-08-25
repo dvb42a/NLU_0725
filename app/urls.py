@@ -9,6 +9,9 @@ urlpatterns = [
     path('', app.views.Dashboard.as_view(), name="dashboard"),
     # 任務 App 詳細資訊頁面
     path('manage/info/', app.views.app_info_view, name="manage_info"),
+    # 統計數據
+    path('manage/result/', app.views.app_result_view,name="result_info"),
+    path('manage/result/none/', app.views.app_none_view, name="result_none"),
     # 任務意圖列表頁面
     path('task/build/intent/', app.views.app_intent, name="intent"),
     # 任務意圖語句列表頁面

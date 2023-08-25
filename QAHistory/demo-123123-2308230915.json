@@ -1,0 +1,788 @@
+[
+   {
+      "q": "問題",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [],
+      "run_time": "2.85 秒",
+      "ask_time": "2023-02-23 09:36:14"
+   },
+   {
+      "q": "公司",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "1.27 秒",
+      "ask_time": "2023-03-23 09:37:09"
+   },
+   {
+      "q": "公司電話",
+      "clu_intent": "問公司電話",
+      "intent": "問公司電話",
+      "score": "0.99",
+      "ans": "台積電公司的電話是：(03) 123213123",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "電話",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "2.24 秒",
+      "ask_time": "2023-08-23 09:37:28"
+   },
+   {
+      "q": "你好",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是台積電客服機器人，很高興能為你服務",
+      "entities": [
+         {
+            "entity": "你好",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.25 秒",
+      "ask_time": "2023-08-23 09:39:41"
+   },
+   {
+      "q": "hi",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是台積電客服機器人，很高興能為你服務",
+      "entities": [
+         {
+            "entity": "hi",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.41 秒",
+      "ask_time": "2023-08-23 09:59:45"
+   },
+   {
+      "q": "你是?",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [
+         {
+            "entity": "你",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "0.84 秒",
+      "ask_time": "2023-08-23 09:59:49"
+   },
+   {
+      "q": "你是?台",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是台積電客服機器人，很高興能為你服務",
+      "entities": [
+         {
+            "entity": "台",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "0.78 秒",
+      "ask_time": "2023-08-23 09:59:53"
+   },
+   {
+      "q": "天氣",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.90",
+      "ans": "抱歉，我只能回答台積電公司的資訊",
+      "entities": [],
+      "run_time": "0.89 秒",
+      "ask_time": "2023-08-23 09:59:58"
+   },
+   {
+      "q": "天氣車子",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.82",
+      "ans": "抱歉，我只能回答台積電公司的資訊",
+      "entities": [
+         {
+            "entity": "車子",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "0.78 秒",
+      "ask_time": "2023-08-23 10:00:02"
+   },
+   {
+      "q": "車子",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.60",
+      "ans": "我只能提供台積電公司的資訊",
+      "entities": [
+         {
+            "entity": "車",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "子",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "0.8 秒",
+      "ask_time": "2023-08-23 10:00:07"
+   },
+   {
+      "q": "號碼",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.98",
+      "ans": "抱歉，我只能回答台積電公司的資訊",
+      "entities": [
+         {
+            "entity": "號碼",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "0.87 秒",
+      "ask_time": "2023-08-23 10:00:17"
+   },
+   {
+      "q": "快樂",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [
+         {
+            "entity": "快樂",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "0.82 秒",
+      "ask_time": "2023-08-23 10:00:22"
+   },
+   {
+      "q": "網頁",
+      "clu_intent": "問公司網站",
+      "intent": "問公司網站",
+      "score": "0.99",
+      "ans": "台積電公司的網站是：www.kinglyrobot.com",
+      "entities": [
+         {
+            "entity": "網頁",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "0.84 秒",
+      "ask_time": "2023-08-23 10:00:42"
+   },
+   {
+      "q": "網站",
+      "clu_intent": "問公司網站",
+      "intent": "問公司網站",
+      "score": "0.99",
+      "ans": "www.kinglyrobot.com",
+      "entities": [
+         {
+            "entity": "網站",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "0.79 秒",
+      "ask_time": "2023-08-23 10:00:48"
+   },
+   {
+      "q": "台積電",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "台積電",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "1.13 秒",
+      "ask_time": "2023-08-23 10:02:28"
+   },
+   {
+      "q": "有甚麼產品",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.61",
+      "ans": "我只能提供台積電公司的資訊",
+      "entities": [
+         {
+            "entity": "甚麼產品",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.04 秒",
+      "ask_time": "2023-08-23 10:02:48"
+   },
+   {
+      "q": "早安",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [
+         {
+            "entity": "早安",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.1 秒",
+      "ask_time": "2023-08-23 10:04:53"
+   },
+   {
+      "q": "晚安",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是台積電客服機器人，很高興能為你服務",
+      "entities": [
+         {
+            "entity": "晚安",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "0.96 秒",
+      "ask_time": "2023-08-23 10:04:59"
+   },
+   {
+      "q": "媽卡巴卡",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是台積電客服機器人，很高興能為你服務",
+      "entities": [
+         {
+            "entity": "卡巴卡",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "0.97 秒",
+      "ask_time": "2023-08-23 10:05:05"
+   },
+   {
+      "q": "hello",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [
+         {
+            "entity": "hello",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.02 秒",
+      "ask_time": "2023-08-23 10:05:19"
+   },
+   {
+      "q": "hi",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是台積電客服機器人，很高興能為你服務",
+      "entities": [
+         {
+            "entity": "hi",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.04 秒",
+      "ask_time": "2023-08-23 10:05:22"
+   },
+   {
+      "q": "asking for the company name ",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "company",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "1.28 秒",
+      "ask_time": "2023-08-23 10:05:28"
+   },
+   {
+      "q": "where is the company",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "where",
+            "entity_category": "問句"
+         },
+         {
+            "entity": "company",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "1.05 秒",
+      "ask_time": "2023-08-23 10:06:14"
+   },
+   {
+      "q": "how to go ",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [],
+      "run_time": "0.9 秒",
+      "ask_time": "2023-08-23 10:06:41"
+   },
+   {
+      "q": "good night",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [],
+      "run_time": "0.87 秒",
+      "ask_time": "2023-08-23 10:06:52"
+   },
+   {
+      "q": "food ",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.83",
+      "ans": "抱歉，我只能回答台積電公司的資訊",
+      "entities": [],
+      "run_time": "0.78 秒",
+      "ask_time": "2023-08-23 10:06:56"
+   },
+   {
+      "q": "website link",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.95",
+      "ans": "抱歉，我只能回答台積電公司的資訊",
+      "entities": [
+         {
+            "entity": "website",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "0.84 秒",
+      "ask_time": "2023-08-23 10:07:04"
+   },
+   {
+      "q": "link",
+      "clu_intent": "問連絡資訊",
+      "intent": "問連絡資訊",
+      "score": "0.99",
+      "ans": "台積電股份有限公司\n電話： (03) 123213123\n地址：xxxxxxx\n營業時間：星期一 ~ 星期五 08:00 ~ 17:00\n公司官網：www.kinglyrobot.com",
+      "entities": [],
+      "run_time": "0.79 秒",
+      "ask_time": "2023-08-23 10:07:11"
+   },
+   {
+      "q": "line",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.58",
+      "ans": "我只能提供台積電公司的資訊",
+      "entities": [],
+      "run_time": "0.83 秒",
+      "ask_time": "2023-08-23 10:07:16"
+   },
+   {
+      "q": "有line嗎",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [
+         {
+            "entity": "line",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "0.8 秒",
+      "ask_time": "2023-08-23 10:07:24"
+   },
+   {
+      "q": "有line嗎",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是台積電客服機器人，很高興能為你服務",
+      "entities": [
+         {
+            "entity": "line",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "1.0 秒",
+      "ask_time": "2023-08-23 10:14:16"
+   },
+   {
+      "q": "中午好",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [
+         {
+            "entity": "中午",
+            "entity_category": "問候語"
+         },
+         {
+            "entity": "好",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.18 秒",
+      "ask_time": "2023-08-23 10:14:27"
+   },
+   {
+      "q": "買東西",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "買",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "東西",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "0.91 秒",
+      "ask_time": "2023-08-23 10:14:35"
+   },
+   {
+      "q": "早抖",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [
+         {
+            "entity": "抖",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "0.94 秒",
+      "ask_time": "2023-08-23 10:16:59"
+   },
+   {
+      "q": "ok",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [],
+      "run_time": "0.78 秒",
+      "ask_time": "2023-08-23 10:17:07"
+   },
+   {
+      "q": "笑死",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是台積電客服機器人，很高興能為你服務",
+      "entities": [
+         {
+            "entity": "笑",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "0.89 秒",
+      "ask_time": "2023-08-23 10:17:12"
+   },
+   {
+      "q": "笑死甚麼東西",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [
+         {
+            "entity": "甚麼東西",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "0.78 秒",
+      "ask_time": "2023-08-23 10:17:18"
+   },
+   {
+      "q": "公司在哪",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "0.84 秒",
+      "ask_time": "2023-08-23 10:17:26"
+   },
+   {
+      "q": "公司在?",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "2.37 秒",
+      "ask_time": "2023-08-23 10:20:21"
+   },
+   {
+      "q": "公司",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "1.47 秒",
+      "ask_time": "2023-08-23 10:20:50"
+   },
+   {
+      "q": "公司在哪",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "哪",
+            "entity_category": "問句"
+         }
+      ],
+      "run_time": "0.8 秒",
+      "ask_time": "2023-08-23 10:20:59"
+   },
+   {
+      "q": "購買方式",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [],
+      "run_time": "0.88 秒",
+      "ask_time": "2023-08-23 10:21:08"
+   },
+   {
+      "q": "購買",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "購買",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "1.59 秒",
+      "ask_time": "2023-08-23 10:21:24"
+   },
+   {
+      "q": "領養",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.98",
+      "ans": "抱歉，我只能回答台積電公司的資訊",
+      "entities": [],
+      "run_time": "0.86 秒",
+      "ask_time": "2023-08-23 10:22:37"
+   },
+   {
+      "q": "公司資訊",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "公司",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "0.77 秒",
+      "ask_time": "2023-08-23 10:22:45"
+   },
+   {
+      "q": "資訊",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [],
+      "run_time": "0.94 秒",
+      "ask_time": "2023-08-23 10:40:22"
+   },
+   {
+      "q": "123123123",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [],
+      "run_time": "0.8 秒",
+      "ask_time": "2023-08-23 10:40:26"
+   },
+   {
+      "q": "交通",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.97",
+      "ans": "我只能提供台積電公司的資訊",
+      "entities": [],
+      "run_time": "1.01 秒",
+      "ask_time": "2023-08-23 10:40:36"
+   },
+   {
+      "q": "台灣",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.67",
+      "ans": "抱歉，我只能回答台積電公司的資訊",
+      "entities": [
+         {
+            "entity": "台灣",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "2.17 秒",
+      "ask_time": "2023-08-24 16:48:00"
+   },
+   {
+      "q": "快點",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [],
+      "run_time": "1.11 秒",
+      "ask_time": "2023-08-24 16:48:22"
+   },
+   {
+      "q": "很爛",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.97",
+      "ans": "我只能提供台積電公司的資訊",
+      "entities": [
+         {
+            "entity": "爛",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.17 秒",
+      "ask_time": "2023-08-24 16:48:29"
+   },
+   {
+      "q": "早上好中國 ",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，台積電客服機器人在此為你服務",
+      "entities": [
+         {
+            "entity": "早上好",
+            "entity_category": "問候語"
+         },
+         {
+            "entity": "中國",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.0 秒",
+      "ask_time": "2023-08-24 16:49:18"
+   },
+   {
+      "q": "good morning",
+      "clu_intent": "基本問候",
+      "intent": "基本問候",
+      "score": "0.99",
+      "ans": "你好，我是台積電客服機器人，很高興能為你服務",
+      "entities": [
+         {
+            "entity": "good",
+            "entity_category": "問候語"
+         },
+         {
+            "entity": "morning",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "1.47 秒",
+      "ask_time": "2023-08-24 16:52:17"
+   },
+   {
+      "q": "想要打給你們",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.79",
+      "ans": "抱歉，我只能回答台積電公司的資訊",
+      "entities": [
+         {
+            "entity": "打",
+            "entity_category": "公司資訊"
+         }
+      ],
+      "run_time": "1.48 秒",
+      "ask_time": "2023-08-24 16:52:29"
+   },
+   {
+      "q": "想要找你們談生意",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.47",
+      "ans": "抱歉，我只能回答台積電公司的資訊",
+      "entities": [],
+      "run_time": "0.85 秒",
+      "ask_time": "2023-08-24 16:52:45"
+   }
+]

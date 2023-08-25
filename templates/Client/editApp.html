@@ -61,7 +61,7 @@
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                   </button>
                               </form>
-                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -231,7 +231,7 @@
         const refresh_button =document.getElementById('refresh');
 
         refresh_button.addEventListener('click',function(){
-             window.location.href = "{% url "Client:app" %}"
+             window.location.href = "{% url "Client:app" %}?page={{num_page}}"
         });
 
     </script>

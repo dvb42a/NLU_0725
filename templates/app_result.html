@@ -1,0 +1,233 @@
+{% extends "layouts/base-dashboard.html" %}
+{% block nav_items %}
+     {% include "layouts/base-dashboard_left.html" %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block path_bar %}
+    <!-- 導航列 -->
+    <div class="row align-items-center py-4">
+        <div class="col-lg-6 col-7">
+            <h6 class="h1 text-white d-inline-block mb-0">資訊</h6>
+            <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                    <li class="breadcrumb-item"><a href="{% url "app:dashboard" %}"><i class="fas fa-home"></i></a></li>
+                    <li class="breadcrumb-item">{{ app.app_name }}</li>
+                    <li class="breadcrumb-item">App 管理</li>
+                    <li class="breadcrumb-item active" aria-current="page">統計數據</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+    </div>
+{% endblock %}
+{% block small_card %}
+    <!-- Card stats -->
+    <div class="row">
+        <!-- Card 1 start-->
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">意圖總數：</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ results|length }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                               <i class="fas fa-keyboard"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Card 1 end-->
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">累積被查詢次數：</h5>
+                            <span class="h2 font-weight-bold mb-0">{{ app.counter }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                               <i class="fas fa-tachometer-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">None 回應詳細報告 </h5>
+                            <span class="h2 font-weight-bold mb-0"><a href="{% url "app:result_none" %}?{{ url }} ">查看</a></span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                <i class="fas fa-terminal"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block page_card %}
+
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col d-flex justify-content-between">
+                            <h3 class="mb-0">被訪意圖排名 TOP 3</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive" id="intentTable">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">意圖名稱</th>
+                            <th scope="col">次數</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if results %}
+                            {% for result in results|slice:":3"  %}
+                                <tr>
+                                    <th scope="row">
+                                        {{result.name}}
+                                    </th>
+                                    <th scope="row">
+                                        {{ result.count }}
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <th scope="row">
+                                    <span class="text-primary">沒有資料。</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                        <nav aria-label="...">
+                          <ul class="pagination pagination-lg">
+                            {% for num_page in account_list.paginator.page_range %}
+                                {% if num_page == order_list.number%}
+                                <li class="page-item disabled active">
+                                    <a class="page-link">{{num_page}}</a>
+                                </li>
+                                {% else %}
+                                <li class="page-item">
+                                  <a class="page-link" href="{% url "Admin:account" %}?page={{num_page}}" >{{num_page}}</a>
+                                </li>
+                                {% endif %}
+                            {% endfor %}
+                          </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col d-flex justify-content-between">
+                            <h3 class="mb-0">被訪意圖次數</h3>
+                            <div class="d-inline-flex " >
+                              <div class="mt-2">
+                                   <a href="{% url "app:result_info" %}?{{ url }}&date=half&#intentTable "class="btn btn-secondary" >
+                                        最近15天的記錄
+                                    </a>
+                                    <a href="{% url "app:result_info" %}?{{ url }}&date=1&#intentTable"class="btn btn-secondary" >
+                                        一個月內的記錄
+                                    </a>
+                                    <a href="{% url "app:result_info" %}?{{ url }}&date=3&#intentTable "class="btn btn-secondary">
+                                         三個月內的記錄
+                                    </a>
+                                    <a href="{% url "app:result_info" %}?{{ url }}&date=6&#intentTable "class="btn btn-secondary">
+                                       半年內的記錄
+                                    </a>
+                                   <button  class="btn btn-secondary" id="refresh" type="button">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                   </button>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="table-responsive">
+                    <!-- Projects table -->
+                    <table class="table align-items-center table-flush">
+                        <thead class="thead-light">
+                        <tr>
+                            <th scope="col">意圖名稱</th>
+                            <th scope="col">次數</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if results %}
+                            {% for result in results  %}
+                                <tr>
+                                    <th scope="row">
+                                        {{result.name}}
+                                    </th>
+                                    <th scope="row">
+                                        {{ result.count }}
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <th scope="row">
+                                    <span class="text-primary">沒有資料。</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block jquery %}
+    <script>
+        const refresh_button =document.getElementById('refresh');
+
+        refresh_button.addEventListener('click',function(){
+             window.location.href = "{% url "app:result_info" %}?{{ url }}#intentTable"
+        });
+
+    </script>
+{% endblock %}
+
