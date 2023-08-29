@@ -12,6 +12,7 @@ urlpatterns = [
     # 統計數據
     path('manage/result/', app.views.app_result_view,name="result_info"),
     path('manage/result/none/', app.views.app_none_view, name="result_none"),
+    path('manage/result/export/', app.views.app_excel_view,name="result_excel"),
     # 任務意圖列表頁面
     path('task/build/intent/', app.views.app_intent, name="intent"),
     # 任務意圖語句列表頁面

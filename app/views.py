@@ -18,7 +18,10 @@ from collections import Counter
 import re
 from datetime import datetime, timedelta
 from django.urls import reverse
-
+import openpyxl
+import pandas as pd
+from io import BytesIO
+from urllib.parse import quote
 
 logging.basicConfig(filename='log.txt', filemode='a')
 
@@ -137,13 +140,18 @@ def app_result_view(request, context):
                 start_date = current_date - timedelta(days=countDate)
                 all_values = [item['clu_intent'] for item in json_data if item['clu_intent'] is not None
                               and start_date <= datetime.strptime(item['ask_time'], '%Y-%m-%d %H:%M:%S').date() <= end_date]
-                location="intentTable"
+            if "start" in request.GET:
+                start_date_str = request.GET['start']
+                end_date_str = request.GET['end']
+                start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+                end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+                all_values = [item['clu_intent'] for item in json_data if item['clu_intent'] is not None
+                              and start_date <= datetime.strptime(item['ask_time'],'%Y-%m-%d %H:%M:%S').date() <= end_date]
             else:
                 all_values = [item['clu_intent'] for item in json_data if item['clu_intent'] is not None]
             value_counter = Counter(all_values)
             result = [{"name": value, "count": count} for value, count in value_counter.items()]
             sorted_result=sorted(result , key=lambda x: x['count'], reverse=True)
-            print(sorted_result)
             context['results']=sorted_result
     except FileNotFoundError:
         print('445')
@@ -202,6 +210,67 @@ def app_none_view(request, context):
         deployed=app.deployed,))
     return render(request, 'app_noneList.html', sendconfig(context, request))
 
+@login_required
+def app_excel_view(request, context):
+    app_name = request.GET.get('app')
+    user_id = request.session['login_name']
+    app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
+
+    # Find out the json file of the app
+    datetime = app.created_date.strftime('%y%m%d%H%M')
+    dataFileName = user_id + '-' + app_name + '-' + datetime
+    project_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    json_file_path = os.path.join(project_path, 'QAHistory/' + dataFileName + '.json')
+
+    # Create DataFrames to hold the data
+    df_result = pd.DataFrame(columns=["意圖名稱", "次數"])
+    df_none = pd.DataFrame(columns=["用戶問題", "推測意圖", "系統預測類別"])
+
+    # Try to read JSON data and append to DataFrames
+    with open(json_file_path, 'r', encoding='utf-8') as json_file:
+        excel_name = datetime + "_" + user_id + "_" + app_name + "統計數據輸出"
+        data = json.load(json_file)  # Parse JSON data into a list of dictionaries
+
+        # Filter data based on 'clu_intent' value
+        filtered_data = [item for item in data if item.get('clu_intent') == "None"]
+
+        all_values = [item['clu_intent'] for item in data if item['clu_intent'] is not None]
+        value_counter = Counter(all_values)
+        result = [{"name": value, "count": count} for value, count in value_counter.items()]
+        sorted_result = sorted(result, key=lambda x: x['count'], reverse=True)
+        print(all_values)
+        for item in sorted_result:
+            df_result = df_result.append({"意圖名稱": item.get("name", ""), "次數": item.get("count", "")},
+                           ignore_index=True)
+
+        # Append filtered data to 'df_none'
+        for item in filtered_data:
+            df_none = df_none.append({"用戶問題": item.get("q", ""), "推測意圖": item.get("clu_intent", ""),
+                            "系統預測類別": item.get("entities", [])},
+                           ignore_index=True)
+
+        # Create a BytesIO buffer to store the Excel file
+        excel_buffer = BytesIO()
+
+        # Write DataFrames to Excel file
+        with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
+            df_result.to_excel(writer, sheet_name='查詢次數彙整', index=False)
+            df_none.to_excel(writer, sheet_name='None回應報告', index=False)
+
+
+        # Set the response's content type
+        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+        # Encode the filename using URL encoding
+        encoded_filename = quote(excel_name.encode('utf-8'))
+
+        # Set the filename for download using URL-encoded filename
+        response['Content-Disposition'] = f'attachment; filename="{encoded_filename}.xlsx"'
+
+        # Write the content of the Excel buffer to the response
+        response.write(excel_buffer.getvalue())
+
+        return response
 
 @login_required
 def app_intent(request, context):
