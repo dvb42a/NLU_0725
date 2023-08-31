@@ -267,7 +267,7 @@
                 if (inputVal === '') {
                     $('#task_creat_Done').attr('disabled', true);
                 } else {
-                    var regex = /^[a-zA-Z0-9_\u4e00-\u9fa5\.]*$/; // 中英文、数字、下划线和小数点的正则表达式
+                    var regex = /^[a-zA-Z0-9_]*$/; // 中英文、数字、下划线和小数点的正则表达式
                     $('#task_creat_Done').attr('disabled', false);
                     if (!regex.test(inputVal)) { // 判断输入框的值是否符合正则表达式
                         document.getElementById("AddTaskModalTitle").innerHTML='錯誤訊息：';

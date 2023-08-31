@@ -22,6 +22,10 @@ import openpyxl
 import pandas as pd
 from io import BytesIO
 from urllib.parse import quote
+from datetime import timedelta as AddDate
+from django.db import models
+from openpyxl import Workbook
+from openpyxl.utils import get_column_letter
 
 logging.basicConfig(filename='log.txt', filemode='a')
 
@@ -60,8 +64,10 @@ class Dashboard(View):
         # 當權限為 系統管理員/專案管理員 時可以查看 CLU 任務型資料
         account = context["account"]
         client_plan = ClientPlan.objects.filter(ac=account.ac_name, plan_end__gt=timezone.now()) # 查詢登入帳號所持有還未到期的plan
-        client_plan_withCountApp = client_plan.annotate(current_app=Count('plan_app'))
-        apps = Apps.objects.filter(ac=account.ac_name).order_by('-created_date')  # 查詢登入帳號所持有的app清單
+        client_plan_withCountApp = client_plan.annotate(
+            current_app=Count('plan_app', filter=models.Q(plan_app__state=1))
+        )
+        apps = Apps.objects.filter(ac=account.ac_name, state=1).order_by('-created_date')  # 查詢登入帳號所持有的app清單
 
         context.update(dict(
             role=account.role,
@@ -149,6 +155,9 @@ def app_result_view(request, context):
                               and start_date <= datetime.strptime(item['ask_time'],'%Y-%m-%d %H:%M:%S').date() <= end_date]
             else:
                 all_values = [item['clu_intent'] for item in json_data if item['clu_intent'] is not None]
+
+
+
             value_counter = Counter(all_values)
             result = [{"name": value, "count": count} for value, count in value_counter.items()]
             sorted_result=sorted(result , key=lambda x: x['count'], reverse=True)
@@ -215,10 +224,11 @@ def app_excel_view(request, context):
     app_name = request.GET.get('app')
     user_id = request.session['login_name']
     app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
+    current_date = datetime.now().date().strftime('%Y%m%d')
 
     # Find out the json file of the app
-    datetime = app.created_date.strftime('%y%m%d%H%M')
-    dataFileName = user_id + '-' + app_name + '-' + datetime
+    datetimeAPP = app.created_date.strftime('%y%m%d%H%M')
+    dataFileName = user_id + '-' + app_name + '-' + datetimeAPP
     project_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     json_file_path = os.path.join(project_path, 'QAHistory/' + dataFileName + '.json')
 
@@ -227,50 +237,88 @@ def app_excel_view(request, context):
     df_none = pd.DataFrame(columns=["用戶問題", "推測意圖", "系統預測類別"])
 
     # Try to read JSON data and append to DataFrames
-    with open(json_file_path, 'r', encoding='utf-8') as json_file:
-        excel_name = datetime + "_" + user_id + "_" + app_name + "統計數據輸出"
-        data = json.load(json_file)  # Parse JSON data into a list of dictionaries
+    try:
+        with open(json_file_path, 'r', encoding='utf-8') as json_file:
 
-        # Filter data based on 'clu_intent' value
-        filtered_data = [item for item in data if item.get('clu_intent') == "None"]
+            excel_name = current_date + "_" + user_id + "_" + app_name + "統計數據輸出"
+            data = json.load(json_file)  # Parse JSON data into a list of dictionaries
 
-        all_values = [item['clu_intent'] for item in data if item['clu_intent'] is not None]
-        value_counter = Counter(all_values)
-        result = [{"name": value, "count": count} for value, count in value_counter.items()]
-        sorted_result = sorted(result, key=lambda x: x['count'], reverse=True)
-        print(all_values)
-        for item in sorted_result:
-            df_result = df_result.append({"意圖名稱": item.get("name", ""), "次數": item.get("count", "")},
-                           ignore_index=True)
+            # Filter data based on 'clu_intent' value
+            filtered_data = [item for item in data if item.get('clu_intent') == "None"]
 
-        # Append filtered data to 'df_none'
-        for item in filtered_data:
-            df_none = df_none.append({"用戶問題": item.get("q", ""), "推測意圖": item.get("clu_intent", ""),
-                            "系統預測類別": item.get("entities", [])},
-                           ignore_index=True)
+            all_values = [item['clu_intent'] for item in data if item['clu_intent'] is not None]
+            value_counter = Counter(all_values)
+            result = [{"name": value, "count": count} for value, count in value_counter.items()]
+            sorted_result = sorted(result, key=lambda x: x['count'], reverse=True)
 
-        # Create a BytesIO buffer to store the Excel file
-        excel_buffer = BytesIO()
+            # Append filtered data to 'df_result'
+            for item in sorted_result:
+                df_result = df_result.append({"意圖名稱": item.get("name", ""), "次數": item.get("count", "")},
+                               ignore_index=True)
 
-        # Write DataFrames to Excel file
-        with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
-            df_result.to_excel(writer, sheet_name='查詢次數彙整', index=False)
-            df_none.to_excel(writer, sheet_name='None回應報告', index=False)
+            # Append filtered data to 'df_none'
+            for item in filtered_data:
+                df_none = df_none.append({"用戶問題": item.get("q", ""), "推測意圖": item.get("clu_intent", ""),
+                                "系統預測類別": item.get("entities", [])},
+                               ignore_index=True)
 
 
-        # Set the response's content type
-        response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            # Create a BytesIO buffer to store the Excel file
+            excel_buffer = BytesIO()
 
-        # Encode the filename using URL encoding
-        encoded_filename = quote(excel_name.encode('utf-8'))
+            # Write DataFrames to Excel file
+            with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
+                df_result.to_excel(writer, sheet_name='查詢次數彙整', index=False)
+                df_none.to_excel(writer, sheet_name='None回應報告', index=False)
 
-        # Set the filename for download using URL-encoded filename
-        response['Content-Disposition'] = f'attachment; filename="{encoded_filename}.xlsx"'
+                # Get the openpyxl workbook and worksheet objects
+                workbook = writer.book
+                worksheet_result = writer.sheets['查詢次數彙整']
+                worksheet_none = writer.sheets['None回應報告']
+                # Auto-adjust column width based on content
+                for column_cells in worksheet_result.columns:
+                    max_length = 0
+                    column_letter = column_cells[0].column_letter
+                    for cell in column_cells:
+                        try:
+                            if len(str(cell.value)) > max_length:
+                                max_length = len(str(cell.value))
+                        except:
+                            pass
+                    adjusted_width = (max_length + 2) * 4  # Adding a little extra width
+                    worksheet_result.column_dimensions[column_letter].width = adjusted_width
 
-        # Write the content of the Excel buffer to the response
-        response.write(excel_buffer.getvalue())
+                for column_cells in worksheet_none.columns:
+                    max_length = 0
+                    column_letter = column_cells[0].column_letter
+                    for cell in column_cells:
+                        try:
+                            if len(str(cell.value)) > max_length:
+                                max_length = len(str(cell.value))
+                        except:
+                            pass
+                    adjusted_width = (max_length + 2) * 2  # Adding a little extra width
+                    worksheet_none.column_dimensions[column_letter].width = adjusted_width
 
-        return response
+
+
+            # Set the response's content type
+            response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+            # Encode the filename using URL encoding
+            encoded_filename = quote(excel_name.encode('utf-8'))
+
+            # Set the filename for download using URL-encoded filename
+            response['Content-Disposition'] = f'attachment; filename="{encoded_filename}.xlsx"'
+
+            # Write the content of the Excel buffer to the response
+            response.write(excel_buffer.getvalue())
+
+            return response
+    except FileNotFoundError:
+
+        print("JSON file not found.")
+
 
 @login_required
 def app_intent(request, context):
@@ -521,7 +569,9 @@ def delete_app(request):
     if state == 202:
         print(f'[DELETE app]: {user_id}-{app_name}\nresponse:{state}')
         app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
-        app.delete()
+        app.state=1
+        app.deleted_date = datetime.now()
+        app.save()
         return redirect(reverse("app:dashboard"))
     else:
         return HttpResponse('<h1>App 刪除失敗</h1><br /><a href="/app/">Back page</a><br />' + str(state))
@@ -538,7 +588,9 @@ def delete_app_in_ClientPlan(request):
     if state == 202:
         print(f'[DELETE app]: {user_id}-{app_name}\nresponse:{state}')
         app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
-        app.delete()
+        app.state = 1
+        app.deleted_date = datetime.now()
+        app.save()
         previous_page = request.META.get('HTTP_REFERER', '/')
         return redirect(previous_page)
     else:
@@ -629,8 +681,9 @@ def app_publish(request):
                     publish_dict = deployInfo(user_id, app_name, deploy_name)
                     print("-----------------" + str(publish_dict))
                     publish_time_str = publish_dict['lastDeployedDateTime']
-                    dt = datetime.datetime.strptime(publish_time_str, "%Y-%m-%dT%H:%M:%SZ")
-                    app.last_deployed_date = (dt + datetime.timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S")
+                    dt = datetime.strptime(publish_time_str, "%Y-%m-%dT%H:%M:%SZ")
+                    adjusted_dt = dt + AddDate(hours=8)
+                    app.last_deployed_date = adjusted_dt.strftime("%Y-%m-%d %H:%M:%S")
                     app.deployed = 1
                     app.deploy_version = app.deploy_version + 1
                     app.save(update_fields=['last_deployed_date', 'deployed', 'deploy_version'])

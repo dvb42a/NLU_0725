@@ -12,7 +12,7 @@ class Apps(models.Model):
     id = models.IntegerField(primary_key=True,blank=True)
     plan = models.ForeignKey(ClientPlan, on_delete=models.DO_NOTHING, related_name='plan_app')
     ac = models.ForeignKey(Account, on_delete=models.DO_NOTHING, related_name='apps')
-    state = models.IntegerField(default=0, blank=True)
+    state = models.IntegerField(default=1, blank=True)
     app_name = models.CharField(max_length=32)
     app_desc = models.TextField()
     app_culture = models.CharField(default="中文", blank=True,max_length=20)
@@ -20,6 +20,7 @@ class Apps(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     last_trained_date = models.DateTimeField()
     last_deployed_date = models.DateTimeField()
+    deleted_date = models.DateTimeField()
     train_version = models.IntegerField(default=0, blank=True)
     deploy_version = models.IntegerField(default=0, blank=True)
     trained = models.IntegerField(default=0, blank=True)
@@ -31,3 +32,9 @@ class Apps(models.Model):
 
     def __str__(self):
         return self.app_name
+
+    def state_starded(self):
+        if self == '0':
+            return '已刪除'
+        if self == '1':
+            return '正常'

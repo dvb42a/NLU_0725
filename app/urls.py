@@ -1,5 +1,6 @@
 from django.urls import path
 import app.views
+from app.middleware import CheckAppMiddleware
 
 app_name = "app"
 
@@ -10,9 +11,9 @@ urlpatterns = [
     # 任務 App 詳細資訊頁面
     path('manage/info/', app.views.app_info_view, name="manage_info"),
     # 統計數據
-    path('manage/result/', app.views.app_result_view,name="result_info"),
-    path('manage/result/none/', app.views.app_none_view, name="result_none"),
-    path('manage/result/export/', app.views.app_excel_view,name="result_excel"),
+    path('manage/result/', CheckAppMiddleware(app.views.app_result_view),name="result_info"),
+    path('manage/result/none/', CheckAppMiddleware(app.views.app_none_view), name="result_none"),
+    path('manage/result/export/', CheckAppMiddleware(app.views.app_excel_view),name="result_excel"),
     # 任務意圖列表頁面
     path('task/build/intent/', app.views.app_intent, name="intent"),
     # 任務意圖語句列表頁面

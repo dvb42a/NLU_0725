@@ -5,7 +5,7 @@ from Order.models import Order
 
 class ClientPlan(models.Model):
     """
-    公司擁有之專案
+    擁有之專案
     """
     id = models.CharField(primary_key=True,blank=True,max_length=20)
     ac = models.ForeignKey(AuthUser, on_delete=models.DO_NOTHING, related_name='ac')

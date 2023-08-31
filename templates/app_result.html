@@ -87,7 +87,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col">
-                            <h5 class="card-title text-uppercase text-muted mb-0">所有數據輸出為excel </h5>
+                            <h5 class="card-title text-uppercase text-muted mb-0">依照所選數據輸出為excel </h5>
                             <span class="h2 font-weight-bold mb-0"><a href="{% url "app:result_excel" %}?{{ url }} ">下載</a></span>
                         </div>
                         <div class="col-auto">
@@ -114,17 +114,20 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-2">
                         <div>
-                            <a href="{% url "app:result_info" %}?{{ url }}&date=half&#intentTable" class="btn btn-secondary mb-2">
+                            <a href="{% url "app:result_info" %}?{{ url }}&date=half" class="btn btn-secondary mb-2">
                                 最近15天的記錄
                             </a>
-                            <a href="{% url "app:result_info" %}?{{ url }}&date=1&#intentTable" class="btn btn-secondary mb-2">
+                            <a href="{% url "app:result_info" %}?{{ url }}&date=1" class="btn btn-secondary mb-2">
                                 一個月內的記錄
                             </a>
-                            <a href="{% url "app:result_info" %}?{{ url }}&date=3&#intentTable" class="btn btn-secondary mb-2">
+                            <a href="{% url "app:result_info" %}?{{ url }}&date=3" class="btn btn-secondary mb-2">
                                 三個月內的記錄
                             </a>
-                            <a href="{% url "app:result_info" %}?{{ url }}&date=6&#intentTable" class="btn btn-secondary mb-2">
+                            <a href="{% url "app:result_info" %}?{{ url }}&date=6" class="btn btn-secondary mb-2">
                                 半年內的記錄
+                            </a>
+                            <a href="{% url "app:result_info" %}?{{ url }}" class="btn btn-secondary mb-2">
+                                不限
                             </a>
                         </div>
                         <div class="d-flex align-items-center">
@@ -139,7 +142,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <div class="row">
         <div class="col-12">

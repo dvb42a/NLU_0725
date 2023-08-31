@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'Accounts.middleware.RoleMiddleware'
+    'app.middleware.CheckAppMiddleware'
 ]
 
 ROOT_URLCONF = 'LUIS_NLU.urls'

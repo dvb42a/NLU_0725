@@ -13,6 +13,8 @@ from django.utils import timezone
 from django.db.models import Count
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.db import models
+
 
 class app(View):
     @staticmethod
@@ -30,7 +32,9 @@ class app(View):
             search_input = search
         else:
             plan_list = ClientPlan.objects.filter(ac=account.ac_name).order_by('-plan_start')
-        client_plan_withCountApp = plan_list.annotate(current_app=Count('plan_app'))
+        client_plan_withCountApp = plan_list.annotate(
+            current_app=Count('plan_app', filter=models.Q(plan_app__state=1))
+        )
         plan = Paginator(client_plan_withCountApp, 5)
         plan = plan.get_page(page)
 
@@ -54,11 +58,22 @@ class app_index(View):
         clientPlan = ClientPlan.objects.select_related('order').get(id=id)
         account = get_user_info(request)
         order=Order.objects.filter(order_no=clientPlan.order_id)
-
         mission_data = Apps.objects.filter(ac_id=account , plan_id=id)
+        mission_data_state1=mission_data.filter(state=1)
+        # 创建一个空列表来存储任务的时间戳，包括新增和删除日期
+        missions = []
+
+        for mission in mission_data:
+            missions.append((mission.app_name, mission.created_date, '新增'))
+            if mission.deleted_date:
+                missions.append((mission.app_name, mission.deleted_date, '刪除'))
+
+        # 对时间戳列表按照时间顺序进行排序
+        sorted_missions = sorted(missions, key=lambda x: x[1])
+        context['sorted_missions']=sorted_missions
         context['clientPlan']=clientPlan
         context['account'] = account
-        context['mission_data']=mission_data
+        context['mission_data']=mission_data_state1
         context.update(dict(
             dashborad=True
         ))
