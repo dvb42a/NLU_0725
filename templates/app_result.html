@@ -88,7 +88,7 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">依照所選數據輸出為excel </h5>
-                            <span class="h2 font-weight-bold mb-0"><a href="{% url "app:result_excel" %}?{{ url }} ">下載</a></span>
+                            <span class="h2 font-weight-bold mb-0"><a id="excel_export" href="{% url "app:result_excel" %}?{{ url }}{% if request.GET.start and request.GET.end %}{% with start=request.GET.start end=request.GET.end %}&start={{start}}&end={{end}}{% endwith %}{% elif request.GET.date %}{% with date=request.GET.date %}&date={{date}}{% endwith %}{% endif %}">下載</a></span>
                         </div>
                         <div class="col-auto">
                             <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -114,19 +114,19 @@
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-2">
                         <div>
-                            <a href="{% url "app:result_info" %}?{{ url }}&date=half" class="btn btn-secondary mb-2">
+                            <a href="{% url "app:result_info" %}?{{ url }}&date=half" class="{% if request.GET.date == 'half' %} btn-light{% endif %} btn btn-secondary mb-2">
                                 最近15天的記錄
                             </a>
-                            <a href="{% url "app:result_info" %}?{{ url }}&date=1" class="btn btn-secondary mb-2">
+                            <a href="{% url "app:result_info" %}?{{ url }}&date=1" class="{% if request.GET.date == '1' %} btn-light{% endif %} btn btn-secondary mb-2">
                                 一個月內的記錄
                             </a>
-                            <a href="{% url "app:result_info" %}?{{ url }}&date=3" class="btn btn-secondary mb-2">
+                            <a href="{% url "app:result_info" %}?{{ url }}&date=3" class="{% if request.GET.date == '3' %} btn-light{% endif %} btn btn-secondary mb-2">
                                 三個月內的記錄
                             </a>
-                            <a href="{% url "app:result_info" %}?{{ url }}&date=6" class="btn btn-secondary mb-2">
+                            <a href="{% url "app:result_info" %}?{{ url }}&date=6" class="{% if request.GET.date == '6' %} btn-light{% endif %} btn btn-secondary mb-2">
                                 半年內的記錄
                             </a>
-                            <a href="{% url "app:result_info" %}?{{ url }}" class="btn btn-secondary mb-2">
+                            <a href="{% url "app:result_info" %}?{{ url }}" class="{% if not request.GET.date and not request.GET.start %} btn-light{%endif%} btn btn-secondary mb-2">
                                 不限
                             </a>
                         </div>
@@ -260,6 +260,22 @@
         const refresh_button =document.getElementById('refresh');
         const customStart =document.getElementById('customStart');
         const customEnd =document.getElementById('customEnd');
+        const excel_export= document.getElementById('excel_export');
+
+        var url=excel_export.getAttribute("href");
+        var params = new URLSearchParams(url);
+        var startValue = params.get("start");
+        var dateValue = params.get("date");
+        console.log(startValue);
+        console.log(dateValue);
+        if (dateValue == null && startValue == null)
+        {
+           excel_export.addEventListener('click',function(){
+                excel_export.href="#";
+                alert("請篩選期限");
+           });
+
+        }
 
         refresh_button.addEventListener('click',function(){
              window.location.href = "{% url "app:result_info" %}?{{ url }}"
@@ -281,8 +297,6 @@
                 window.location.href = link
             }
         }
-
-
     </script>
 {% endblock %}
 

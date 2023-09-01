@@ -13,7 +13,8 @@ urlpatterns = [
     # 統計數據
     path('manage/result/', CheckAppMiddleware(app.views.app_result_view),name="result_info"),
     path('manage/result/none/', CheckAppMiddleware(app.views.app_none_view), name="result_none"),
-    path('manage/result/export/', CheckAppMiddleware(app.views.app_excel_view),name="result_excel"),
+    path('manage/result/export/result/', CheckAppMiddleware(app.views.app_excel_result),name="result_excel"),
+    path('manage/result/export/none/', CheckAppMiddleware(app.views.app_excel_none),name="result_excel_none"),
     # 任務意圖列表頁面
     path('task/build/intent/', app.views.app_intent, name="intent"),
     # 任務意圖語句列表頁面

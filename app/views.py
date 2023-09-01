@@ -108,6 +108,69 @@ def app_info_view(request, context):
         chat_bubble=chat_bubble))
     return render(request, 'app_info.html', sendconfig(context, request))
 
+def getAllValues(start,end,count,data):
+
+    if count is not None  and start is None :
+        current_date = datetime.now().date()
+        end_date = current_date
+        start_date = current_date - timedelta(days=count)
+        all_values = [item['clu_intent'] for item in data if item['clu_intent'] is not None
+                      and start_date <= datetime.strptime(item['ask_time'],'%Y-%m-%d %H:%M:%S').date() <= end_date]
+    if start is not None and count is None:
+        start_date_str = start
+        end_date_str = end
+        start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+        all_values = [item['clu_intent'] for item in data if item['clu_intent'] is not None
+                      and start_date <= datetime.strptime(item['ask_time'],
+                                                          '%Y-%m-%d %H:%M:%S').date() <= end_date]
+    if start is None and count is None :
+        all_values = [item['clu_intent'] for item in data if item['clu_intent'] is not None]
+
+    return all_values
+
+def getAllValuesNone(start,end,count,data,search):
+    if not search:
+        search_term=""
+    else:
+        search_term = search  # Get the search term from the request
+    pattern = re.compile(search_term, re.IGNORECASE)
+
+    if count is not None  and start is None:
+        print('123')
+        current_date = datetime.now().date()
+        end_date = current_date
+        start_date = current_date - timedelta(days=count)
+        all_values = [item for item in data if
+                              item['clu_intent'] == "None" and
+                              (re.search(pattern, item['q']) or
+                               any(re.search(pattern, e['entity']) for e in item['entities']) or
+                               any(re.search(pattern, e['entity_category']) for e in item['entities']))
+                      and start_date <= datetime.strptime(item['ask_time'],'%Y-%m-%d %H:%M:%S').date() <= end_date]
+    if start is not None and count is None:
+        print('456')
+        start_date_str = start
+        end_date_str = end
+        start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
+        end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
+        all_values = [item for item in data if
+                              item['clu_intent'] == "None" and
+                              (re.search(pattern, item['q']) or
+                               any(re.search(pattern, e['entity']) for e in item['entities']) or
+                               any(re.search(pattern, e['entity_category']) for e in item['entities']))
+                      and start_date <= datetime.strptime(item['ask_time'],
+                                                          '%Y-%m-%d %H:%M:%S').date() <= end_date]
+    if start is None and count is None:
+        print('789')
+        all_values = [item for item in data if
+                      item['clu_intent'] == "None" and
+                      (re.search(pattern, item['q']) or
+                       any(re.search(pattern, e['entity']) for e in item['entities']) or
+                       any(re.search(pattern, e['entity_category']) for e in item['entities']))]
+
+    return all_values
+
+
 @login_required
 def app_result_view(request, context):
     """
@@ -132,6 +195,8 @@ def app_result_view(request, context):
 
             if "date" in request.GET:
                 current_date = datetime.now().date()
+                start = None
+                end = None
                 date = request.GET['date']
                 if date == "half":
                     countDate = 15
@@ -141,29 +206,26 @@ def app_result_view(request, context):
                     countDate = 90
                 if date == "6":
                     countDate = 180
-
-                end_date = current_date
-                start_date = current_date - timedelta(days=countDate)
-                all_values = [item['clu_intent'] for item in json_data if item['clu_intent'] is not None
-                              and start_date <= datetime.strptime(item['ask_time'], '%Y-%m-%d %H:%M:%S').date() <= end_date]
             if "start" in request.GET:
-                start_date_str = request.GET['start']
-                end_date_str = request.GET['end']
-                start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
-                end_date = datetime.strptime(end_date_str, '%Y-%m-%d').date()
-                all_values = [item['clu_intent'] for item in json_data if item['clu_intent'] is not None
-                              and start_date <= datetime.strptime(item['ask_time'],'%Y-%m-%d %H:%M:%S').date() <= end_date]
-            else:
-                all_values = [item['clu_intent'] for item in json_data if item['clu_intent'] is not None]
+                start = request.GET['start']
+                end = request.GET['end']
+                countDate = None
+            if "start" not in request.GET and "date" not in request.GET:
+                start=None
+                end=None
+                countDate=None
 
-
+            print(start)
+            print(end)
+            print(countDate)
+            all_values = getAllValues(start, end, countDate, json_data)
 
             value_counter = Counter(all_values)
             result = [{"name": value, "count": count} for value, count in value_counter.items()]
             sorted_result=sorted(result , key=lambda x: x['count'], reverse=True)
             context['results']=sorted_result
     except FileNotFoundError:
-        print('445')
+        print('Error!!!')
 
     context.update(dict(
         app=app,
@@ -182,8 +244,8 @@ def app_none_view(request, context):
     app_name = request.GET.get('app')
     user_id = request.session['login_name']
     app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
-    datetime=app.created_date.strftime('%y%m%d%H%M')
-    dataFileName=user_id+'-'+app_name+'-'+datetime
+    datetimeApp=app.created_date.strftime('%y%m%d%H%M')
+    dataFileName=user_id+'-'+app_name+'-'+datetimeApp
     project_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     # 构建 JSON 文件的完整路径
     json_file_path = os.path.join(project_path, 'QAHistory/'+dataFileName+'.json')
@@ -194,19 +256,31 @@ def app_none_view(request, context):
 
             json_data = json.load(json_file)
             item_count = len(json_data)
+            search = request.GET.get('search')
 
-            # 提取所有值到一个列表中
-            if 'search' in request.GET:
-                search_term = request.GET.get('search')  # Get the search term from the request
-                pattern = re.compile(search_term, re.IGNORECASE)  # Create a pattern for case-insensitive search
+            if "date" in request.GET:
+                current_date = datetime.now().date()
+                start=None
+                end=None
+                date = request.GET['date']
+                if date == "half":
+                    countDate = 15
+                if date == "1":
+                    countDate = 30
+                if date == "3":
+                    countDate = 90
+                if date == "6":
+                    countDate = 180
+            if "start" in request.GET:
+                start= request.GET['start']
+                end = request.GET['end']
+                countDate = None
+            if "start" not in request.GET and "date" not in request.GET:
+                start= None
+                end = None
+                countDate = None
 
-                all_values = [item for item in json_data if
-                              item['clu_intent'] == "None" and
-                              (re.search(pattern, item['q']) or
-                               any(re.search(pattern, e['entity']) for e in item['entities']) or
-                               any(re.search(pattern, e['entity_category']) for e in item['entities']))]
-            else:
-                all_values = [item for item in json_data if item['clu_intent'] == "None"]
+            all_values=getAllValuesNone(start,end,countDate,json_data,search)
             context['results']=all_values
     except FileNotFoundError:
         print('445')
@@ -220,7 +294,7 @@ def app_none_view(request, context):
     return render(request, 'app_noneList.html', sendconfig(context, request))
 
 @login_required
-def app_excel_view(request, context):
+def app_excel_result(request, context):
     app_name = request.GET.get('app')
     user_id = request.session['login_name']
     app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
@@ -234,7 +308,6 @@ def app_excel_view(request, context):
 
     # Create DataFrames to hold the data
     df_result = pd.DataFrame(columns=["意圖名稱", "次數"])
-    df_none = pd.DataFrame(columns=["用戶問題", "推測意圖", "系統預測類別"])
 
     # Try to read JSON data and append to DataFrames
     try:
@@ -246,7 +319,26 @@ def app_excel_view(request, context):
             # Filter data based on 'clu_intent' value
             filtered_data = [item for item in data if item.get('clu_intent') == "None"]
 
-            all_values = [item['clu_intent'] for item in data if item['clu_intent'] is not None]
+            if "date" in request.GET:
+                current_date = datetime.now().date()
+                start=None
+                end=None
+                date = request.GET['date']
+                if date == "half":
+                    countDate = 15
+                if date == "1":
+                    countDate = 30
+                if date == "3":
+                    countDate = 90
+                if date == "6":
+                    countDate = 180
+            if "start" in request.GET:
+                start= request.GET['start']
+                end = request.GET['end']
+                countDate = None
+
+            all_values=getAllValues(start,end,countDate,data)
+
             value_counter = Counter(all_values)
             result = [{"name": value, "count": count} for value, count in value_counter.items()]
             sorted_result = sorted(result, key=lambda x: x['count'], reverse=True)
@@ -256,25 +348,16 @@ def app_excel_view(request, context):
                 df_result = df_result.append({"意圖名稱": item.get("name", ""), "次數": item.get("count", "")},
                                ignore_index=True)
 
-            # Append filtered data to 'df_none'
-            for item in filtered_data:
-                df_none = df_none.append({"用戶問題": item.get("q", ""), "推測意圖": item.get("clu_intent", ""),
-                                "系統預測類別": item.get("entities", [])},
-                               ignore_index=True)
-
-
             # Create a BytesIO buffer to store the Excel file
             excel_buffer = BytesIO()
 
             # Write DataFrames to Excel file
             with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
                 df_result.to_excel(writer, sheet_name='查詢次數彙整', index=False)
-                df_none.to_excel(writer, sheet_name='None回應報告', index=False)
 
                 # Get the openpyxl workbook and worksheet objects
                 workbook = writer.book
                 worksheet_result = writer.sheets['查詢次數彙整']
-                worksheet_none = writer.sheets['None回應報告']
                 # Auto-adjust column width based on content
                 for column_cells in worksheet_result.columns:
                     max_length = 0
@@ -288,6 +371,95 @@ def app_excel_view(request, context):
                     adjusted_width = (max_length + 2) * 4  # Adding a little extra width
                     worksheet_result.column_dimensions[column_letter].width = adjusted_width
 
+            # Set the response's content type
+            response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+            # Encode the filename using URL encoding
+            encoded_filename = quote(excel_name.encode('utf-8'))
+
+            # Set the filename for download using URL-encoded filename
+            response['Content-Disposition'] = f'attachment; filename="{encoded_filename}.xlsx"'
+
+            # Write the content of the Excel buffer to the response
+            response.write(excel_buffer.getvalue())
+
+            return response
+    except FileNotFoundError:
+
+        print("JSON file not found.")
+
+@login_required
+def app_excel_none(request, context):
+    app_name = request.GET.get('app')
+    user_id = request.session['login_name']
+    app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
+    current_date = datetime.now().date().strftime('%Y%m%d')
+
+    # Find out the json file of the app
+    datetimeAPP = app.created_date.strftime('%y%m%d%H%M')
+    dataFileName = user_id + '-' + app_name + '-' + datetimeAPP
+    project_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    json_file_path = os.path.join(project_path, 'QAHistory/' + dataFileName + '.json')
+
+    # Create DataFrames to hold the data
+    df_none = pd.DataFrame(columns=["用戶問題", "推測意圖", "系統預測類別"])
+
+    # Try to read JSON data and append to DataFrames
+    try:
+        with open(json_file_path, 'r', encoding='utf-8') as json_file:
+
+            excel_name = current_date + "_" + user_id + "_" + app_name + "統計數據輸出"
+            data = json.load(json_file)  # Parse JSON data into a list of dictionaries
+
+            # Filter data based on 'clu_intent' value
+            filtered_data = [item for item in data if item.get('clu_intent') == "None"]
+
+            if "date" in request.GET:
+                current_date = datetime.now().date()
+                start=None
+                end=None
+                date = request.GET['date']
+                if date == "half":
+                    countDate = 15
+                if date == "1":
+                    countDate = 30
+                if date == "3":
+                    countDate = 90
+                if date == "6":
+                    countDate = 180
+            if "start" in request.GET:
+                start= request.GET['start']
+                end = request.GET['end']
+                countDate = None
+            if "start" not in request.GET and "date" not in request.GET:
+                start= None
+                end = None
+                countDate = None
+
+            all_values = getAllValuesNone(start,end,countDate,filtered_data)
+
+            value_counter = Counter(all_values)
+            result = [{"name": value, "count": count} for value, count in value_counter.items()]
+            sorted_result = sorted(result, key=lambda x: x['count'], reverse=True)
+
+            # Append filtered data to 'df_none'
+            for item in sorted_result:
+                df_none = df_none.append({"用戶問題": item.get("q", ""), "推測意圖": item.get("clu_intent", ""),
+                                "系統預測類別": item.get("entities", [])},
+                               ignore_index=True)
+
+
+            # Create a BytesIO buffer to store the Excel file
+            excel_buffer = BytesIO()
+
+            # Write DataFrames to Excel file
+            with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
+                df_none.to_excel(writer, sheet_name='None回應報告', index=False)
+
+                # Get the openpyxl workbook and worksheet objects
+                workbook = writer.book
+                worksheet_none = writer.sheets['None回應報告']
+                # Auto-adjust column width based on content
                 for column_cells in worksheet_none.columns:
                     max_length = 0
                     column_letter = column_cells[0].column_letter
@@ -318,7 +490,6 @@ def app_excel_view(request, context):
     except FileNotFoundError:
 
         print("JSON file not found.")
-
 
 @login_required
 def app_intent(request, context):

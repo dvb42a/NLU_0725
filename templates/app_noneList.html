@@ -23,8 +23,70 @@
         </div>
     </div>
 {% endblock %}
-
+{% block small_card %}
+    <!-- Card stats -->
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <div class="card card-stats">
+                <!-- Card body -->
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">依照所選數據輸出為excel </h5>
+                            <span class="h2 font-weight-bold mb-0"><a id="excel_export" href="{% url "app:result_excel_none" %}?{{ url }}{% if request.GET.start and request.GET.end %}{% with start=request.GET.start end=request.GET.end %}&start={{start}}&end={{end}}{% endwith %}{% elif request.GET.date %}{% with date=request.GET.date %}&date={{date}}{% endwith %}{% endif %}">下載</a></span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                <i class="fa fa-table" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 {% block page_card %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+               <div class="card-header border-0">
+                    <div class="row align-items-center">
+                        <div class="col d-flex justify-content-between align-items-center">
+                            <h3 class="mb-0">篩選</h3>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between mt-2">
+                        <div>
+                            <a href="{% url "app:result_none" %}?{{ url }}&date=half" class="{% if request.GET.date == 'half' %} btn-light{% endif %} btn btn-secondary mb-2">
+                                最近15天的記錄
+                            </a>
+                            <a href="{% url "app:result_none" %}?{{ url }}&date=1" class="{% if request.GET.date == '1' %} btn-light{% endif %} btn btn-secondary mb-2">
+                                一個月內的記錄
+                            </a>
+                            <a href="{% url "app:result_none" %}?{{ url }}&date=3" class="{% if request.GET.date == '3' %} btn-light{% endif %} btn btn-secondary mb-2">
+                                三個月內的記錄
+                            </a>
+                            <a href="{% url "app:result_none" %}?{{ url }}&date=6" class="{% if request.GET.date == '6' %} btn-light{% endif %} btn btn-secondary mb-2">
+                                半年內的記錄
+                            </a>
+                            <a href="{% url "app:result_none" %}?{{ url }}" class="{% if not request.GET.date and not request.GET.start %} btn-light{%endif%} btn btn-secondary mb-2">
+                                不限
+                            </a>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <input class="form-control rounded mr-2" style="width: 250px" type="date" id="customStart" name="custom_start" {% if request.GET.start %} value ="{{ request.GET.start }}" {% endif %}>
+                            <span class="mr-2">至</span>
+                            <input class="form-control rounded mr-2" style="width: 250px" type="date" id="customEnd" name="custom_end" {% if request.GET.end %} value ="{{ request.GET.end }}" {% endif %}>
+                            <button class="btn btn-secondary" id="refresh" type="button">
+                                <i class="fa fa-times" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -35,11 +97,11 @@
                             <div class="d-inline-flex" >
                               <form method="get"  class="d-flex" style="margin-left:12px">
                                   <input type="text" hidden name="app" value="{{app}}">
-                                  <input  class="form-control rounded" style="width:350px" placeholder="搜尋用戶提問" aria-label="Search" name="search" value="{{search_input}}" />
+                                  <input  class="form-control rounded" style="width:350px" placeholder="搜尋用戶提問/系統預測關鍵字/系統預測分類" aria-label="Search" name="search" value="{{search_input}}" />
                                   <button class="btn btn-primary">
                                     <i class="fas fa-search"></i>
                                   </button>
-                                  <button  class="btn btn-primary" id="refresh" type="button">
+                                  <button  class="btn btn-primary" id="refreshBtn" type="button">
                                     <i class="fa fa-times" aria-hidden="true"></i>
                                   </button>
                               </form>
@@ -122,12 +184,40 @@
 
 {% block jquery %}
     <script>
-        const modal_button = document.getElementById('open_modal');
         const refresh_button =document.getElementById('refresh');
+        const refresh_button_input = document.getElementById('refreshBtn');
+        const customStart =document.getElementById('customStart');
+        const customEnd =document.getElementById('customEnd');
 
         refresh_button.addEventListener('click',function(){
              window.location.href = "{% url "app:result_none" %}?{{ url }} "
         });
+
+        refresh_button_input.addEventListener('click',function(){
+             window.location.href = "{% url "app:result_none" %}?{{ url }} "
+        });
+
+        customStart.addEventListener('change',function() {
+            checkDateInput();
+        })
+
+        customEnd.addEventListener('change',function() {
+            checkDateInput();
+        })
+
+        function checkDateInput()
+        {
+            if (customStart.value !="" && customEnd.value !="")
+            {
+                console.log('easease');
+                link="{% url "app:result_none" %}?{{ url }}"+"&start="+customStart.value+"&end="+customEnd.value;
+                window.location.href = link
+            }
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+
+
 
     </script>
 {% endblock %}
