@@ -33,7 +33,7 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">依照所選數據輸出為excel </h5>
-                            <span class="h2 font-weight-bold mb-0"><a id="excel_export" href="{% url "app:result_excel_none" %}?{{ url }}{% if request.GET.start and request.GET.end %}{% with start=request.GET.start end=request.GET.end %}&start={{start}}&end={{end}}{% endwith %}{% elif request.GET.date %}{% with date=request.GET.date %}&date={{date}}{% endwith %}{% endif %}">下載</a></span>
+                            <span class="h2 font-weight-bold mb-0"><a id="excel_export" href="{% url "app:result_excel_none" %}?{{ url }}{% if request.GET.start and request.GET.end %}{% with start=request.GET.start end=request.GET.end %}&start={{start}}&end={{end}}{% endwith %}{% elif request.GET.date %}{% with date=request.GET.date %}&date={{date}}{% endwith %}{% endif %}{%if request.GET.search %}{%with search=request.GET.search %}&search={{search}}{% endwith%}{%endif%}">下載</a></span>
                         </div>
                         <div class="col-auto">
                             <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -95,16 +95,14 @@
                         <div class="col d-flex justify-content-between">
                             <h3 class="mb-0">所有無法正常回應的客戶問題</h3>
                             <div class="d-inline-flex" >
-                              <form method="get"  class="d-flex" style="margin-left:12px">
-                                  <input type="text" hidden name="app" value="{{app}}">
-                                  <input  class="form-control rounded" style="width:350px" placeholder="搜尋用戶提問/系統預測關鍵字/系統預測分類" aria-label="Search" name="search" value="{{search_input}}" />
-                                  <button class="btn btn-primary">
+                                <input type="text" hidden name="app" value="{{app}}">
+                                <input  class="form-control rounded" style="width:350px" placeholder="搜尋用戶提問/系統預測關鍵字/系統預測分類" id="search" aria-label="Search" name="search" value="{{search_input}}" />
+                                <button class="btn btn-primary" id="submitBtn" type="button">
                                     <i class="fas fa-search"></i>
-                                  </button>
-                                  <button  class="btn btn-primary" id="refreshBtn" type="button">
+                                </button>
+                                <button  class="btn btn-primary" id="refreshBtn" type="button">
                                     <i class="fa fa-times" aria-hidden="true"></i>
-                                  </button>
-                              </form>
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -188,6 +186,21 @@
         const refresh_button_input = document.getElementById('refreshBtn');
         const customStart =document.getElementById('customStart');
         const customEnd =document.getElementById('customEnd');
+        const submit_button=document.getElementById('submitBtn');
+        const search= document.getElementById('search');
+        const urlParams = new URLSearchParams(window.location.search);
+
+        if(urlParams.has('search'))
+        {
+            search.value=urlParams.get('search');
+        }
+
+        submit_button.addEventListener('click',function(){
+            const queryParams = window.location.search;
+            queryParamsWithSearch =queryParams+"&search="+search.value;
+            link="{% url "app:result_none" %}"+queryParamsWithSearch;
+            window.location.href = link
+        });
 
         refresh_button.addEventListener('click',function(){
              window.location.href = "{% url "app:result_none" %}?{{ url }} "
@@ -209,13 +222,13 @@
         {
             if (customStart.value !="" && customEnd.value !="")
             {
-                console.log('easease');
                 link="{% url "app:result_none" %}?{{ url }}"+"&start="+customStart.value+"&end="+customEnd.value;
                 window.location.href = link
             }
         }
 
-        const urlParams = new URLSearchParams(window.location.search);
+
+
 
 
 

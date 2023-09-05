@@ -137,7 +137,7 @@ def getAllValuesNone(start,end,count,data,search):
     pattern = re.compile(search_term, re.IGNORECASE)
 
     if count is not None  and start is None:
-        print('123')
+        #print('123')
         current_date = datetime.now().date()
         end_date = current_date
         start_date = current_date - timedelta(days=count)
@@ -148,7 +148,7 @@ def getAllValuesNone(start,end,count,data,search):
                                any(re.search(pattern, e['entity_category']) for e in item['entities']))
                       and start_date <= datetime.strptime(item['ask_time'],'%Y-%m-%d %H:%M:%S').date() <= end_date]
     if start is not None and count is None:
-        print('456')
+        #print('456')
         start_date_str = start
         end_date_str = end
         start_date = datetime.strptime(start_date_str, '%Y-%m-%d').date()
@@ -161,7 +161,7 @@ def getAllValuesNone(start,end,count,data,search):
                       and start_date <= datetime.strptime(item['ask_time'],
                                                           '%Y-%m-%d %H:%M:%S').date() <= end_date]
     if start is None and count is None:
-        print('789')
+        #print('789')
         all_values = [item for item in data if
                       item['clu_intent'] == "None" and
                       (re.search(pattern, item['q']) or
@@ -283,7 +283,7 @@ def app_none_view(request, context):
             all_values=getAllValuesNone(start,end,countDate,json_data,search)
             context['results']=all_values
     except FileNotFoundError:
-        print('445')
+        print('error')
 
     context.update(dict(
         app=app,
@@ -316,8 +316,6 @@ def app_excel_result(request, context):
             excel_name = current_date + "_" + user_id + "_" + app_name + "統計數據輸出"
             data = json.load(json_file)  # Parse JSON data into a list of dictionaries
 
-            # Filter data based on 'clu_intent' value
-            filtered_data = [item for item in data if item.get('clu_intent') == "None"]
 
             if "date" in request.GET:
                 current_date = datetime.now().date()
@@ -407,8 +405,8 @@ def app_excel_none(request, context):
     # Try to read JSON data and append to DataFrames
     try:
         with open(json_file_path, 'r', encoding='utf-8') as json_file:
-
-            excel_name = current_date + "_" + user_id + "_" + app_name + "統計數據輸出"
+            search = request.GET.get('search')
+            excel_name = current_date + "_" + user_id + "_" + app_name + "None報告"
             data = json.load(json_file)  # Parse JSON data into a list of dictionaries
 
             # Filter data based on 'clu_intent' value
@@ -436,14 +434,10 @@ def app_excel_none(request, context):
                 end = None
                 countDate = None
 
-            all_values = getAllValuesNone(start,end,countDate,filtered_data)
-
-            value_counter = Counter(all_values)
-            result = [{"name": value, "count": count} for value, count in value_counter.items()]
-            sorted_result = sorted(result, key=lambda x: x['count'], reverse=True)
-
+            all_values = getAllValuesNone(start,end,countDate,data,search)
+            print(all_values)
             # Append filtered data to 'df_none'
-            for item in sorted_result:
+            for item in all_values:
                 df_none = df_none.append({"用戶問題": item.get("q", ""), "推測意圖": item.get("clu_intent", ""),
                                 "系統預測類別": item.get("entities", [])},
                                ignore_index=True)
@@ -454,13 +448,28 @@ def app_excel_none(request, context):
 
             # Write DataFrames to Excel file
             with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
-                df_none.to_excel(writer, sheet_name='None回應報告', index=False)
+                if countDate is not None and start is None:
+                    current_date = datetime.now().date()
+                    end_date = current_date
+                    start_date = current_date - timedelta(days=countDate)
+                    steet_name = str(start_date) + '至' + str(end_date) + '的None回應報告'
+                if start is not None and countDate is None:
+                    start_date_str = start
+                    end_date_str = end
+                    steet_name = start_date_str + '至' + end_date_str + '的None回應報告'
+                if start is None and countDate is None:
+                    steet_name='整體None回應報告'
+
+                df_none.to_excel(writer, sheet_name=steet_name, index=False)
+
 
                 # Get the openpyxl workbook and worksheet objects
                 workbook = writer.book
-                worksheet_none = writer.sheets['None回應報告']
+                worksheet_none = writer.sheets[steet_name]
+
                 # Auto-adjust column width based on content
                 for column_cells in worksheet_none.columns:
+
                     max_length = 0
                     column_letter = column_cells[0].column_letter
                     for cell in column_cells:
