@@ -26,7 +26,7 @@ from datetime import timedelta as AddDate
 from django.db import models
 from openpyxl import Workbook
 from openpyxl.utils import get_column_letter
-
+from django.core.paginator import Paginator
 logging.basicConfig(filename='log.txt', filemode='a')
 
 LUIS_KEY = "b25e3e3c55204401bca92434148d298a"  # kingly.azure@gmail.com KinglyNLU金鑰
@@ -178,6 +178,7 @@ def app_result_view(request, context):
     context內的值從required繼承而來
     """
     app_name = request.GET.get('app')
+    page = request.GET.get('page')
     user_id = request.session['login_name']
     app = Apps.objects.filter(app_name=app_name, ac=user_id).first()
     app_datetime=app.created_date.strftime('%y%m%d%H%M')
@@ -257,6 +258,7 @@ def app_none_view(request, context):
 
             json_data = json.load(json_file)
             item_count = len(json_data)
+            page = request.GET.get('page')
             search = request.GET.get('search')
 
             if "date" in request.GET:
@@ -282,7 +284,10 @@ def app_none_view(request, context):
                 countDate = None
 
             all_values=getAllValuesNone(start,end,countDate,json_data,search)
-            context['results']=all_values
+
+            sorted_result_page=Paginator(all_values,15)
+            sorted_result_page_output=sorted_result_page.get_page(page)
+            context['results']=sorted_result_page_output
             context['File'] = 'true'
     except FileNotFoundError:
         context['File']='false'
@@ -413,7 +418,7 @@ def app_excel_none(request, context):
     json_file_path = os.path.join(project_path, 'QAHistory/' + dataFileName + '.json')
 
     # Create DataFrames to hold the data
-    df_none = pd.DataFrame(columns=["用戶問題", "推測意圖", "系統預測類別"])
+    df_none = pd.DataFrame(columns=["用戶問題", "系統預測關鍵字", "系統預測類別", "提問日期"])
 
     # Try to read JSON data and append to DataFrames
     try:
@@ -451,9 +456,22 @@ def app_excel_none(request, context):
             #print(all_values)
             # Append filtered data to 'df_none'
             for item in all_values:
-                df_none = df_none.append({"用戶問題": item.get("q", ""), "推測意圖": item.get("clu_intent", ""),
-                                "系統預測類別": item.get("entities", [])},
-                               ignore_index=True)
+                q = item.get("q", "")
+                entities = item.get("entities", [])
+                if entities:
+                    entity = "["+entities[0].get("entity", "")+"]"
+                    entity_category = "["+entities[0].get("entity_category", "")+"]"
+                else:
+                    entity = "-"
+                    entity_category = "-"
+                ask_time = item.get("ask_time", "")
+
+                df_none = df_none.append({
+                    "用戶問題": q,
+                    "系統預測關鍵字": entity,
+                    "系統預測類別": entity_category,
+                    "提問日期": ask_time
+                }, ignore_index=True)
 
 
             # Create a BytesIO buffer to store the Excel file
@@ -491,7 +509,7 @@ def app_excel_none(request, context):
                                 max_length = len(str(cell.value))
                         except:
                             pass
-                    adjusted_width = (max_length + 2) * 2  # Adding a little extra width
+                    adjusted_width = (max_length + 20) * 1  # Adding a little extra width
                     worksheet_none.column_dimensions[column_letter].width = adjusted_width
 
 

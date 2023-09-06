@@ -864,5 +864,24 @@
       ],
       "run_time": "1.22 秒",
       "ask_time": "2023-09-06 09:56:33"
+   },
+   {
+      "q": "車子",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.60",
+      "ans": "我只能提供台積電公司的資訊",
+      "entities": [
+         {
+            "entity": "車",
+            "entity_category": "公司"
+         },
+         {
+            "entity": "子",
+            "entity_category": "問候語"
+         }
+      ],
+      "run_time": "2.05 秒",
+      "ask_time": "2023-09-06 14:46:55"
    }
 ]

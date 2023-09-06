@@ -119,6 +119,7 @@
                             <th scope="col">用戶的提問</th>
                             <th scope="col">系統預測關鍵字</th>
                             <th scope="col">系統預測分類</th>
+                            <th scope="col">提問日期</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -146,6 +147,9 @@
                                             -
                                         {% endif %}
                                     </th>
+                                    <th scope="row">
+                                        {{ result.ask_time }}
+                                    </th>
                                 </tr>
                             {% endfor %}
                         {% else %}
@@ -163,14 +167,14 @@
                     <div class="d-flex justify-content-center">
                         <nav aria-label="...">
                           <ul class="pagination pagination-lg">
-                            {% for num_page in account_list.paginator.page_range %}
-                                {% if num_page == order_list.number%}
+                            {% for num_page in results.paginator.page_range %}
+                                {% if num_page == results.number%}
                                 <li class="page-item disabled active">
                                     <a class="page-link">{{num_page}}</a>
                                 </li>
                                 {% else %}
                                 <li class="page-item">
-                                  <a class="page-link" href="{% url "Admin:account" %}?page={{num_page}}" >{{num_page}}</a>
+                                  <a class="page-link" href="{% url "app:result_none" %}?{{url}}&page={{num_page}}" >{{num_page}}</a>
                                 </li>
                                 {% endif %}
                             {% endfor %}

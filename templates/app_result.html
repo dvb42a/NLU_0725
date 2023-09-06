@@ -187,24 +187,6 @@
                         {% endif %}
                         </tbody>
                     </table>
-                    <br>
-                    <div class="d-flex justify-content-center">
-                        <nav aria-label="...">
-                          <ul class="pagination pagination-lg">
-                            {% for num_page in account_list.paginator.page_range %}
-                                {% if num_page == order_list.number%}
-                                <li class="page-item disabled active">
-                                    <a class="page-link">{{num_page}}</a>
-                                </li>
-                                {% else %}
-                                <li class="page-item">
-                                  <a class="page-link" href="{% url "Admin:account" %}?page={{num_page}}" >{{num_page}}</a>
-                                </li>
-                                {% endif %}
-                            {% endfor %}
-                          </ul>
-                        </nav>
-                    </div>
                 </div>
             </div>
         </div>
@@ -226,6 +208,7 @@
                         <thead class="thead-light">
                         <tr>
                             <th scope="col">意圖名稱</th>
+                            <th scope="col">次數</th>
                             <th scope="col">次數</th>
                         </tr>
                         </thead>
