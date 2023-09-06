@@ -33,7 +33,11 @@
                     <div class="row">
                         <div class="col">
                             <h5 class="card-title text-uppercase text-muted mb-0">依照所選數據輸出為excel </h5>
+                            {% if File == 'false' %}
+                            <span class="h2 font-weight-bold mb-0">未有任何數據</span>
+                            {% else %}
                             <span class="h2 font-weight-bold mb-0"><a id="excel_export" href="{% url "app:result_excel_none" %}?{{ url }}{% if request.GET.start and request.GET.end %}{% with start=request.GET.start end=request.GET.end %}&start={{start}}&end={{end}}{% endwith %}{% elif request.GET.date %}{% with date=request.GET.date %}&date={{date}}{% endwith %}{% endif %}{%if request.GET.search %}{%with search=request.GET.search %}&search={{search}}{% endwith%}{%endif%}">下載</a></span>
+                            {% endif %}
                         </div>
                         <div class="col-auto">
                             <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
@@ -189,6 +193,7 @@
         const submit_button=document.getElementById('submitBtn');
         const search= document.getElementById('search');
         const urlParams = new URLSearchParams(window.location.search);
+        const excel_export= document.getElementById('excel_export');
 
         if(urlParams.has('search'))
         {
@@ -227,6 +232,19 @@
             }
         }
 
+        var url=excel_export.getAttribute("href");
+        var params = new URLSearchParams(url);
+        var startValue = params.get("start");
+        var dateValue = params.get("date");
+
+        if (dateValue == null && startValue == null)
+        {
+           excel_export.addEventListener('click',function(){
+                excel_export.href="#";
+                alert("請篩選期限");
+           });
+
+        }
 
 
 

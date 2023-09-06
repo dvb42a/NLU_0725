@@ -829,5 +829,40 @@
       ],
       "run_time": "3.06 秒",
       "ask_time": "2023-09-05 09:56:48"
+   },
+   {
+      "q": "問題",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [],
+      "run_time": "2.08 秒",
+      "ask_time": "2023-09-06 09:55:55"
+   },
+   {
+      "q": "dilemma",
+      "clu_intent": "None",
+      "intent": "None",
+      "score": "0.93",
+      "ans": "抱歉，我只能回答台積電公司的資訊",
+      "entities": [],
+      "run_time": "1.45 秒",
+      "ask_time": "2023-09-06 09:56:24"
+   },
+   {
+      "q": "台積電",
+      "clu_intent": "問公司地址",
+      "intent": "問公司地址",
+      "score": "0.99",
+      "ans": "台積電公司地址是：xxxxxxx",
+      "entities": [
+         {
+            "entity": "台積電",
+            "entity_category": "公司"
+         }
+      ],
+      "run_time": "1.22 秒",
+      "ask_time": "2023-09-06 09:56:33"
    }
 ]

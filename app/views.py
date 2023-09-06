@@ -224,8 +224,9 @@ def app_result_view(request, context):
             result = [{"name": value, "count": count} for value, count in value_counter.items()]
             sorted_result=sorted(result , key=lambda x: x['count'], reverse=True)
             context['results']=sorted_result
+            context['File'] = 'true'
     except FileNotFoundError:
-        print('Error!!!')
+        context['File']='false'
 
     context.update(dict(
         app=app,
@@ -282,8 +283,9 @@ def app_none_view(request, context):
 
             all_values=getAllValuesNone(start,end,countDate,json_data,search)
             context['results']=all_values
+            context['File'] = 'true'
     except FileNotFoundError:
-        print('error')
+        context['File']='false'
 
     context.update(dict(
         app=app,
@@ -351,11 +353,22 @@ def app_excel_result(request, context):
 
             # Write DataFrames to Excel file
             with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
-                df_result.to_excel(writer, sheet_name='查詢次數彙整', index=False)
+                if countDate is not None and start is None:
+                    current_date = datetime.now().date()
+                    end_date = current_date
+                    start_date = current_date - timedelta(days=countDate)
+                    steet_name = str(start_date) + '至' + str(end_date) + '的統計數據'
+                if start is not None and countDate is None:
+                    start_date_str = start
+                    end_date_str = end
+                    steet_name = start_date_str + '至' + end_date_str + '的統計數據'
+                if start is None and countDate is None:
+                    steet_name='整體統計數據'
+                df_result.to_excel(writer, sheet_name=steet_name, index=False)
 
                 # Get the openpyxl workbook and worksheet objects
                 workbook = writer.book
-                worksheet_result = writer.sheets['查詢次數彙整']
+                worksheet_result = writer.sheets[steet_name]
                 # Auto-adjust column width based on content
                 for column_cells in worksheet_result.columns:
                     max_length = 0
@@ -435,7 +448,7 @@ def app_excel_none(request, context):
                 countDate = None
 
             all_values = getAllValuesNone(start,end,countDate,data,search)
-            print(all_values)
+            #print(all_values)
             # Append filtered data to 'df_none'
             for item in all_values:
                 df_none = df_none.append({"用戶問題": item.get("q", ""), "推測意圖": item.get("clu_intent", ""),

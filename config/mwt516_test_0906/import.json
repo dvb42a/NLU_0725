@@ -1,0 +1,986 @@
+{
+   "projectFileVersion": "2023-04-15-preview",
+   "stringIndexType": "Utf16CodeUnit",
+   "metadata": {
+      "projectKind": "Conversation",
+      "projectName": "mwt516-test_0906",
+      "multilingual": true,
+      "description": "吸占莓啦立卜",
+      "language": "zh-hant"
+   },
+   "assets": {
+      "projectKind": "Conversation",
+      "intents": [
+         {
+            "category": "問公司地址"
+         },
+         {
+            "category": "問公司電話"
+         },
+         {
+            "category": "問公司網站"
+         },
+         {
+            "category": "問連絡資訊"
+         },
+         {
+            "category": "基本問候"
+         }
+      ],
+      "entities": [
+         {
+            "category": "公司",
+            "compositionSetting": "combineComponents"
+         },
+         {
+            "category": "公司資訊",
+            "compositionSetting": "combineComponents"
+         },
+         {
+            "category": "問句",
+            "compositionSetting": "combineComponents"
+         },
+         {
+            "category": "問候語",
+            "compositionSetting": "combineComponents"
+         }
+      ],
+      "utterances": [
+         {
+            "text": "台積電",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               }
+            ]
+         },
+         {
+            "text": "台積電地址",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 3,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電的詳細地址",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電詳細地址",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 5,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電的地址",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 4,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "給我台積電的地址",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 2,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "請問台積電公司的地址在哪",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 2,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 5,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 8,
+                  "length": 2
+               },
+               {
+                  "category": "問句",
+                  "offset": 10,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電在哪",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "問句",
+                  "offset": 3,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電在那",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "問句",
+                  "offset": 3,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "請問台積電公司的在哪",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 2,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 5,
+                  "length": 2
+               },
+               {
+                  "category": "問句",
+                  "offset": 8,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "怎麼去台積電公司",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 3,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 6,
+                  "length": 2
+               },
+               {
+                  "category": "問句",
+                  "offset": 0,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電怎麼走",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "問句",
+                  "offset": 3,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電位置",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 3,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "請問台積電的位置",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 2,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "公司的位置",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 3,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電公司的位置",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 3,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "公司在哪",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 2
+               },
+               {
+                  "category": "問句",
+                  "offset": 2,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "公司在那",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 2
+               },
+               {
+                  "category": "問句",
+                  "offset": 2,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電公司的位置在哪",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 3,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               },
+               {
+                  "category": "問句",
+                  "offset": 8,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電公司的位置在那",
+            "intent": "問公司地址",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 3,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               },
+               {
+                  "category": "問句",
+                  "offset": 8,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電電話",
+            "intent": "問公司電話",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 3,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "公司電話",
+            "intent": "問公司電話",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 2,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電的公司電話",
+            "intent": "問公司電話",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 4,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "請問台積電的電話",
+            "intent": "問公司電話",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 2,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電的相關電話",
+            "intent": "問公司電話",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "給我台積電的電話",
+            "intent": "問公司電話",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 2,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電的官網",
+            "intent": "問公司網站",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 4,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電公司的官網",
+            "intent": "問公司網站",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 3,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電的網站",
+            "intent": "問公司網站",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 4,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電公司的官方網站",
+            "intent": "問公司網站",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 3,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 8,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "公司聯絡方式",
+            "intent": "問連絡資訊",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 2,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電公司的聯絡方式",
+            "intent": "問連絡資訊",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 3,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 6,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電的聯絡方式",
+            "intent": "問連絡資訊",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 4,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "該怎麼和台積電聯絡",
+            "intent": "問連絡資訊",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 4,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 7,
+                  "length": 2
+               },
+               {
+                  "category": "問句",
+                  "offset": 1,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "該怎麼和台積電公司聯絡",
+            "intent": "問連絡資訊",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 4,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 7,
+                  "length": 2
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 9,
+                  "length": 2
+               },
+               {
+                  "category": "問句",
+                  "offset": 1,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "如何聯絡台積電",
+            "intent": "問連絡資訊",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 4,
+                  "length": 3
+               },
+               {
+                  "category": "公司資訊",
+                  "offset": 2,
+                  "length": 2
+               },
+               {
+                  "category": "問句",
+                  "offset": 0,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電的聯繫方式",
+            "intent": "問連絡資訊",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               }
+            ]
+         },
+         {
+            "text": "台積電公司的聯繫方式",
+            "intent": "問連絡資訊",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "公司",
+                  "offset": 3,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "你好",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "你是誰",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 3
+               }
+            ]
+         },
+         {
+            "text": "哈囉你是誰",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 2,
+                  "length": 3
+               },
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "哈囉你好",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 2,
+                  "length": 2
+               },
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "嗨你好",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 1,
+                  "length": 2
+               },
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 1
+               }
+            ]
+         },
+         {
+            "text": "hi 你好",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 3,
+                  "length": 2
+               },
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "hi 你是",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "hi 你是哪位",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 2
+               },
+               {
+                  "category": "問候語",
+                  "offset": 5,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "台積電你好",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 0,
+                  "length": 3
+               },
+               {
+                  "category": "問候語",
+                  "offset": 3,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "你哪位",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 1,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "你好台積電",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 2,
+                  "length": 3
+               },
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "哈囉台積電",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 2,
+                  "length": 3
+               },
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "hi 台積電",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 3,
+                  "length": 3
+               },
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 2
+               }
+            ]
+         },
+         {
+            "text": "嗨",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 1
+               }
+            ]
+         },
+         {
+            "text": "嗨台積電",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 1,
+                  "length": 3
+               },
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 1
+               }
+            ]
+         },
+         {
+            "text": "how are you",
+            "intent": "基本問候",
+            "entities": []
+         },
+         {
+            "text": "hello 你好",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "問候語",
+                  "offset": 6,
+                  "length": 2
+               },
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 5
+               }
+            ]
+         },
+         {
+            "text": "hello 台積電",
+            "intent": "基本問候",
+            "entities": [
+               {
+                  "category": "公司",
+                  "offset": 6,
+                  "length": 3
+               },
+               {
+                  "category": "問候語",
+                  "offset": 0,
+                  "length": 5
+               }
+            ]
+         }
+      ]
+   }
+}
